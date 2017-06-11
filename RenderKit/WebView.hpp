@@ -20,6 +20,9 @@ public:
     WebView();
     ~WebView();
     
+    std::string getTitle() const;
+    
+    
     bool openFile( const std::string &file);
 private:
     

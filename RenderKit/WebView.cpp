@@ -24,6 +24,11 @@ WebView::~WebView()
     }
 }
 
+std::string WebView::getTitle() const
+{
+    return _parser->getTitle();
+}
+
 bool WebView::openFile( const std::string &file)
 {
     if( !_parser)
@@ -33,7 +38,9 @@ bool WebView::openFile( const std::string &file)
     
     const std::string html = FileSystem::getFileText( file);
 
-    _parser->parseContent(html.c_str(), strlen(html.c_str()));
     
-    return false;
+    
+    const bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
+    
+    return ret;
 }

@@ -2282,6 +2282,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/GroundBase/,
 					"$(SRCROOT)/RenderKit/Modest/include/",
+					"$(SRCROOT)/../GX/include/",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -2328,6 +2329,7 @@
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/GroundBase/,
 					"$(SRCROOT)/RenderKit/Modest/include/",
+					"$(SRCROOT)/../GX/include/",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;

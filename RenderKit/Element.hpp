@@ -9,6 +9,9 @@
 #ifndef Element_hpp
 #define Element_hpp
 
+#include "GXColor.hpp"
+#include "GXGeometry.hpp"
+
 #include <myhtml/myhtml.h>
 
 class Element
@@ -29,9 +32,11 @@ public:
     myhtml_tree_node_t *_node;
 };
 
-class BlockElement : public HTMLElement
+class HTMLBlockElement : public HTMLElement
 {
-    
+public:
+    GXColor backgroundColor;
+    GXSize  size;
 };
 
 #endif /* Element_hpp */

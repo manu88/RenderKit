@@ -9,6 +9,7 @@
 #ifndef HTMLParser_hpp
 #define HTMLParser_hpp
 
+#include <string>
 #include <modest/modest.h>
 #include <modest/render/tree_node.h>
 
@@ -21,7 +22,9 @@ public:
     HTMLParser();
     ~HTMLParser();
     
+    std::string getTitle() const;
     
+    bool parseContent( const std::string &buf);
     bool parseContent( const char* buf , size_t len);
     
     bool render();

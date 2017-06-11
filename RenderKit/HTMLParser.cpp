@@ -57,6 +57,31 @@ HTMLParser::~HTMLParser()
     }
 }
 
+std::string HTMLParser::getTitle() const
+{
+    std::string ret;
+    
+    myhtml_collection_t *collection = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_TITLE, NULL);
+    
+    
+    if(collection && collection->list && collection->length)
+    {
+        myhtml_tree_node_t *text_node = myhtml_node_child(collection->list[0]);
+        
+        if(text_node)
+        {
+            const char* text = myhtml_node_text(text_node, NULL);
+            
+            if(text)
+            {
+                return text;
+            }
+        }
+    }
+    
+    return ret;
+}
+
 static myhtml_tree_t * parse_html(const char* data, size_t data_size)
 {
     myhtml_t* myhtml = myhtml_create();
@@ -93,6 +118,11 @@ static mycss_entry_t * create_css_parser(void)
     
     
     return entry;
+}
+
+bool HTMLParser::parseContent( const std::string &buf)
+{
+    return parseContent(buf.c_str(), buf.size());
 }
 
 bool HTMLParser::parseContent( const char* buf , size_t len)

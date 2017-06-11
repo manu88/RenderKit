@@ -10,6 +10,56 @@
 #include "HTMLTree.hpp"
 
 
+
+std::string HTMLNode::getTagName() const noexcept
+{
+    assert(_node);
+    assert(_tree);
+    
+    return myhtml_tag_name_by_id( _tree, _node->tag_id, NULL/*tag_length*/);
+}
+
+bool HTMLNode::hasText() const noexcept
+{
+    return myhtml_node_text( _node , NULL ) != NULL;
+}
+
+std::string HTMLNode::getText() const noexcept
+{
+    assert(_node);
+    const char* t = myhtml_node_text( _node , NULL );
+    if( t)
+    {
+        return t;
+    }
+    return std::string();
+}
+
+const myhtml_tree_attr_t* HTMLNode::getAttributeByName( const std::string &name) const noexcept
+{
+    assert(_node);
+    return myhtml_attribute_by_key( _node, name.c_str(), name.size());
+}
+
+const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const myhtml_tree_attr_t * attribute) const noexcept
+{
+    
+    mystatus_t out_status = MyCORE_STATUS_ERROR;
+    const mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( declaration ,
+                                                                   encoding,
+                                                                   attribute->value.data,
+                                                                   attribute->value.length,
+                                                                   &out_status);
+    
+    if( out_status == 0)
+    {
+        return dec_entry;
+    }
+    
+    return nullptr;
+}
+
+
 HTMLTree::HTMLTree():
 _tree(nullptr),
 _html(nullptr)

@@ -15,7 +15,11 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     
     app->pushView(&_webView);
     
-    _webView.openFile("/Users/manueldeneu/Documents/projets/dev/RenderKit/test.html");
+    if(_webView.openFile("/Users/manueldeneu/Documents/projets/dev/RenderKit/test.html"))
+    {
+        app->setName(_webView.getTitle());
+        app->getCurrentView()->setNeedsRedraw();
+    }
 }
 
 void AppDelegate::applicationDidLoad( CLApplication* app)
