@@ -21,6 +21,12 @@
 #include "mycss/property/serialization.h"
 #include "mycss/property/resources_name.h"
 
+
+const char* mycss_property_type_name(mycss_property_type_t prop_type)
+{
+    return mycss_property_index_type_name[prop_type];
+}
+
 void mycss_property_serialization_type_name(mycss_property_type_t prop_type, mycore_callback_serialize_f callback, void* context)
 {
     if(prop_type >= MyCSS_PROPERTY_TYPE_LAST_ENTRY)

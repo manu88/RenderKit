@@ -157,9 +157,9 @@
 		593640151EEC45E400A96EC8 /* HTMLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593640121EEC45E400A96EC8 /* HTMLContext.cpp */; };
 		593640181EEC472300A96EC8 /* CSSParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593640161EEC472300A96EC8 /* CSSParser.cpp */; };
 		593640191EEC472300A96EC8 /* CSSParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593640161EEC472300A96EC8 /* CSSParser.cpp */; };
-		5936401A1EEC474800A96EC8 /* main_.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5978CCBB1EDF3BC900E59956 /* main_.cpp */; };
 		5936401D1EEC490600A96EC8 /* HTMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936401B1EEC490600A96EC8 /* HTMLParser.cpp */; };
 		5936401E1EEC490600A96EC8 /* HTMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936401B1EEC490600A96EC8 /* HTMLParser.cpp */; };
+		595B965E1EED3B1B00B366CC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965D1EED3B1B00B366CC /* main.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -362,8 +362,8 @@
 		593640171EEC472300A96EC8 /* CSSParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSParser.hpp; sourceTree = "<group>"; };
 		5936401B1EEC490600A96EC8 /* HTMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLParser.cpp; sourceTree = "<group>"; };
 		5936401C1EEC490600A96EC8 /* HTMLParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLParser.hpp; sourceTree = "<group>"; };
+		595B965D1EED3B1B00B366CC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
-		5978CCBB1EDF3BC900E59956 /* main_.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = main_.cpp; path = RenderKit/main_.cpp; sourceTree = "<group>"; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
 		5978CCC71EDF3C9F00E59956 /* match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = match.h; sourceTree = "<group>"; };
@@ -896,6 +896,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		595B965C1EED3B1B00B366CC /* TestTerm */ = {
+			isa = PBXGroup;
+			children = (
+				595B965D1EED3B1B00B366CC /* main.cpp */,
+			);
+			name = TestTerm;
+			path = RenderKit/TestTerm;
+			sourceTree = "<group>";
+		};
 		5978CCAF1EDF3BC900E59956 = {
 			isa = PBXGroup;
 			children = (
@@ -904,7 +913,7 @@
 				5978CCC21EDF3C9F00E59956 /* include */,
 				5978CD801EDF3C9F00E59956 /* source */,
 				5978CCBA1EDF3BC900E59956 /* RenderKit */,
-				5978CCBB1EDF3BC900E59956 /* main_.cpp */,
+				595B965C1EED3B1B00B366CC /* TestTerm */,
 				59363F711EEC438A00A96EC8 /* TestUI */,
 				5978CCB91EDF3BC900E59956 /* Products */,
 				5936400F1EEC449100A96EC8 /* Frameworks */,
@@ -2176,7 +2185,7 @@
 				5978D0211EDF3CA000E59956 /* token.c in Sources */,
 				5978CFDD1EDF3C9F00E59956 /* destroy.c in Sources */,
 				5978CF521EDF3C9F00E59956 /* finder.c in Sources */,
-				5936401A1EEC474800A96EC8 /* main_.cpp in Sources */,
+				595B965E1EED3B1B00B366CC /* main.cpp in Sources */,
 				5978D04A1EDF3CA000E59956 /* scheme.c in Sources */,
 				5978CF6F1EDF3C9F00E59956 /* thread_queue.c in Sources */,
 				5978D0401EDF3CA000E59956 /* myosi.c in Sources */,

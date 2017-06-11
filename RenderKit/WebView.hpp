@@ -12,7 +12,7 @@
 #include <string>
 #include "VKView.hpp"
 
-class HTMLTree;
+class HTMLParser;
 
 class WebView : public VKView
 {
@@ -23,7 +23,7 @@ public:
     bool openFile( const std::string &file);
 private:
     
-    HTMLTree *_tree;
+    HTMLParser *_parser;
 };
 
 #endif /* WebView_hpp */

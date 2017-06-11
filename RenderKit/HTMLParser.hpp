@@ -25,6 +25,8 @@ private:
     
     void parseHTML();
     void print_entries(mycss_entry_t* entry, mycss_declaration_entry_t* declr_entry);
+    static mystatus_t serialization_callback(const char* data, size_t len, void* ctx);
+    mystatus_t tokenCallback(const char* data, size_t len);
     
     CSSParser _cssParser;
     HTMLTree  _htmlTree;

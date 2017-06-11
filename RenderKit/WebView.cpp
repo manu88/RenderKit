@@ -7,33 +7,33 @@
 //
 
 #include "WebView.hpp"
-#include "HTMLTree.hpp"
+#include "HTMLParser.hpp"
 #include "FileSystem.hpp"
 
 WebView::WebView():
-_tree(nullptr)
+_parser(nullptr)
 {
     background = GXColors::White;
 }
 
 WebView::~WebView()
 {
-    if( _tree)
+    if( _parser)
     {
-        delete _tree;
+        delete _parser;
     }
 }
 
 bool WebView::openFile( const std::string &file)
 {
-    if( !_tree)
+    if( !_parser)
     {
-        _tree = new HTMLTree();
+        _parser = new HTMLParser();
     }
     
     const std::string html = FileSystem::getFileText( file);
-    
-    _tree->parseContent(html.c_str(), strlen(html.c_str()));
+
+    _parser->parseContent(html.c_str(), strlen(html.c_str()));
     
     return false;
 }

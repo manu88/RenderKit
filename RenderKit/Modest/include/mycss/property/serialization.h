@@ -30,6 +30,8 @@
 extern "C" {
 #endif
 
+const char* mycss_property_type_name(mycss_property_type_t prop_type);
+
 void mycss_property_serialization_type_name(mycss_property_type_t prop_type, mycore_callback_serialize_f callback, void* context);
 void mycss_property_serialization_value(unsigned int value_type, void* value, mycore_callback_serialize_f callback, void* context);
 
