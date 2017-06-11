@@ -136,37 +136,21 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
     }
 
     
-
-    myhtml_tree_node_t* c = node._node->child;
-    
-    size_t c1 = 0;
-    size_t c2 = 0;
-    while (c)
-    {
-        c1++;
-        const char* t = myhtml_node_text( c , NULL );
-        if( t && !is_empty(t))
-        {
-            printf("Text1 '%s'\n" , t);
-        }
-        c = c->next;
-    }
-    
     for ( const auto &iter : node )
     {
-        c2++;
+        
         assert(iter._node && iter._tree);
 
         const std::string text = iter.getText();
         
         if( !text.empty() && !is_empty(text.c_str()))
         {
-            printf("Text2 = '%s'\n" , text.c_str());
+            printf("Text = '%s'\n" , text.c_str());
         }
         
 
     }
-    assert( c1 == c2);
+
     return block;
 }
 

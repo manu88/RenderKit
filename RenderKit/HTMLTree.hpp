@@ -89,7 +89,7 @@ public:
     
     const Iterator end() const
     {
-        return Iterator( _node->last_child , _tree);
+        return Iterator( nullptr , _tree);
     }
     
     
