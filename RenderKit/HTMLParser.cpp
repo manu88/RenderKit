@@ -8,7 +8,15 @@
 
 #include <ctype.h>
 #include <assert.h>
+
+#include <modest/render/tree.h>
+#include <modest/render/tree_node.h>
+#include <modest/render/binding.h>
+#include <modest/glue.h>
+
 #include "HTMLParser.hpp"
+
+
 
 
 static int is_empty(const char *s)
@@ -22,128 +30,119 @@ static int is_empty(const char *s)
 }
 
 
-HTMLParser::HTMLParser()
+HTMLParser::HTMLParser():
+_renderNode(nullptr)
 {
+    _modest = modest_create();
+    assert(modest_init(_modest) == 0);
     
 }
 
 HTMLParser::~HTMLParser()
 {
-    
+    if( _modest)
+    {
+        
+        mycss_t *mycss = _modest->mycss_entry->mycss;
+        mycss_entry_destroy( _modest->mycss_entry, true);
+        mycss_destroy(mycss, true);
+        
+        myhtml_t* myhtml = _modest->myhtml_tree->myhtml;
+        myhtml_tree_destroy( _modest->myhtml_tree);
+        myhtml_destroy(myhtml);
+        
+        modest_clean(_modest);
+        modest_destroy(_modest , true);
+        
+    }
 }
 
+static myhtml_tree_t * parse_html(const char* data, size_t data_size)
+{
+    myhtml_t* myhtml = myhtml_create();
+    mystatus_t status = myhtml_init(myhtml, MyHTML_OPTIONS_DEFAULT, 1, 0);
+    
+    assert(status == 0);
+    
+    myhtml_tree_t* tree = myhtml_tree_create();
+    status = myhtml_tree_init(tree, myhtml);
+    
+    assert(status == 0);
+    
+    status = myhtml_parse(tree, MyENCODING_UTF_8, data, data_size);
+    assert(status == 0);
+    
+    return tree;
+}
+
+
+static mycss_entry_t * create_css_parser(void)
+{
+    // base init
+    mycss_t *mycss = mycss_create();
+    mystatus_t status = mycss_init(mycss);
+    
+    assert(status == 0);
+    
+    
+    // currenr entry work init
+    mycss_entry_t *entry = mycss_entry_create();
+    status = mycss_entry_init(mycss, entry);
+    
+    assert(status == 0);
+    
+    
+    return entry;
+}
 
 bool HTMLParser::parseContent( const char* buf , size_t len)
 {
-    if( _htmlTree.parseContent(buf, len))
-    {
-        parseHTML();
-        return true;
-    }
+    assert(_modest);
     
-    return false;
+    _modest->myhtml_tree = parse_html(buf, len);
+    
+    _modest->mycss_entry = create_css_parser();
+    
+    
+    return _modest->myhtml_tree && _modest->mycss_entry;
 }
 
-/*static*/ mystatus_t HTMLParser::serialization_callback(const char* data, size_t len, void* ctx)
-{
-    HTMLParser* self = reinterpret_cast<HTMLParser*>(ctx);
-    assert(self);
-    return self->tokenCallback(data, len);
-    
-}
-mystatus_t HTMLParser::tokenCallback(const char* data, size_t len)
-{
-    printf("%.*s", (int)len, data);
-    return MyCORE_STATUS_OK;
-}
 
-void HTMLParser::print_entries(mycss_entry_t* entry, mycss_declaration_entry_t* declr_entry)
+static void traverse(modest_t* modest, myhtml_tree_t *html_tree )
 {
-    if(declr_entry == NULL)
-        return;
+    myhtml_tree_node_t *node = html_tree->node_html;
     
-    while(declr_entry)
-    {
-        printf("\t");
-        mycss_declaration_serialization_entry(entry, declr_entry, serialization_callback, this);
-        //printf("'%s'" , mycss_property_type_name(declr_entry->type));
-        
-        
-        if(declr_entry->next)
-            printf(";\n");
-        else
-            printf(";");
-        
-        declr_entry = declr_entry->next;
-    }
-}
-
-void HTMLParser::parseHTML()
-{
-    myhtml_tree_node_t *node = _htmlTree._tree->node_html;
-    printf("Result:\n");
     
-
+    /* run on a tree without recursion */
     while(node)
     {
-        const char *tag_name = myhtml_tag_name_by_id(_htmlTree._tree, myhtml_node_tag_id(node), NULL);
-        if( tag_name && strcmp(tag_name, "div") == 0)
-        {
-            printf(" -> Start Div\n");
-            //printf("TAG : '%s'" , tag_name);
-        }
-        
-        const char* key = "style";
-        myhtml_tree_attr_t *attr_style = myhtml_attribute_by_key(node, key, strlen(key));
-
-        if(attr_style)
-        {
-            mycss_declaration_entry_t *dec_entry = mycss_declaration_parse(_cssParser.getEntry()->declaration,
-                                                                           MyENCODING_UTF_8,
-                                                                           attr_style->value.data,
-                                                                           attr_style->value.length,
-                                                                           NULL);
-            
-            if(dec_entry)
-            {
-                /*
-                 printf("Node:\n\t");
-                 myhtml_serialization_tree_callback(node, serialization_callback, NULL);
-                 */
-                printf("\nHas style:\n");
-                print_entries(_cssParser.getEntry(), dec_entry);
-                printf("\n\n");
-            }
-        }
-        else
-        {
-            
-            const char* txt = myhtml_node_text(node, NULL);
-            if(txt && !is_empty(txt))
-            {
-                printf("TEXT '%s' \n" , txt );
-            }
-        }
+        modest_glue_callback_myhtml_insert_node(modest->myhtml_tree, node, modest);
         
         if(node->child)
-        {
-            //printf("-------- Child node\n");
             node = node->child;
-        }
-        else
-        {
-            while(node != _htmlTree._tree->node_html && node->next == NULL)
-            {
-                //printf("-------- Jump to parent\n");
+        else {
+            while(node != html_tree->node_html && node->next == NULL)
                 node = node->parent;
-            }
             
-            if(node == _htmlTree._tree->node_html )
-            {
+            if(node == html_tree->node_html)
                 break;
-            }
-            printf("-------- Next node\n");
+            
             node = node->next;
         }
     }
 }
+bool HTMLParser::render()
+{
+    
+    modest_render_tree_t *render = modest_render_tree_create();
+    assert(modest_render_tree_init(render) == 0);
+    
+    traverse( _modest ,  _modest->myhtml_tree);
+    
+    
+    
+    _renderNode = modest_render_binding( _modest, render, _modest->myhtml_tree);
+    
+    return _renderNode != nullptr ;
+}
+

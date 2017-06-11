@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		59363F671EEC413300A96EC8 /* libVisualKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59363F621EEC412A00A96EC8 /* libVisualKit.dylib */; };
 		59363F741EEC439E00A96EC8 /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE071EDF3C9F00E59956 /* serialization.c */; };
 		59363F751EEC439E00A96EC8 /* tokenizer_end.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF071EDF3C9F00E59956 /* tokenizer_end.c */; };
 		59363F761EEC439E00A96EC8 /* property.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD9C1EDF3C9F00E59956 /* property.c */; };
@@ -160,6 +159,8 @@
 		5936401D1EEC490600A96EC8 /* HTMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936401B1EEC490600A96EC8 /* HTMLParser.cpp */; };
 		5936401E1EEC490600A96EC8 /* HTMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936401B1EEC490600A96EC8 /* HTMLParser.cpp */; };
 		595B965E1EED3B1B00B366CC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965D1EED3B1B00B366CC /* main.cpp */; };
+		595B96611EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
+		595B96621EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -299,6 +300,9 @@
 		5978D0501EDF3CA000E59956 /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF4E1EDF3C9F00E59956 /* utils.c */; };
 		599081941EDFEDA500D7EB1F /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081901EDFEDA500D7EB1F /* FileSystem.cpp */; };
 		599081951EDFEDA500D7EB1F /* StringOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081921EDFEDA500D7EB1F /* StringOperations.cpp */; };
+		59B32C0E1EED6D6B0002846B /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
+		59B32C111EED708D0002846B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */; };
+		59B32C121EED708D0002846B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */; };
 		59CBC69B1EE18F4500BC2D67 /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */; };
 /* End PBXBuildFile section */
 
@@ -363,6 +367,8 @@
 		5936401B1EEC490600A96EC8 /* HTMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLParser.cpp; sourceTree = "<group>"; };
 		5936401C1EEC490600A96EC8 /* HTMLParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLParser.hpp; sourceTree = "<group>"; };
 		595B965D1EED3B1B00B366CC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		595B965F1EED40F500B366CC /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
+		595B96601EED40F500B366CC /* Element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -843,6 +849,8 @@
 		599081911EDFEDA500D7EB1F /* FileSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileSystem.hpp; sourceTree = "<group>"; };
 		599081921EDFEDA500D7EB1F /* StringOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringOperations.cpp; sourceTree = "<group>"; };
 		599081931EDFEDA500D7EB1F /* StringOperations.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringOperations.hpp; sourceTree = "<group>"; };
+		59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HTMLRenderer.cpp; path = RenderKit/HTMLRenderer.cpp; sourceTree = SOURCE_ROOT; };
+		59B32C101EED708D0002846B /* HTMLRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HTMLRenderer.hpp; path = RenderKit/HTMLRenderer.hpp; sourceTree = SOURCE_ROOT; };
 		59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLTree.cpp; sourceTree = "<group>"; };
 		59CBC69A1EE18F4500BC2D67 /* HTMLTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLTree.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -861,7 +869,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59363F671EEC413300A96EC8 /* libVisualKit.dylib in Frameworks */,
+				59B32C0E1EED6D6B0002846B /* libGX.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,12 +940,16 @@
 		5978CCBA1EDF3BC900E59956 /* RenderKit */ = {
 			isa = PBXGroup;
 			children = (
-				5936400B1EEC442100A96EC8 /* WebView.cpp */,
-				5936400C1EEC442100A96EC8 /* WebView.hpp */,
-				593640161EEC472300A96EC8 /* CSSParser.cpp */,
-				593640171EEC472300A96EC8 /* CSSParser.hpp */,
+				59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */,
+				59B32C101EED708D0002846B /* HTMLRenderer.hpp */,
 				5936401B1EEC490600A96EC8 /* HTMLParser.cpp */,
 				5936401C1EEC490600A96EC8 /* HTMLParser.hpp */,
+				5936400B1EEC442100A96EC8 /* WebView.cpp */,
+				5936400C1EEC442100A96EC8 /* WebView.hpp */,
+				595B965F1EED40F500B366CC /* Element.cpp */,
+				595B96601EED40F500B366CC /* Element.hpp */,
+				593640161EEC472300A96EC8 /* CSSParser.cpp */,
+				593640171EEC472300A96EC8 /* CSSParser.hpp */,
 				59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */,
 				59CBC69A1EE18F4500BC2D67 /* HTMLTree.hpp */,
 				593640121EEC45E400A96EC8 /* HTMLContext.cpp */,
@@ -1930,6 +1942,7 @@
 				59363F881EEC439E00A96EC8 /* StringOperations.cpp in Sources */,
 				59363F891EEC439E00A96EC8 /* encoding.c in Sources */,
 				59363F8A1EEC439E00A96EC8 /* stream.c in Sources */,
+				595B96621EED40F500B366CC /* Element.cpp in Sources */,
 				59363F8B1EEC439E00A96EC8 /* init.c in Sources */,
 				59363F8C1EEC439E00A96EC8 /* mystring.c in Sources */,
 				59363F8D1EEC439E00A96EC8 /* rules.c in Sources */,
@@ -2046,6 +2059,7 @@
 				59363FF91EEC439E00A96EC8 /* thread.c in Sources */,
 				59363FFA1EEC439E00A96EC8 /* raw_property.c in Sources */,
 				59363FFB1EEC439E00A96EC8 /* detect.c in Sources */,
+				59B32C121EED708D0002846B /* HTMLRenderer.cpp in Sources */,
 				59363FFC1EEC439E00A96EC8 /* utils.c in Sources */,
 				59363FFD1EEC439E00A96EC8 /* parser_image.c in Sources */,
 				59363FFE1EEC439E00A96EC8 /* state.c in Sources */,
@@ -2116,6 +2130,7 @@
 				5978CFB31EDF3C9F00E59956 /* parser_text_decoration.c in Sources */,
 				5978D0441EDF3CA000E59956 /* parser_end.c in Sources */,
 				5978D0011EDF3CA000E59956 /* os_2.c in Sources */,
+				59B32C111EED708D0002846B /* HTMLRenderer.cpp in Sources */,
 				5978CF641EDF3C9F00E59956 /* raw.c in Sources */,
 				5978CF891EDF3C9F00E59956 /* default.c in Sources */,
 				5978CFD11EDF3C9F00E59956 /* tokenizer.c in Sources */,
@@ -2136,6 +2151,7 @@
 				5978D0311EDF3CA000E59956 /* perf.c in Sources */,
 				5978CFF91EDF3C9F00E59956 /* maxp.c in Sources */,
 				5978CFB91EDF3C9F00E59956 /* shared.c in Sources */,
+				595B96611EED40F500B366CC /* Element.cpp in Sources */,
 				5978CFAB1EDF3C9F00E59956 /* init.c in Sources */,
 				5978CFF71EDF3C9F00E59956 /* loca.c in Sources */,
 				5978D0351EDF3CA000E59956 /* mcsync.c in Sources */,
