@@ -27,7 +27,9 @@ public:
         Iterator( myhtml_tree_node_t *node , myhtml_tree_t* tree) :
         _node(node),
         _tree(tree)
-        {}
+        {
+        
+        }
         
         bool operator!=( const Iterator& rhs)
         {
@@ -58,7 +60,18 @@ public:
     _node(node) ,
     _tree(tree)
     {}
+    /*
+    HTMLNode( const HTMLNode &other) :
+    _node(other._node),
+    _tree(other._tree)
+    {}
     
+    void operator=(const HTMLNode &other)
+    {
+        _node = other._node;
+        _tree = other._tree;
+    }
+    */
     std::string getTagName() const noexcept;
     
     bool hasText() const noexcept;
