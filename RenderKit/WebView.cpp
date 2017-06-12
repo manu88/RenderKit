@@ -65,6 +65,45 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
     
     assert(_renderer.getRoot() );
     
+    auto drawBlock = [rect] (GXContext* context , const HTMLBlockElement* block , const GXPoint &p)
+    {
+        context->beginPath();
+        context->addRect(GXRectMake(p, block->size));
+        if( block->tag == "img")
+        {
+            context->setFillColor(GXColors::Green);
+            printf("Draw image '%s' \n" ,block->src.c_str() );
+            const GXImageHandle img = context->createImage( "/Users/manueldeneu/Documents/projets/dev/RenderKit/" +block->src  , GXimageFlags_None );
+            
+            if( img != GXImageInvalid)
+            {
+                printf("Create image ok \n");
+                GXPaint imgPaint = context->imagePattern(GXPointMakeNull(), block->size, 0, img, 1.f);
+
+                context->setFillPainter( imgPaint);
+            }
+            
+        }
+        else
+        {
+            context->setFillColor( block->backgroundColor);
+        }
+        
+        context->fill();
+        if( !block->text.empty())
+        {
+            context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
+            
+            
+            context->setFillColor(GXColors::Black);
+            
+            context->setFontSize(20.f);
+            //ctx->setStrokeColor(GXColors::Green);
+            context->addText(GXPointMake(p.x, p.y + 10) , block->text);
+        }
+        
+    };
+    
     for ( const HTMLBlockElement* c : _renderer.getRoot()->_children)
     {
         assert(c->_parent);
@@ -89,6 +128,10 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
                 printf(" size %i %i ",ccc->size.width , ccc->size.height );
                 printf("\n");
                 
+                drawBlock(ctx , ccc , p);
+                
+                
+                p.y += 40;
                 for ( const HTMLBlockElement* cccc : ccc->_children)
                 {
                     assert(cccc->_parent);
@@ -97,19 +140,9 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
                     printf(" size %i %i ",cccc->size.width , cccc->size.height );
                     printf("\n");
                     
-                    ctx->beginPath();
-                    ctx->addRect(GXRectMake(p, cccc->size));
-                    ctx->setFillColor(cccc->backgroundColor);
+                    drawBlock(ctx , cccc , p);
                     
-                    ctx->fill();
-                    if( !cccc->text.empty())
-                    {
-                        ctx->setFontId( ctx->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
-                        ctx->setFillColor(GXColors::Black);
-                        ctx->setFontSize(20.f);
-                        //ctx->setStrokeColor(GXColors::Green);
-                        ctx->addText(GXPointMake(p.x, p.y + 10) , cccc->text);
-                    }
+                 
                     p.y+=cccc->size.height;
                     
                 }

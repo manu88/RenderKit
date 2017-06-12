@@ -170,6 +170,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
 
     if(attr_style.isValid())
     {
+        
         const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,
                                                                            modest->mycss_entry->declaration,
                                                                            attr_style._attr);
@@ -177,7 +178,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
         const mycss_declaration_entry_t* next = dec_entry;
         while (next)
         {
-            
+
             if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
             {
                 block->size.width = parseBlockWidth(next);
@@ -245,7 +246,9 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     {
         const char* imgSrc = imgAttr.getValue();
         assert(imgSrc);
-        printf("Img res = '%s' \n" , imgSrc);
+        //printf("Img res = '%s' \n" , imgSrc);
+        block->src  = imgSrc;
+        
     }
 
     return true;

@@ -49,6 +49,7 @@ public:
     GXColor backgroundColor;
     GXSize  size;
     std::string text;
+    std::string src;
     
     std::vector<HTMLBlockElement*> _children;
     HTMLBlockElement *_parent;
