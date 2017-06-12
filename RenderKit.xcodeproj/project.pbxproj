@@ -303,6 +303,8 @@
 		59B32C0E1EED6D6B0002846B /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
 		59B32C111EED708D0002846B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */; };
 		59B32C121EED708D0002846B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */; };
+		59B32C151EEE591C0002846B /* HTMLAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C131EEE591C0002846B /* HTMLAttribute.cpp */; };
+		59B32C161EEE591C0002846B /* HTMLAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B32C131EEE591C0002846B /* HTMLAttribute.cpp */; };
 		59CBC69B1EE18F4500BC2D67 /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */; };
 /* End PBXBuildFile section */
 
@@ -851,6 +853,8 @@
 		599081931EDFEDA500D7EB1F /* StringOperations.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringOperations.hpp; sourceTree = "<group>"; };
 		59B32C0F1EED708D0002846B /* HTMLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HTMLRenderer.cpp; path = RenderKit/HTMLRenderer.cpp; sourceTree = SOURCE_ROOT; };
 		59B32C101EED708D0002846B /* HTMLRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = HTMLRenderer.hpp; path = RenderKit/HTMLRenderer.hpp; sourceTree = SOURCE_ROOT; };
+		59B32C131EEE591C0002846B /* HTMLAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLAttribute.cpp; sourceTree = "<group>"; };
+		59B32C141EEE591C0002846B /* HTMLAttribute.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLAttribute.hpp; sourceTree = "<group>"; };
 		59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLTree.cpp; sourceTree = "<group>"; };
 		59CBC69A1EE18F4500BC2D67 /* HTMLTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLTree.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -950,6 +954,8 @@
 				595B96601EED40F500B366CC /* Element.hpp */,
 				593640161EEC472300A96EC8 /* CSSParser.cpp */,
 				593640171EEC472300A96EC8 /* CSSParser.hpp */,
+				59B32C131EEE591C0002846B /* HTMLAttribute.cpp */,
+				59B32C141EEE591C0002846B /* HTMLAttribute.hpp */,
 				59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */,
 				59CBC69A1EE18F4500BC2D67 /* HTMLTree.hpp */,
 				593640121EEC45E400A96EC8 /* HTMLContext.cpp */,
@@ -2039,6 +2045,7 @@
 				59363FE61EEC439E00A96EC8 /* vhea.c in Sources */,
 				59363FE71EEC439E00A96EC8 /* serialization.c in Sources */,
 				59363FE81EEC439E00A96EC8 /* map.c in Sources */,
+				59B32C161EEE591C0002846B /* HTMLAttribute.cpp in Sources */,
 				59363FE91EEC439E00A96EC8 /* parser.c in Sources */,
 				59363FEA1EEC439E00A96EC8 /* punycode.c in Sources */,
 				59363FEB1EEC439E00A96EC8 /* tree.c in Sources */,
@@ -2201,6 +2208,7 @@
 				5978D0211EDF3CA000E59956 /* token.c in Sources */,
 				5978CFDD1EDF3C9F00E59956 /* destroy.c in Sources */,
 				5978CF521EDF3C9F00E59956 /* finder.c in Sources */,
+				59B32C151EEE591C0002846B /* HTMLAttribute.cpp in Sources */,
 				595B965E1EED3B1B00B366CC /* main.cpp in Sources */,
 				5978D04A1EDF3CA000E59956 /* scheme.c in Sources */,
 				5978CF6F1EDF3C9F00E59956 /* thread_queue.c in Sources */,
@@ -2251,7 +2259,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -2304,7 +2312,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;

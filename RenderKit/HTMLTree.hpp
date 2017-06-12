@@ -16,6 +16,7 @@
 #include <mycss/mycss.h>
 
 #include "HTMLTree.hpp"
+#include "HTMLAttribute.hpp"
 
 class HTMLNode
 {
@@ -60,24 +61,13 @@ public:
     _node(node) ,
     _tree(tree)
     {}
-    /*
-    HTMLNode( const HTMLNode &other) :
-    _node(other._node),
-    _tree(other._tree)
-    {}
-    
-    void operator=(const HTMLNode &other)
-    {
-        _node = other._node;
-        _tree = other._tree;
-    }
-    */
+
     std::string getTagName() const noexcept;
     
     bool hasText() const noexcept;
     std::string getText() const noexcept;
     
-    const myhtml_tree_attr_t * getAttributeByName( const std::string &name) const noexcept;
+    
     
     const mycss_declaration_entry_t * parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const myhtml_tree_attr_t * attribute) const noexcept;
     
@@ -92,7 +82,8 @@ public:
         return Iterator( nullptr , _tree);
     }
     
-    
+    HTMLAttribute getAttributeByName( const std::string &name) const noexcept;
+    HTMLAttribute getAttribute( const std::string &key) const noexcept;
     
     myhtml_tree_node_t* _node;
     myhtml_tree_t* _tree;

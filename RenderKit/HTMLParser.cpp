@@ -16,20 +16,6 @@
 
 #include "HTMLParser.hpp"
 
-
-
-
-static int is_empty(const char *s)
-{
-    while (*s != '\0') {
-        if (!isspace(*s))
-            return 0;
-        s++;
-    }
-    return 1;
-}
-
-
 HTMLParser::HTMLParser():
 _renderNode(nullptr)
 {

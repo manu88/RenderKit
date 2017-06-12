@@ -85,18 +85,21 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
 {
     myhtml_tree_node_t* htmlNode = node._node;
     HTMLBlockElement block;
+    
     assert(parent);
     assert(modest);
     assert(htmlNode);
 
     printf(" %s" , node.getTagName().c_str());
-    
-    
-    const myhtml_tree_attr_t *attr_style = node.getAttributeByName("style");
 
-    if(attr_style)
+    
+    HTMLAttribute attr_style = node.getAttributeByName("style");
+
+    if(attr_style.isValid())
     {
-        const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,modest->mycss_entry->declaration, attr_style);
+        const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,
+                                                                           modest->mycss_entry->declaration,
+                                                                           attr_style._attr);
         
         const mycss_declaration_entry_t* next = dec_entry;
         while (next)
@@ -105,13 +108,10 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
             if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
             {
                 block.size.width = parseBlockWidth(next);
-                printf("Width %i \n" , block.size.width );
-   
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_HEIGHT)
             {
                 block.size.height = parseBlockHeight(next);
-                printf("height %i \n" , block.size.height );
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
             {
@@ -122,9 +122,7 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
                 const GXColor col =  parseBackgroundColor(next);
                 
                 block.backgroundColor = col;
-                printf("GXColor = %f %f %f %f \n" , col.r , col.g , col.b  ,col.a );
-
-            }//
+            }
             else
             {
                 printf("Unknown prop  %x\n" , next->type);
@@ -132,22 +130,18 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
             }
             next = next->next;
         }
-        
     }
 
-    
     for ( const auto &iter : node )
     {
-        
         assert(iter._node && iter._tree);
 
         const std::string text = iter.getText();
         
         if( !text.empty() && !is_empty(text.c_str()))
         {
-            printf("Text = '%s'\n" , text.c_str());
+            block.text = text;
         }
-        
 
     }
 
@@ -157,6 +151,7 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
 void HTMLRenderer::node_serialization( modest* modest, modest_render_tree_node_t* node )
 {
 
+    
     modest_render_tree_node_t* n = node->parent;
     while (n)
     {
@@ -171,7 +166,21 @@ void HTMLRenderer::node_serialization( modest* modest, modest_render_tree_node_t
             printf("block");
             HTMLNode htmlNode(node->html_node , modest->myhtml_tree );
             
-            addChild( modest, htmlNode , node->parent);
+            
+            HTMLBlockElement block  = addChild( modest, htmlNode , node->parent);
+            if( !block.text.empty())
+            {
+                printf(" text '%s' ",block.text.c_str() );
+            }
+            if( block.backgroundColor != GXColorInvalid)
+            {
+                printf(" backColor %f %f %f %f" ,
+                       block.backgroundColor.r , block.backgroundColor.g , block.backgroundColor.b , block.backgroundColor.a );
+            }
+            if( block.size != GXSizeInvalid)
+            {
+                printf(" size %i %i" , block.size.width , block.size.height);
+            }
             break;
         }
         case MODEST_RENDER_TREE_NODE_TYPE_VIEWPORT:
@@ -226,11 +235,11 @@ float  HTMLRenderer::parseBlockWidth( const mycss_declaration_entry_t* node)
     
     if( node->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
     {
-        printf(" in pixels ");
+        //printf(" in pixels ");
     }
     else if( node->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
     {
-        printf(" in percents ");
+        //printf(" in percents ");
     }
     
     return parseFloatIntAttribute(node);
@@ -242,11 +251,11 @@ float HTMLRenderer::parseBlockHeight( const mycss_declaration_entry_t* node)
     
     if( node->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
     {
-        printf(" in pixels ");
+        //printf(" in pixels ");
     }
     else if( node->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
     {
-        printf(" in percents ");
+        //printf(" in percents ");
         
     }
     

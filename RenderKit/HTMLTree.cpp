@@ -35,11 +35,7 @@ std::string HTMLNode::getText() const noexcept
     return std::string();
 }
 
-const myhtml_tree_attr_t* HTMLNode::getAttributeByName( const std::string &name) const noexcept
-{
-    assert(_node);
-    return myhtml_attribute_by_key( _node, name.c_str(), name.size());
-}
+
 
 const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const myhtml_tree_attr_t * attribute) const noexcept
 {
@@ -107,4 +103,30 @@ bool HTMLTree::parseContent( const char* buf , size_t len)
         return true;
     }
     return false;
+}
+
+HTMLAttribute HTMLNode::getAttributeByName( const std::string &name) const noexcept
+{
+    assert(_node);
+    return HTMLAttribute( myhtml_attribute_by_key( _node, name.c_str(), name.size()) );
+}
+
+
+HTMLAttribute HTMLNode::getAttribute( const std::string &key) const noexcept
+{
+    HTMLAttribute attr(nullptr);
+    
+    myhtml_tree_attr_t * at = myhtml_node_attribute_first( _node );
+    
+    while (at)
+    {
+        const char* k = myhtml_attribute_key(at, NULL);
+        if( strcmp(k, key.c_str()) == 0)
+        {
+            attr._attr = at;
+            return attr;
+        }
+    }
+    
+    return attr;
 }
