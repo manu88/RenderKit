@@ -144,6 +144,15 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
         }
 
     }
+    
+    HTMLAttribute imgAttr = node.getAttributeByName("src");
+    
+    if( imgAttr.isValid())
+    {
+        const char* imgSrc = imgAttr.getValue();
+        assert(imgSrc);
+        printf("Img res = '%s' \n" , imgSrc);
+    }
 
     return block;
 }

@@ -9,7 +9,7 @@
 #include "WebView.hpp"
 #include "HTMLParser.hpp"
 #include "FileSystem.hpp"
-
+#include "HTMLRenderer.hpp"
 WebView::WebView():
 _parser(nullptr)
 {
@@ -40,7 +40,23 @@ bool WebView::openFile( const std::string &file)
 
     
     
-    const bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
+    bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
     
+    if( ret)
+    {
+        if( !_parser->render())
+        {
+            ret = false;
+        }
+        
+    }
     return ret;
+}
+
+void WebView::paint( GXContext* ctx , const GXRect& rect )
+{
+    printf("Paint webView \n");
+    HTMLRenderer renderer;
+    
+    assert(renderer.render( _parser));
 }

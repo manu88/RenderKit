@@ -25,6 +25,7 @@ public:
     
     bool openFile( const std::string &file);
 private:
+    void paint( GXContext*  , const GXRect& ) override;
     
     HTMLParser *_parser;
 };

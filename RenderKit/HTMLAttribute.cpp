@@ -16,3 +16,24 @@ std::string HTMLAttribute::getName() const noexcept
     
     return myhtml_attribute_key(_attr, nullptr);
 }
+
+const char* HTMLAttribute::getValue() const noexcept
+{
+    assert(_attr);
+    
+    return myhtml_attribute_value(_attr, nullptr);
+}
+
+size_t HTMLAttribute::getValueLength() const noexcept
+{
+    assert(_attr);
+    
+    size_t len = 0;
+    
+    if( myhtml_attribute_value(_attr, &len))
+    {
+        return len;
+    }
+    
+    return 0;
+}

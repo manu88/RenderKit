@@ -20,7 +20,6 @@ int main(int argc, const char * argv[])
     
     HTMLRenderer renderer;
     
-    printf("TEST RENDER \n");
     assert(renderer.render( &parser));
 
     return 0;

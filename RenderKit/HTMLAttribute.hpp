@@ -26,6 +26,8 @@ public:
     }
     
     std::string getName() const noexcept;
+    const char* getValue() const noexcept;
+    size_t getValueLength() const noexcept;
     
     myhtml_tree_attr_t * _attr;
 };
