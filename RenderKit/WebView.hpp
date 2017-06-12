@@ -11,6 +11,7 @@
 
 #include <string>
 #include "VKView.hpp"
+#include "HTMLRenderer.hpp"
 
 class HTMLParser;
 
@@ -28,6 +29,7 @@ private:
     void paint( GXContext*  , const GXRect& ) override;
     
     HTMLParser *_parser;
+    HTMLRenderer _renderer;
 };
 
 #endif /* WebView_hpp */

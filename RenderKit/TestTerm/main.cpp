@@ -20,7 +20,10 @@ int main(int argc, const char * argv[])
     
     HTMLRenderer renderer;
     
-    assert(renderer.render( &parser));
+    GXSize viewSize = GXSizeMake(1920, 1080);
+    assert(renderer.render( viewSize, &parser));
+    
+    renderer.printBlockTree();
 
     return 0;
 }

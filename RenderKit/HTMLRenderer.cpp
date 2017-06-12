@@ -31,7 +31,8 @@ static int is_empty(const char *s)
     return 1;
 }
 
-HTMLRenderer::HTMLRenderer()
+HTMLRenderer::HTMLRenderer():
+_root(nullptr)
 {
     
 }
@@ -42,24 +43,43 @@ HTMLRenderer::~HTMLRenderer()
 }
 
 
-bool HTMLRenderer::render(HTMLParser* parser )
+bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
 {
+    printf("Render size %i %i \n" , viewPortSize.width , viewPortSize.height);
     assert(parser);
     
     
     modest_render_tree_node_t* node = parser->_renderNode;
     size_t depth = 0;
     
+    
+    HTMLBlockElement* current = nullptr;
     while(node)
     {
+        if( current == nullptr)
+        {
+            current = new HTMLBlockElement;
+            current->_parent = nullptr;
+            _root = current;
+            _root->size = viewPortSize;
+            
+        }
+        if(node_serialization(current , parser->_modest, node ))
+        {
+            
+        }
         
-        node_serialization(parser->_modest, node );
         
-        printf("\n");
         if(node->child)
         {
             depth++;
             node = node->child;
+            
+            HTMLBlockElement* p = current;
+            current = new HTMLBlockElement;
+            current->size = p->size;
+            current->_parent = p;
+            p->_children.push_back(current);
         }
         else
         {
@@ -73,23 +93,76 @@ bool HTMLRenderer::render(HTMLParser* parser )
                 break;
             
             node = node->next;
+            
+            HTMLBlockElement* parent = current->_parent;
+            current = new HTMLBlockElement;
+            current->size = parent->size;
+            current->_parent = parent;
+            parent->_children.push_back(current);
         }
     }
+    
     
     
     return true;
 }
 
+void HTMLRenderer::printBlockTree() const
+{
+    printf("List Root \n");
+    assert(_root);
+    
+    for ( const HTMLBlockElement* c : _root->_children)
+    {
+        assert(c->_parent);
+        printf("\tGot child %s ", c->tag.c_str());
+        printf(" text '%s' ",c->text.c_str() );
+        printf(" size %i %i ",c->size.width , c->size.height );
+        printf("\n");
+        
+        for ( const HTMLBlockElement* cc : c->_children)
+        {
+            assert(cc->_parent);
+            printf("\t\tGot child %s ", cc->tag.c_str());
+            printf(" text '%s' ",cc->text.c_str() );
+            printf(" size %i %i ",cc->size.width , cc->size.height );
+            printf("\n");
+            
+            for ( const HTMLBlockElement* ccc : cc->_children)
+            {
+                assert(ccc->_parent);
+                printf("\t\t\tGot child %s", ccc->tag.c_str());
+                printf(" text '%s' ",ccc->text.c_str() );
+                printf(" size %i %i ",ccc->size.width , ccc->size.height );
+                printf("\n");
+                
+                for ( const HTMLBlockElement* cccc : ccc->_children)
+                {
+                    assert(cccc->_parent);
+                    printf("\t\t\t\tGot child %s", cccc->tag.c_str());
+                    printf(" text '%s' ",cccc->text.c_str() );
+                    printf(" size %i %i ",cccc->size.width , cccc->size.height );
+                    printf("\n");
+                    
+                }
+            }
+        }
+    }
+}
 
-HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent)
+
+bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent)
 {
     myhtml_tree_node_t* htmlNode = node._node;
-    HTMLBlockElement block;
+    
+    assert(block);
+    assert(block->_parent);
     
     assert(parent);
     assert(modest);
     assert(htmlNode);
 
+    block->tag = node.getTagName();
     printf(" %s" , node.getTagName().c_str());
 
     
@@ -107,11 +180,32 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
             
             if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
             {
-                block.size.width = parseBlockWidth(next);
+                block->size.width = parseBlockWidth(next);
+                if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
+                {
+                    //printf(" in pixels ");
+                }
+                else if( next->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
+                {
+                    //printf(" in percents ");
+                    block->size.width *= block->_parent->size.width * 0.01;
+                    
+                }
+                
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_HEIGHT)
             {
-                block.size.height = parseBlockHeight(next);
+                block->size.height = parseBlockHeight(next);
+                
+                if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
+                {
+                    //printf(" in pixels ");
+                }
+                else if( next->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
+                {
+                    //printf(" in percents ");
+                    block->size.height *= block->_parent->size.height * 0.01;
+                }
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
             {
@@ -121,7 +215,7 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
             {
                 const GXColor col =  parseBackgroundColor(next);
                 
-                block.backgroundColor = col;
+                block->backgroundColor = col;
             }
             else
             {
@@ -140,7 +234,7 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
         
         if( !text.empty() && !is_empty(text.c_str()))
         {
-            block.text = text;
+            block->text = text;
         }
 
     }
@@ -154,14 +248,17 @@ HTMLBlockElement HTMLRenderer::addChild(modest* modest, const HTMLNode& node , m
         printf("Img res = '%s' \n" , imgSrc);
     }
 
-    return block;
+    return true;
+    
 }
 
-void HTMLRenderer::node_serialization( modest* modest, modest_render_tree_node_t* node )
+bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node )
 {
-
+    assert(block);
     
     modest_render_tree_node_t* n = node->parent;
+    
+    printf("\n");
     while (n)
     {
         printf("\t");
@@ -176,19 +273,22 @@ void HTMLRenderer::node_serialization( modest* modest, modest_render_tree_node_t
             HTMLNode htmlNode(node->html_node , modest->myhtml_tree );
             
             
-            HTMLBlockElement block  = addChild( modest, htmlNode , node->parent);
-            if( !block.text.empty())
+            if(addChild(block, modest, htmlNode , node->parent))
             {
-                printf(" text '%s' ",block.text.c_str() );
-            }
-            if( block.backgroundColor != GXColorInvalid)
-            {
-                printf(" backColor %f %f %f %f" ,
-                       block.backgroundColor.r , block.backgroundColor.g , block.backgroundColor.b , block.backgroundColor.a );
-            }
-            if( block.size != GXSizeInvalid)
-            {
-                printf(" size %i %i" , block.size.width , block.size.height);
+            
+                if( !block->text.empty())
+                {
+                    printf(" text '%s' ",block->text.c_str() );
+                }
+                if( block->backgroundColor != GXColorInvalid)
+                {
+                    printf(" backColor %f %f %f %f" ,
+                           block->backgroundColor.r , block->backgroundColor.g , block->backgroundColor.b , block->backgroundColor.a );
+                }
+                if( block->size != GXSizeInvalid)
+                {
+                    printf(" size %i %i" , block->size.width , block->size.height);
+                }
             }
             break;
         }
@@ -207,6 +307,8 @@ void HTMLRenderer::node_serialization( modest* modest, modest_render_tree_node_t
     
     
     printf(">");
+    
+    return true;
 }
 
 
@@ -265,7 +367,6 @@ float HTMLRenderer::parseBlockHeight( const mycss_declaration_entry_t* node)
     else if( node->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
     {
         //printf(" in percents ");
-        
     }
     
     return parseFloatIntAttribute(node);

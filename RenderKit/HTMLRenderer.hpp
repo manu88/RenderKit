@@ -15,6 +15,8 @@
 
 #include "Element.hpp"
 #include "HTMLTree.hpp"
+#include "GXGeometry.hpp"
+
 
 class HTMLParser;
 class HTMLRenderer
@@ -23,11 +25,18 @@ public:
     HTMLRenderer();
     ~HTMLRenderer();
     
-    bool render(HTMLParser* );
+    bool render( const GXSize& viewPortSize, HTMLParser* );
+    
+    const HTMLBlockElement* getRoot() const noexcept
+    {
+        return _root;
+    }
+    
+    void printBlockTree() const;
 private:
     
-    HTMLBlockElement addChild(modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent);
-    void node_serialization(modest* modest, modest_render_tree_node_t* node );
+    bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent);
+    bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     
     GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
     
@@ -36,6 +45,8 @@ private:
     float parseBlockHeight( const mycss_declaration_entry_t* node);
     
     static std::unordered_map<const char* , const GXColor> ColorsNames;
+    
+    HTMLBlockElement* _root;
 };
 
 #endif /* HTMLRenderer_hpp */

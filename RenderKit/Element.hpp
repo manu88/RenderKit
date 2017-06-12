@@ -44,8 +44,8 @@ public:
     size(GXSizeMakeNull()),
     _parent(nullptr)
     {}
-    
-    
+
+    std::string tag;
     GXColor backgroundColor;
     GXSize  size;
     std::string text;
