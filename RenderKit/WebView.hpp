@@ -22,8 +22,7 @@ public:
     ~WebView();
     
     std::string getTitle() const;
-    
-    
+
     bool openFile( const std::string &file);
 private:
     void paint( GXContext*  , const GXRect& ) override;

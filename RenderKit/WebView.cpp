@@ -51,6 +51,8 @@ bool WebView::openFile( const std::string &file)
         else
         {
             assert(_renderer.render( getSize(), _parser));
+            
+            _renderer.printBlockTree();
         }
         
     }
@@ -59,16 +61,51 @@ bool WebView::openFile( const std::string &file)
 
 void WebView::paint( GXContext* ctx , const GXRect& rect )
 {
-    GXPoint p = GXPointMakeNull();
+
+    GXPoint p = GXPointMake(0, 0);
+    ctx->setFontId( ctx->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
+    ctx->setFontSize(20.f);
     
     printf("Paint webView \n");
     
     assert(_renderer.getRoot() );
     
-    auto drawBlock = [rect] (GXContext* context , const HTMLBlockElement* block , const GXPoint &p)
+    std::function<void(GXContext*, HTMLBlockElement*)> drawBlock
+    = [&drawBlock,rect , &p] (GXContext* context , HTMLBlockElement* block )
     {
+        
+        printf("Paint %s block at %i %i \n" ,block->tag.c_str() , p.x , p.y);
         context->beginPath();
-        context->addRect(GXRectMake(p, block->size));
+        
+        GXSize realSize = GXSizeInvalid;
+        int heightToAdd = 0;
+        
+        assert(block->size.width != -1 && block->size.wPercent == false);
+        realSize.width = (int) block->size.width;
+        realSize.height = (int) block->size.height;
+
+        if( block->size.height == -1 && !block->text.empty())
+        {
+            
+            const GXPoint textPoint = GXPointMake(p.x +10, p.y + 10);
+            const float textW = block->size.width-10;
+            GXSize min = GXSizeInvalid;
+            GXSize max = GXSizeInvalid;
+            context->getTextSize(textPoint, textW, block->text, min, max);
+            
+            realSize.height = max.height;
+            printf("Real Height for %s : %i\n" , block->tag.c_str() , realSize.height);
+            heightToAdd = realSize.height;
+        }
+        
+        assert( realSize.height != -1);
+        
+        if( !block->text.empty())
+        {
+            
+        }
+        context->addRect(GXRectMake(p, realSize));
+        /*
         if( block->tag == "img")
         {
             context->setFillColor(GXColors::Green);
@@ -84,7 +121,8 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
             }
             
         }
-        else
+         
+        else*/
         {
             context->setFillColor( block->backgroundColor);
         }
@@ -92,62 +130,45 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
         context->fill();
         if( !block->text.empty())
         {
-            context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
-            
-            
             context->setFillColor(GXColors::Black);
-            
-            context->setFontSize(20.f);
-            //ctx->setStrokeColor(GXColors::Green);
-            context->addText(GXPointMake(p.x, p.y + 10) , block->text);
+            const GXPoint textPoint = GXPointMake(p.x +10, p.y + 20);
+            const float textW = block->size.width-10;
+
+            context->addTextBox(textPoint, textW, block->text);
         }
+        
+        p.y += heightToAdd;
+        for (HTMLBlockElement* c : block->_children)
+        {
+            
+            if( c->floatProp == MyCSS_PROPERTY_FLOAT_UNSET)
+            {
+                
+            }
+            
+            drawBlock(context , c );
+            
+            
+            if( c->floatProp == MyCSS_PROPERTY_FLOAT_LEFT)
+            {
+                //p.x += c->size.width;
+            }
+            else if( c->floatProp == MyCSS_PROPERTY_FLOAT_RIGHT)
+            {
+                //p.x += c->size.width;
+            }
+            else
+            {
+                //p.y+=block->size.height;
+
+            }
+
+        }
+        
         
     };
     
-    for ( const HTMLBlockElement* c : _renderer.getRoot()->_children)
-    {
-        assert(c->_parent);
-        printf("\tGot child %s ", c->tag.c_str());
-        printf(" text '%s' ",c->text.c_str() );
-        printf(" size %i %i ",c->size.width , c->size.height );
-        printf("\n");
-        
-        for ( const HTMLBlockElement* cc : c->_children)
-        {
-            assert(cc->_parent);
-            printf("\t\tGot child %s ", cc->tag.c_str());
-            printf(" text '%s' ",cc->text.c_str() );
-            printf(" size %i %i ",cc->size.width , cc->size.height );
-            printf("\n");
-            
-            for ( const HTMLBlockElement* ccc : cc->_children)
-            {
-                assert(ccc->_parent);
-                printf("\t\t\tGot child %s", ccc->tag.c_str());
-                printf(" text '%s' ",ccc->text.c_str() );
-                printf(" size %i %i ",ccc->size.width , ccc->size.height );
-                printf("\n");
-                
-                drawBlock(ctx , ccc , p);
-                
-                
-                p.y += 40;
-                for ( const HTMLBlockElement* cccc : ccc->_children)
-                {
-                    assert(cccc->_parent);
-                    printf("\t\t\t\tGot child 4 %s", cccc->tag.c_str());
-                    printf(" text '%s' ",cccc->text.c_str() );
-                    printf(" size %i %i ",cccc->size.width , cccc->size.height );
-                    printf("\n");
-                    
-                    drawBlock(ctx , cccc , p);
-                    
-                 
-                    p.y+=cccc->size.height;
-                    
-                }
-            }
-        }
-    }
     
+    drawBlock(ctx , _renderer.getRoot() );
+
 }

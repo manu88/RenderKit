@@ -35,12 +35,7 @@ public:
 private:
     
     void parseHTML();
-    
-    
-    
-    
-    
-    
+
 };
 
 #endif /* HTMLParser_hpp */

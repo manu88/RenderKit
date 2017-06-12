@@ -27,7 +27,7 @@ public:
     
     bool render( const GXSize& viewPortSize, HTMLParser* );
     
-    const HTMLBlockElement* getRoot() const noexcept
+    HTMLBlockElement* getRoot() const noexcept
     {
         return _root;
     }
@@ -35,6 +35,7 @@ public:
     void printBlockTree() const;
 private:
     
+    bool computeTree();
     bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent);
     bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     

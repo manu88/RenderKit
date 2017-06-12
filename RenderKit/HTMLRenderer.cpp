@@ -16,7 +16,11 @@
 /*static*/ std::unordered_map<const char* , const GXColor> HTMLRenderer::ColorsNames =
 {
     { "red"  , GXColors::Red},
-    { "blue" , GXColors::Blue}
+    { "blue" , GXColors::Blue},
+    { "green" , GXColorMake( 0 , 0.5 , 0)},
+    { "yellow" , GXColorMake( 1.0 , 1. , 0)}
+    
+    
 };
 
 
@@ -61,9 +65,10 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             current = new HTMLBlockElement;
             current->_parent = nullptr;
             _root = current;
-            _root->size = viewPortSize;
+            
             
         }
+        
         if(node_serialization(current , parser->_modest, node ))
         {
             
@@ -75,9 +80,15 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             depth++;
             node = node->child;
             
+            const char *tag = myhtml_tag_name_by_id( parser->_modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
+            if( strcmp(tag, "body") == 0 || strcmp(tag, "html") == 0)
+            {
+                node = node->child;
+            }
+            
             HTMLBlockElement* p = current;
             current = new HTMLBlockElement;
-            current->size = p->size;
+            //current->size = p->size;
             current->_parent = p;
             p->_children.push_back(current);
         }
@@ -96,14 +107,61 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             
             HTMLBlockElement* parent = current->_parent;
             current = new HTMLBlockElement;
-            current->size = parent->size;
+            //current->size = parent->size;
             current->_parent = parent;
             parent->_children.push_back(current);
         }
     }
     
     
+    _root->size = { (float)viewPortSize.width  , (float)viewPortSize.height , false , false};
     
+    
+    return computeTree();
+}
+
+bool HTMLRenderer::computeTree()
+{
+    assert(_root);
+    
+    printf("\nCompute Tree\n");
+    
+    std::function<void(HTMLBlockElement*) > computeBlock = [&computeBlock] (HTMLBlockElement* block)
+    {
+        if( block->size.width == -1)
+        {
+            block->size.width = block->_parent->size.width;
+            block->size.wPercent = block->_parent->size.wPercent;
+        }
+        
+        if( block->size.wPercent)
+        {
+            block->size.width *= block->_parent->size.width / 100.f;
+            block->size.wPercent = false;
+        }
+        
+        float maxHeight = -1;
+        for( HTMLBlockElement* c : block->_children)
+        {
+            computeBlock(c);
+            
+            if( c->size.height > maxHeight)
+            {
+                maxHeight =  c->size.height;
+            }
+        }
+        
+        if( block->size.height == -1)
+        {
+            //printf("Max Height = %f\n" , maxHeight);
+            block->size.height = maxHeight;
+            block->size.hPercent = false;
+        }
+    };
+    
+    assert(_root->size.width != -1 && _root->size.height != -1);
+    
+    computeBlock(_root);
     return true;
 }
 
@@ -112,42 +170,25 @@ void HTMLRenderer::printBlockTree() const
     printf("List Root \n");
     assert(_root);
     
-    for ( const HTMLBlockElement* c : _root->_children)
+    //int tab = 0;
+    std::function<void( const HTMLBlockElement* , int) > printBlock = [&printBlock] ( const HTMLBlockElement* block , int tab)
     {
-        assert(c->_parent);
-        printf("\tGot child %s ", c->tag.c_str());
-        printf(" text '%s' ",c->text.c_str() );
-        printf(" size %i %i ",c->size.width , c->size.height );
+        //assert(block->_parent);
+        for(int i = 0 ; i< tab ; i++)
+            printf("\t");
+        
+        printf("Got child %s ", block->tag.c_str());
+        printf("size %f %s %f %s ",block->size.width, block->size.wPercent?"%" : "px" , block->size.height , block->size.hPercent?"%" : "px");
         printf("\n");
         
-        for ( const HTMLBlockElement* cc : c->_children)
+        for ( const HTMLBlockElement* c : block->_children)
         {
-            assert(cc->_parent);
-            printf("\t\tGot child %s ", cc->tag.c_str());
-            printf(" text '%s' ",cc->text.c_str() );
-            printf(" size %i %i ",cc->size.width , cc->size.height );
-            printf("\n");
-            
-            for ( const HTMLBlockElement* ccc : cc->_children)
-            {
-                assert(ccc->_parent);
-                printf("\t\t\tGot child %s", ccc->tag.c_str());
-                printf(" text '%s' ",ccc->text.c_str() );
-                printf(" size %i %i ",ccc->size.width , ccc->size.height );
-                printf("\n");
-                
-                for ( const HTMLBlockElement* cccc : ccc->_children)
-                {
-                    assert(cccc->_parent);
-                    printf("\t\t\t\tGot child %s", cccc->tag.c_str());
-                    printf(" text '%s' ",cccc->text.c_str() );
-                    printf(" size %i %i ",cccc->size.width , cccc->size.height );
-                    printf("\n");
-                    
-                }
-            }
+            printBlock(c , tab+1);
         }
-    }
+        
+    };
+    
+    printBlock(_root , 0);
 }
 
 
@@ -185,11 +226,12 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
                 {
                     //printf(" in pixels ");
+                    block->size.wPercent = false;
                 }
                 else if( next->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
                 {
                     //printf(" in percents ");
-                    block->size.width *= block->_parent->size.width * 0.01;
+                    block->size.wPercent = true;
                     
                 }
                 
@@ -201,11 +243,13 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
                 {
                     //printf(" in pixels ");
+                    block->size.hPercent = false;
                 }
                 else if( next->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
                 {
                     //printf(" in percents ");
-                    block->size.height *= block->_parent->size.height * 0.01;
+                    block->size.hPercent = true;
+                    
                 }
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
@@ -217,6 +261,10 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 const GXColor col =  parseBackgroundColor(next);
                 
                 block->backgroundColor = col;
+            }
+            else if( next->type == MyCSS_PROPERTY_TYPE_FLOAT)
+            {
+                block->floatProp =(const mycss_property_float_t) next->value_type;
             }
             else
             {
@@ -281,16 +329,20 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
             
                 if( !block->text.empty())
                 {
-                    printf(" text '%s' ",block->text.c_str() );
+                    //printf(" text '%s' ",block->text.c_str() );
                 }
                 if( block->backgroundColor != GXColorInvalid)
                 {
                     printf(" backColor %f %f %f %f" ,
                            block->backgroundColor.r , block->backgroundColor.g , block->backgroundColor.b , block->backgroundColor.a );
                 }
-                if( block->size != GXSizeInvalid)
+                if( block->size != ESizeInvalid )
                 {
-                    printf(" size %i %i" , block->size.width , block->size.height);
+                    printf(" size %f %f" , block->size.width , block->size.height);
+                }
+                if(  block->size.height == -1  )
+                {
+                    printf("No size defined\n");
                 }
             }
             break;
