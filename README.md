@@ -5,3 +5,5 @@ Project testbed for HTML-CSS rendering/layout engine.
 - VisualKit : https://github.com/manu88/VisualKit
 - libGX : https://github.com/manu88/GX
 - libGroundBase-cpp : https://github.com/Fly-Lab/GroundBase-cpp
+- Duktape : http://duktape.org/
+- dukglue : https://github.com/Aloshi/dukglue
