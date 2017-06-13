@@ -47,6 +47,8 @@ bool WebView::openFile( const std::string &file)
         _parser = new HTMLParser();
     }
     
+    assert( _parser );
+    
     const std::string html = FileSystem::getFileText( file);
 
     bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
@@ -103,10 +105,14 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
 void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXPoint &pos )
 {
     
+    assert(block->_parent || block == _renderer.getRoot());
+    
+    GXPoint realPos = pos;
     context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
     context->setFontSize(20.f);
     
-    printf("Paint %s block at %i %i \n" ,block->tag.c_str() , pos.x , pos.y);
+    printf("Paint %s block at %i %i " ,block->tag.c_str() , realPos.x , realPos.y);
+    
     
     
     //GXSize realSize = GXSizeInvalid;
@@ -126,18 +132,33 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     
     assert( block->realSize.height != -1);
     
+    
+    if( block->floatProp == MyCSS_PROPERTY_FLOAT_RIGHT)
+    {
+        printf("Float right");
+        realPos.x = block->_parent->_xFloatRight - block->realSize.width;
+        block->_parent->_xFloatRight -= block->realSize.width;
+    }
+    
+    
     context->beginPath();
-    context->addRect(GXRectMake(pos, block->realSize));
+    printf(" Add rect %i %i %i %i " , realPos.x , realPos.y , block->realSize.width , block->realSize.height);
+    context->addRect(GXRectMake( realPos, block->realSize));
 
     context->setFillColor( block->backgroundColor);
 
     context->fill();
 
-    GXPoint cPos = pos;
+    printf("\n");
+    
+    GXPoint cPos = realPos;
     for (HTMLBlockElement* c : block->_children)
     {
         drawBlock(context , c , cPos );
-        cPos.y += c->realSize.height;
+        if( c->floatProp == MyCSS_PROPERTY_FLOAT_UNSET)
+        {
+            cPos.y += c->realSize.height;
+        }
     }
 
 }

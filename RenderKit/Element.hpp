@@ -72,6 +72,7 @@ public:
     
     myhtml_tree_node_t *_node;
     
+    int _xFloatRight;
     /* Defined by reflow/draw*/
     
     GXSize realSize;

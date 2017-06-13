@@ -162,6 +162,8 @@ bool HTMLRenderer::computeTree()
         {
             block->size.width *= block->_parent->size.width / 100.f;
             block->size.wPercent = false;
+            
+            block->_parent->_xFloatRight = block->_parent->size.width;
         }
         
         float maxHeight = -1;
@@ -202,7 +204,7 @@ void HTMLRenderer::printBlockTree() const
             printf("\t");
         
         printf("Got child (type %i) %s ", block->type , block->tag.c_str());
-        printf("size %f %s %f %s ",block->size.width, block->size.wPercent?"%" : "px" , block->size.height , block->size.hPercent?"%" : "px");
+        printf("size w=%f %s h=%f %s ",block->size.width, block->size.wPercent?"%" : "px" , block->size.height , block->size.hPercent?"%" : "px");
         printf("\n");
         
         for ( const HTMLBlockElement* c : block->_children)
