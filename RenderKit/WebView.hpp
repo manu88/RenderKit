@@ -23,10 +23,26 @@ public:
     
     std::string getTitle() const;
 
+    bool refresh();
     bool openFile( const std::string &file);
-private:
-    void paint( GXContext*  , const GXRect& ) override;
     
+    const std::string &getCurrentURL() const noexcept
+    {
+        return _currentURL;
+    }
+    
+private:
+    bool handleFocus() override
+    {
+        return true;
+    }
+    bool keyPressed(  const GXKey &key ) override;
+    
+    void paint( GXContext*  , const GXRect& ) override;
+    void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
+    
+    
+    std::string _currentURL;
     HTMLParser *_parser;
     HTMLRenderer _renderer;
 };

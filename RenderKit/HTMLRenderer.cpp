@@ -15,10 +15,13 @@
 
 /*static*/ std::unordered_map<const char* , const GXColor> HTMLRenderer::ColorsNames =
 {
-    { "red"  , GXColors::Red},
-    { "blue" , GXColors::Blue},
-    { "green" , GXColorMake( 0 , 0.5 , 0)},
-    { "yellow" , GXColorMake( 1.0 , 1. , 0)}
+    { "red"      , GXColors::Red},
+    { "blue"     , GXColors::Blue},
+    { "green"    , GXColorMake( 0 , 0.5 , 0)},
+    { "yellow"   , GXColorMake( 1.0 , 1. , 0)},
+    { "magenta"  , GXColorMake(0.96, 0, 0.96)},
+    { "cyan"     , GXColorMake(0., 1, 1)}
+    //[UIColor colorWithRed:0.00f green:1.00f blue:1.00f alpha:1.0f];
     
     
 };
@@ -49,10 +52,20 @@ HTMLRenderer::~HTMLRenderer()
 
 bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
 {
-    printf("Render size %i %i \n" , viewPortSize.width , viewPortSize.height);
     assert(parser);
+    assert(viewPortSize.height > 0 && viewPortSize.width > 0);
+    
+    printf("Render size %i %i \n" , viewPortSize.width , viewPortSize.height);
     
     
+    if( _root)
+    {
+        delete _root;
+        _root = nullptr;
+    }
+    
+    
+    assert(_root == nullptr);
     modest_render_tree_node_t* node = parser->_renderNode;
     size_t depth = 0;
     
@@ -60,6 +73,19 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
     HTMLBlockElement* current = nullptr;
     while(node)
     {
+        /* We skip html & body nodes */
+        if( node->html_node)
+        {
+            const char *tag = myhtml_tag_name_by_id( parser->_modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
+            if(  strcmp(tag, "html") == 0 || strcmp(tag, "body") == 0)
+            {
+                node = node->child;
+                continue;
+            }
+        }
+        
+        /* **** **** **** **** **** **** **** **** **** **** */
+        
         if( current == nullptr)
         {
             current = new HTMLBlockElement;
@@ -80,11 +106,9 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             depth++;
             node = node->child;
             
-            const char *tag = myhtml_tag_name_by_id( parser->_modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
-            if( strcmp(tag, "body") == 0 || strcmp(tag, "html") == 0)
-            {
-                node = node->child;
-            }
+            
+            
+            //
             
             HTMLBlockElement* p = current;
             current = new HTMLBlockElement;
@@ -177,7 +201,7 @@ void HTMLRenderer::printBlockTree() const
         for(int i = 0 ; i< tab ; i++)
             printf("\t");
         
-        printf("Got child %s ", block->tag.c_str());
+        printf("Got child (type %i) %s ", block->type , block->tag.c_str());
         printf("size %f %s %f %s ",block->size.width, block->size.wPercent?"%" : "px" , block->size.height , block->size.hPercent?"%" : "px");
         printf("\n");
         
@@ -323,6 +347,7 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
             printf("block");
             HTMLNode htmlNode(node->html_node , modest->myhtml_tree );
             
+            block->type = HTMLBlockElement::Block;
             
             if(addChild(block, modest, htmlNode , node->parent))
             {
@@ -349,6 +374,8 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
         }
         case MODEST_RENDER_TREE_NODE_TYPE_VIEWPORT:
             printf("viewport");
+            block->type = HTMLBlockElement::Viewport;
+            
             break;
             
         case MODEST_RENDER_TREE_NODE_TYPE_ANONYMOUS:
@@ -437,8 +464,7 @@ GXColor HTMLRenderer::parseBackgroundColor( const mycss_declaration_entry_t* nod
     for(size_t i = 0; i < list->entries_length; i++)
     {
         mycss_values_background_t* bg = &list->entries[i];
-        
-        
+
         if(bg->color)
         {
             if( bg->color->value_type == MyCSS_PROPERTY_VALUE__COLOR)

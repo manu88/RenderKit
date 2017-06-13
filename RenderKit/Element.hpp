@@ -41,38 +41,25 @@ struct ESize
 
 static constexpr ESize ESizeInvalid = { -1.f , -1.f , false , false};
 
-
-
-class Element
+class HTMLBlockElement
 {
 public:
-    Element();
-    virtual ~Element();
     
-};
-
-class HTMLElement : public Element
-{
-public:
-    HTMLElement();
-    virtual ~HTMLElement()
-    {}
+    typedef enum
+    {
+        Unknown  = 0,
+        Viewport = 1,
+        Block    = 2,
+    } Type;
     
-    myhtml_tree_node_t *_node;
-};
-
-class HTMLBlockElement : public HTMLElement
-{
-public:
-    HTMLBlockElement():
-    backgroundColor(GXColorInvalid),
-    size( ESizeInvalid ),
-    floatProp( MyCSS_PROPERTY_FLOAT_UNSET ),
-    _parent(nullptr)
-    {}
     
+    HTMLBlockElement();
+    ~HTMLBlockElement();
     void reorder();
 
+    /* Parsed from HTML/CSS code*/
+    
+    Type type;
     std::string tag;
     GXColor backgroundColor;
     ESize  size;
@@ -82,6 +69,14 @@ public:
     
     std::vector<HTMLBlockElement*> _children;
     HTMLBlockElement *_parent;
+    
+    myhtml_tree_node_t *_node;
+    
+    /* Defined by reflow/draw*/
+    
+    GXSize realSize;
+    
+    
 };
 
 #endif /* Element_hpp */

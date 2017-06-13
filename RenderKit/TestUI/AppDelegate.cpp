@@ -13,12 +13,12 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
 {
     app->setName("WebKit");
     
+    app->setKeyboardResponder( &_webView);
     app->pushView(&_webView);
     
     if(_webView.openFile("/Users/manueldeneu/Documents/projets/dev/RenderKit/test2.html"))
     {
-        app->setName(_webView.getTitle());
-        app->getCurrentView()->setNeedsRedraw();
+        
     }
 }
 

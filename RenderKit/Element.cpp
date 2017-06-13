@@ -10,20 +10,27 @@
 
 
 
-
-Element::Element()
+HTMLBlockElement::HTMLBlockElement():
+type(Unknown),
+backgroundColor(GXColorInvalid),
+size( ESizeInvalid ),
+floatProp( MyCSS_PROPERTY_FLOAT_UNSET ),
+_parent(nullptr),
+realSize(GXSizeInvalid)
 {
     
 }
 
-Element::~Element()
-{
-    
-}
 
-HTMLElement::HTMLElement():
-_node(nullptr)
+HTMLBlockElement::~HTMLBlockElement()
 {
+    std::for_each(_children.begin(), _children.end(), [](HTMLBlockElement* block)
+                  {
+                      delete block;
+                      block = nullptr;
+                  });
+    
+    _children.clear();
     
 }
 

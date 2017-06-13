@@ -6,6 +6,7 @@
 //  Copyright © 2017 Unlimited Development. All rights reserved.
 //
 
+#include "CLApplication.hpp"
 #include "WebView.hpp"
 #include "HTMLParser.hpp"
 #include "FileSystem.hpp"
@@ -29,6 +30,16 @@ std::string WebView::getTitle() const
     return _parser->getTitle();
 }
 
+
+bool WebView::refresh()
+{
+    if( _currentURL.empty())
+        return false;
+    
+    
+    return openFile(getCurrentURL());
+}
+
 bool WebView::openFile( const std::string &file)
 {
     if( !_parser)
@@ -38,8 +49,6 @@ bool WebView::openFile( const std::string &file)
     
     const std::string html = FileSystem::getFileText( file);
 
-    
-    
     bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
     
     if( ret)
@@ -50,125 +59,86 @@ bool WebView::openFile( const std::string &file)
         }
         else
         {
+            // we're ok
+            printf("Parse OK \n");
+            
             assert(_renderer.render( getSize(), _parser));
             
+            _currentURL = file;
             _renderer.printBlockTree();
+            
+            CLApplication::instance()->setName( getTitle() );
+            setNeedsRedraw();
         }
         
     }
     return ret;
 }
 
+bool WebView::keyPressed(  const GXKey &key )
+{
+    if (key.key == GXKey_R)
+    {
+        printf("Start Refresh \n");
+        refresh();
+        return true;
+    }
+    
+    return false;
+}
+
 void WebView::paint( GXContext* ctx , const GXRect& rect )
 {
-
-    GXPoint p = GXPointMake(0, 0);
-    ctx->setFontId( ctx->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
-    ctx->setFontSize(20.f);
-    
-    printf("Paint webView \n");
-    
     assert(_renderer.getRoot() );
     
-    std::function<void(GXContext*, HTMLBlockElement*)> drawBlock
-    = [&drawBlock,rect , &p] (GXContext* context , HTMLBlockElement* block )
-    {
-        
-        printf("Paint %s block at %i %i \n" ,block->tag.c_str() , p.x , p.y);
-        context->beginPath();
-        
-        GXSize realSize = GXSizeInvalid;
-        int heightToAdd = 0;
-        
-        assert(block->size.width != -1 && block->size.wPercent == false);
-        realSize.width = (int) block->size.width;
-        realSize.height = (int) block->size.height;
-
-        if( block->size.height == -1 && !block->text.empty())
-        {
-            
-            const GXPoint textPoint = GXPointMake(p.x +10, p.y + 10);
-            const float textW = block->size.width-10;
-            GXSize min = GXSizeInvalid;
-            GXSize max = GXSizeInvalid;
-            context->getTextSize(textPoint, textW, block->text, min, max);
-            
-            realSize.height = max.height;
-            printf("Real Height for %s : %i\n" , block->tag.c_str() , realSize.height);
-            heightToAdd = realSize.height;
-        }
-        
-        assert( realSize.height != -1);
-        
-        if( !block->text.empty())
-        {
-            
-        }
-        context->addRect(GXRectMake(p, realSize));
-        /*
-        if( block->tag == "img")
-        {
-            context->setFillColor(GXColors::Green);
-            printf("Draw image '%s' \n" ,block->src.c_str() );
-            const GXImageHandle img = context->createImage( "/Users/manueldeneu/Documents/projets/dev/RenderKit/" +block->src  , GXimageFlags_None );
-            
-            if( img != GXImageInvalid)
-            {
-                printf("Create image ok \n");
-                GXPaint imgPaint = context->imagePattern(GXPointMakeNull(), block->size, 0, img, 1.f);
-
-                context->setFillPainter( imgPaint);
-            }
-            
-        }
-         
-        else*/
-        {
-            context->setFillColor( block->backgroundColor);
-        }
-        
-        context->fill();
-        if( !block->text.empty())
-        {
-            context->setFillColor(GXColors::Black);
-            const GXPoint textPoint = GXPointMake(p.x +10, p.y + 20);
-            const float textW = block->size.width-10;
-
-            context->addTextBox(textPoint, textW, block->text);
-        }
-        
-        p.y += heightToAdd;
-        for (HTMLBlockElement* c : block->_children)
-        {
-            
-            if( c->floatProp == MyCSS_PROPERTY_FLOAT_UNSET)
-            {
-                
-            }
-            
-            drawBlock(context , c );
-            
-            
-            if( c->floatProp == MyCSS_PROPERTY_FLOAT_LEFT)
-            {
-                //p.x += c->size.width;
-            }
-            else if( c->floatProp == MyCSS_PROPERTY_FLOAT_RIGHT)
-            {
-                //p.x += c->size.width;
-            }
-            else
-            {
-                //p.y+=block->size.height;
-
-            }
-
-        }
-        
-        
-    };
+    GXPoint p = GXPointMake(0, 0);
     
-    
-    drawBlock(ctx , _renderer.getRoot() );
+    printf("Paint webView \n");
+
+    drawBlock(ctx , _renderer.getRoot(), p );
 
 }
+
+
+void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXPoint &pos )
+{
+    
+    context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
+    context->setFontSize(20.f);
+    
+    printf("Paint %s block at %i %i \n" ,block->tag.c_str() , pos.x , pos.y);
+    
+    
+    //GXSize realSize = GXSizeInvalid;
+
+    assert(block->size.width != -1 && block->size.wPercent == false);
+    
+    block->realSize.width = (int) block->size.width;
+    block->realSize.height = (int) block->size.height;
+
+    if( block->realSize.height == -1)
+        return;
+    
+    if( block->size.hPercent)
+    {
+        block->realSize.height *= block->_parent->size.height * 0.01f;
+    }
+    
+    assert( block->realSize.height != -1);
+    
+    context->beginPath();
+    context->addRect(GXRectMake(pos, block->realSize));
+
+    context->setFillColor( block->backgroundColor);
+
+    context->fill();
+
+    GXPoint cPos = pos;
+    for (HTMLBlockElement* c : block->_children)
+    {
+        drawBlock(context , c , cPos );
+        cPos.y += c->realSize.height;
+    }
+
+}
+
