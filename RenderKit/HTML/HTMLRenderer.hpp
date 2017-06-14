@@ -12,11 +12,12 @@
 #include <modest/modest.h>
 
 #include "Element.hpp"
-#include "HTMLTree.hpp"
+//#include "HTMLTree.hpp"
 #include "GXGeometry.hpp"
 
-
+class HTMLNode;
 class HTMLParser;
+
 class HTMLRenderer
 {
 public:

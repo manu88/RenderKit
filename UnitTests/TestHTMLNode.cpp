@@ -7,3 +7,22 @@
 //
 
 #include "TestHTMLNode.hpp"
+
+#include "HTMLNode.hpp"
+
+bool TestHTMLNode::start()
+{
+    HTMLNode node(nullptr , nullptr);
+    assert(!node.isValid());
+    assert(node._modest == nullptr);
+    assert(node._node == nullptr);
+    
+    
+    
+    for (const HTMLNode& c : node )
+    {
+        assert(false);
+    }
+    
+    return true;
+}

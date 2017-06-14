@@ -16,10 +16,7 @@
 #include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
 #include "HTMLParser.hpp"
-
-
-
-
+#include "HTMLNode.hpp"
 
 static int is_empty(const char *s)
 {
@@ -80,8 +77,6 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             current = new HTMLBlockElement;
             current->_parent = nullptr;
             _root = current;
-            
-            
         }
         
         if(node_serialization(current , parser->_modest, node ))
@@ -253,24 +248,19 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
         const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,
                                                                            modest->mycss_entry->declaration,
                                                                            attr_style);
-        
         const mycss_declaration_entry_t* next = dec_entry;
         while (next)
         {
-
             if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
             {
                 block->size.width =  CSSEntry::parseBlockWidth(next);
                 if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
                 {
-                    //printf(" in pixels ");
                     block->size.wPercent = false;
                 }
                 else if( next->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
                 {
-                    //printf(" in percents ");
                     block->size.wPercent = true;
-                    
                 }
                 
             }
@@ -280,12 +270,10 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 
                 if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
                 {
-                    //printf(" in pixels ");
                     block->size.hPercent = false;
                 }
                 else if( next->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
                 {
-                    //printf(" in percents ");
                     block->size.hPercent = true;
                     
                 }
@@ -321,7 +309,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     
     /* END Style ATTR */
 
-    for ( const auto &iter : node )
+    for ( const HTMLNode& iter : node )
     {
         assert(iter._node && iter._modest->myhtml_tree);
 

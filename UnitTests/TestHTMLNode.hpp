@@ -9,6 +9,15 @@
 #ifndef TestHTMLNode_hpp
 #define TestHTMLNode_hpp
 
-#include <stdio.h>
+#include "UnitTestClass.hpp"
+
+
+
+class TestHTMLNode : public UnitTestClass
+{
+public:
+    TestHTMLNode():UnitTestClass("TestHTMLNode"){}
+    bool start() override;
+};
 
 #endif /* TestHTMLNode_hpp */

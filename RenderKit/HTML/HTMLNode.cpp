@@ -7,7 +7,7 @@
 //
 
 #include <assert.h>
-#include "HTMLTree.hpp"
+#include "HTMLNode.hpp"
 
 
 std::string HTMLNode::getTagName() const noexcept

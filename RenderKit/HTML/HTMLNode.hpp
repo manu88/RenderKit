@@ -6,8 +6,8 @@
 //  Copyright © 2017 Unlimited Development. All rights reserved.
 //
 
-#ifndef HTMLTree_hpp
-#define HTMLTree_hpp
+#ifndef HTMLNode_hpp
+#define HTMLNode_hpp
 
 #include <string>
 #include <iterator>
@@ -17,7 +17,7 @@
 
 #include <modest/myosi.h> // modest_t
 #include <modest/modest.h> // modest
-#include "HTMLTree.hpp"
+
 #include "HTMLAttribute.hpp"
 
 class HTMLNode
@@ -100,4 +100,4 @@ public:
 };
 
 
-#endif /* HTMLTree_hpp */
+#endif /* HTMLNode_hpp */
