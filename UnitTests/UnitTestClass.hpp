@@ -9,6 +9,8 @@
 #ifndef UnitTestClass_hpp
 #define UnitTestClass_hpp
 
+
+#include <assert.h>
 #include <stdio.h>
 #include <vector>
 #include <string>

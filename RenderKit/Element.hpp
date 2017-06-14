@@ -59,6 +59,8 @@ public:
 
     /* Parsed from HTML/CSS code*/
     
+    myhtml_tree_node_t *_node;
+    
     Type type;
     std::string tag;
     GXColor backgroundColor;
@@ -71,7 +73,7 @@ public:
     std::vector<HTMLBlockElement*> _children;
     HTMLBlockElement *_parent;
     
-    myhtml_tree_node_t *_node;
+    
     
     int _xFloatRight;
     /* Defined by reflow/draw*/

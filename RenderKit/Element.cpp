@@ -11,6 +11,7 @@
 
 
 HTMLBlockElement::HTMLBlockElement():
+_node(nullptr),
 type(Unknown),
 backgroundColor(GXColorInvalid),
 drawFrame(false),
