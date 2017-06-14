@@ -108,7 +108,6 @@
 		59363FD71EEC439E00A96EC8 /* avl_tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDCC1EDF3C9F00E59956 /* avl_tree.c */; };
 		59363FD81EEC439E00A96EC8 /* type.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD8F1EDF3C9F00E59956 /* type.c */; };
 		59363FD91EEC439E00A96EC8 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
-		59363FDA1EEC439E00A96EC8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59363F681EEC417900A96EC8 /* main.cpp */; };
 		59363FDB1EEC439E00A96EC8 /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA01EDF3C9F00E59956 /* serialization.c */; };
 		59363FDC1EEC439E00A96EC8 /* mcsync.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDDB1EDF3C9F00E59956 /* mcsync.c */; };
 		59363FDD1EEC439E00A96EC8 /* myosi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF2C1EDF3C9F00E59956 /* myosi.c */; };
@@ -148,10 +147,8 @@
 		59363FFF1EEC439E00A96EC8 /* tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA71EDF3C9F00E59956 /* tree.c */; };
 		593640001EEC439E00A96EC8 /* color_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE811EDF3C9F00E59956 /* color_parser.c */; };
 		593640021EEC439E00A96EC8 /* libVisualKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59363F621EEC412A00A96EC8 /* libVisualKit.dylib */; };
-		5936400A1EEC43C900A96EC8 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 593640081EEC43C900A96EC8 /* AppDelegate.cpp */; };
 		5936400E1EEC442100A96EC8 /* WebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936400B1EEC442100A96EC8 /* WebView.cpp */; };
 		593640111EEC449100A96EC8 /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
-		595B965E1EED3B1B00B366CC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965D1EED3B1B00B366CC /* main.cpp */; };
 		595B96611EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		595B96621EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		596D48E31EF137300011158B /* CSSEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48DF1EF137300011158B /* CSSEntry.cpp */; };
@@ -168,6 +165,9 @@
 		596D48F91EF137500011158B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48EE1EF137500011158B /* HTMLRenderer.cpp */; };
 		596D48FA1EF137500011158B /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48F01EF137500011158B /* HTMLTree.cpp */; };
 		596D48FB1EF137500011158B /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48F01EF137500011158B /* HTMLTree.cpp */; };
+		596D48FE1EF137940011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48FD1EF137940011158B /* main.cpp */; };
+		596D49031EF137A00011158B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49001EF137A00011158B /* AppDelegate.cpp */; };
+		596D49041EF137A00011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49021EF137A00011158B /* main.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -357,14 +357,10 @@
 
 /* Begin PBXFileReference section */
 		59363F5A1EEC412A00A96EC8 /* VisualKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VisualKit.xcodeproj; path = ../VisualKit/VisualKit.xcodeproj; sourceTree = "<group>"; };
-		59363F681EEC417900A96EC8 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = RenderKit/TestUI/main.cpp; sourceTree = "<group>"; };
 		593640071EEC439E00A96EC8 /* TestUI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestUI; sourceTree = BUILT_PRODUCTS_DIR; };
-		593640081EEC43C900A96EC8 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = RenderKit/TestUI/AppDelegate.cpp; sourceTree = "<group>"; };
-		593640091EEC43C900A96EC8 /* AppDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = AppDelegate.hpp; path = RenderKit/TestUI/AppDelegate.hpp; sourceTree = "<group>"; };
 		5936400B1EEC442100A96EC8 /* WebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebView.cpp; sourceTree = "<group>"; };
 		5936400C1EEC442100A96EC8 /* WebView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebView.hpp; sourceTree = "<group>"; };
 		593640101EEC449100A96EC8 /* libGX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGX.dylib; path = "../../../../Library/Developer/Xcode/DerivedData/RenderKit-gfmvyzpnrlyrwvfndrqyuxwzhrzn/Build/Products/Debug/libGX.dylib"; sourceTree = "<group>"; };
-		595B965D1EED3B1B00B366CC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		595B965F1EED40F500B366CC /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		595B96601EED40F500B366CC /* Element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
 		596D48DE1EF137300011158B /* CSSColors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSColors.hpp; sourceTree = "<group>"; };
@@ -382,6 +378,10 @@
 		596D48EF1EF137500011158B /* HTMLRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLRenderer.hpp; sourceTree = "<group>"; };
 		596D48F01EF137500011158B /* HTMLTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLTree.cpp; sourceTree = "<group>"; };
 		596D48F11EF137500011158B /* HTMLTree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLTree.hpp; sourceTree = "<group>"; };
+		596D48FD1EF137940011158B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		596D49001EF137A00011158B /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		596D49011EF137A00011158B /* AppDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
+		596D49021EF137A00011158B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -895,31 +895,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		59363F711EEC438A00A96EC8 /* TestUI */ = {
-			isa = PBXGroup;
-			children = (
-				59363F681EEC417900A96EC8 /* main.cpp */,
-				593640081EEC43C900A96EC8 /* AppDelegate.cpp */,
-				593640091EEC43C900A96EC8 /* AppDelegate.hpp */,
-			);
-			name = TestUI;
-			sourceTree = "<group>";
-		};
 		5936400F1EEC449100A96EC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				593640101EEC449100A96EC8 /* libGX.dylib */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		595B965C1EED3B1B00B366CC /* TestTerm */ = {
-			isa = PBXGroup;
-			children = (
-				595B965D1EED3B1B00B366CC /* main.cpp */,
-			);
-			name = TestTerm;
-			path = RenderKit/TestTerm;
 			sourceTree = "<group>";
 		};
 		596D48DD1EF137300011158B /* CSS */ = {
@@ -951,6 +932,24 @@
 			path = HTML;
 			sourceTree = "<group>";
 		};
+		596D48FC1EF137940011158B /* TestTerm */ = {
+			isa = PBXGroup;
+			children = (
+				596D48FD1EF137940011158B /* main.cpp */,
+			);
+			path = TestTerm;
+			sourceTree = "<group>";
+		};
+		596D48FF1EF137A00011158B /* TestUI */ = {
+			isa = PBXGroup;
+			children = (
+				596D49001EF137A00011158B /* AppDelegate.cpp */,
+				596D49011EF137A00011158B /* AppDelegate.hpp */,
+				596D49021EF137A00011158B /* main.cpp */,
+			);
+			path = TestUI;
+			sourceTree = "<group>";
+		};
 		5978CCAF1EDF3BC900E59956 = {
 			isa = PBXGroup;
 			children = (
@@ -959,8 +958,8 @@
 				5978CCC21EDF3C9F00E59956 /* include */,
 				5978CD801EDF3C9F00E59956 /* source */,
 				5978CCBA1EDF3BC900E59956 /* RenderKit */,
-				595B965C1EED3B1B00B366CC /* TestTerm */,
-				59363F711EEC438A00A96EC8 /* TestUI */,
+				596D48FC1EF137940011158B /* TestTerm */,
+				596D48FF1EF137A00011158B /* TestUI */,
 				5978CCB91EDF3BC900E59956 /* Products */,
 				5936400F1EEC449100A96EC8 /* Frameworks */,
 			);
@@ -2016,6 +2015,7 @@
 				59363FB11EEC439E00A96EC8 /* stack.c in Sources */,
 				59363FB21EEC439E00A96EC8 /* parser.c in Sources */,
 				59363FB31EEC439E00A96EC8 /* mcobject.c in Sources */,
+				596D49041EF137A00011158B /* main.cpp in Sources */,
 				596D48FB1EF137500011158B /* HTMLTree.cpp in Sources */,
 				59363FB41EEC439E00A96EC8 /* serialization.c in Sources */,
 				59363FB51EEC439E00A96EC8 /* parser.c in Sources */,
@@ -2057,7 +2057,6 @@
 				596D48F51EF137500011158B /* HTMLContext.cpp in Sources */,
 				59363FD81EEC439E00A96EC8 /* type.c in Sources */,
 				59363FD91EEC439E00A96EC8 /* match.c in Sources */,
-				59363FDA1EEC439E00A96EC8 /* main.cpp in Sources */,
 				59363FDB1EEC439E00A96EC8 /* serialization.c in Sources */,
 				59363FDC1EEC439E00A96EC8 /* mcsync.c in Sources */,
 				59363FDD1EEC439E00A96EC8 /* myosi.c in Sources */,
@@ -2079,8 +2078,8 @@
 				59363FEC1EEC439E00A96EC8 /* mystring.c in Sources */,
 				59363FED1EEC439E00A96EC8 /* glue.c in Sources */,
 				59363FEE1EEC439E00A96EC8 /* token.c in Sources */,
+				596D49031EF137A00011158B /* AppDelegate.cpp in Sources */,
 				59363FEF1EEC439E00A96EC8 /* destroy.c in Sources */,
-				5936400A1EEC43C900A96EC8 /* AppDelegate.cpp in Sources */,
 				59363FF01EEC439E00A96EC8 /* finder.c in Sources */,
 				59363FF11EEC439E00A96EC8 /* scheme.c in Sources */,
 				59363FF21EEC439E00A96EC8 /* thread_queue.c in Sources */,
@@ -2215,6 +2214,7 @@
 				5978CF7B1EDF3C9F00E59956 /* mcsync.c in Sources */,
 				5978D03C1EDF3CA000E59956 /* myosi.c in Sources */,
 				5978CFBB1EDF3C9F00E59956 /* function.c in Sources */,
+				596D48FE1EF137940011158B /* main.cpp in Sources */,
 				5978D0421EDF3CA000E59956 /* parser.c in Sources */,
 				5978CFC11EDF3C9F00E59956 /* list.c in Sources */,
 				5978CF871EDF3C9F00E59956 /* convert.c in Sources */,
@@ -2234,7 +2234,6 @@
 				596D48FA1EF137500011158B /* HTMLTree.cpp in Sources */,
 				5978CFDD1EDF3C9F00E59956 /* destroy.c in Sources */,
 				5978CF521EDF3C9F00E59956 /* finder.c in Sources */,
-				595B965E1EED3B1B00B366CC /* main.cpp in Sources */,
 				596D48E31EF137300011158B /* CSSEntry.cpp in Sources */,
 				5978D04A1EDF3CA000E59956 /* scheme.c in Sources */,
 				5978CF6F1EDF3C9F00E59956 /* thread_queue.c in Sources */,
