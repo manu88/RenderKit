@@ -11,14 +11,31 @@
 
 
 #include <mycss/declaration/myosi.h>
+#include <GXColor.hpp>
 
 class CSSDeclaration
 {
 public:
-    CSSDeclaration( mycss_declaration_entry_t *decl );
+    CSSDeclaration( const mycss_declaration_entry_t *decl );
     ~CSSDeclaration();
     
-    mycss_declaration_entry_t *_decl;
+    
+    
+    mycss_property_type_t getType() const noexcept;
+    
+    GXColor parseBackgroundColor() const noexcept;
+    float parseBlockWidth() const noexcept;
+    float parseBlockHeight() const noexcept;
+    
+    
+    const mycss_declaration_entry_t *_decl;
+    
+    static GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
+    
+private:
+    static float parseFloatIntAttribute( const  mycss_declaration_entry_t* node ) noexcept;
+    static float parseBlockWidth( const mycss_declaration_entry_t* node) noexcept;
+    static float parseBlockHeight( const mycss_declaration_entry_t* node) noexcept;
 };
 
 #endif /* CSSDeclaration_hpp */

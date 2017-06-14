@@ -268,13 +268,16 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     if(attr_style.isValid())
     {
         
-        const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8, attr_style);
-        const mycss_declaration_entry_t* next = dec_entry;
+        const CSSDeclaration dec_entry = node.parseDeclaration(MyENCODING_UTF_8, attr_style);
+        
+        const mycss_declaration_entry_t* next = dec_entry._decl;
         while (next)
         {
-            if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
+            const CSSDeclaration d(next);
+            
+            if( d.getType() == MyCSS_PROPERTY_TYPE_WIDTH)
             {
-                block->size.width =  CSSEntry::parseBlockWidth(next);
+                block->size.width =  d.parseBlockWidth();
                 if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
                 {
                     block->size.wPercent = false;
@@ -285,9 +288,9 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 }
                 
             }
-            else if( next->type == MyCSS_PROPERTY_TYPE_HEIGHT)
+            else if( d.getType() == MyCSS_PROPERTY_TYPE_HEIGHT)
             {
-                block->size.height = CSSEntry::parseBlockHeight(next);
+                block->size.height = d.parseBlockHeight();
                 
                 if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
                 {
@@ -299,22 +302,22 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                     
                 }
             }
-            else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
+            else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
             {
                 assert(false); // todo
             }
-            else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND)
+            else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND)
             {
-                const GXColor col =  CSSEntry::parseBackgroundColor(next);
+                const GXColor col =  d.parseBackgroundColor();
                 
                 block->backgroundColor = col;
             }
-            else if (next->type == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
+            else if ( d.getType() == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
             {
                 //mycss_values_border_t
                 block->drawFrame = true;
             }
-            else if( next->type == MyCSS_PROPERTY_TYPE_FLOAT)
+            else if( d.getType() == MyCSS_PROPERTY_TYPE_FLOAT)
             {
                 block->floatProp =(const mycss_property_float_t) next->value_type;
             }

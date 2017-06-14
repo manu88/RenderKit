@@ -12,28 +12,30 @@
 #include <string>
 #include <iterator>
 
-#include <myhtml/myhtml.h>
-//#include <mycss/mycss.h>
-
 #include <modest/myosi.h> // modest_t
 
 #include "CSSDeclaration.hpp"
 #include "HTMLAttribute.hpp"
 
-class HTMLNode
+struct HTMLNodeBase
+{
+    modest_t* _modest;
+    myhtml_tree_node_t* _node;
+};
+
+class HTMLNode : public HTMLNodeBase
 {
 public:
     
     
-    class Iterator : public std::iterator<std::forward_iterator_tag, HTMLNode>
+    class Iterator : public std::iterator<std::forward_iterator_tag, HTMLNode> , public HTMLNodeBase
     {
         friend class HTMLNode;
     private:
-        Iterator( myhtml_tree_node_t *node , modest_t* modest) :
-        _modest(modest),
-        _node(node)
+        Iterator( myhtml_tree_node_t *node , modest_t* modest)
         {
-            
+            _modest = modest;
+            _node = node;
         }
     public:
         bool operator!=( const Iterator& rhs)
@@ -56,27 +58,21 @@ public:
         {
             return HTMLNode( _node , _modest);
         };
-        
-        modest_t* _modest;
-        myhtml_tree_node_t *_node;
+
     };
     
     
-    HTMLNode(myhtml_tree_node_t* node , modest_t* modest):
-    _modest(modest),
-    _node(node)
-    {}
+    HTMLNode(myhtml_tree_node_t* node , modest_t* modest)
+    {
+        _modest = modest;
+        _node = node;
+    }
 
     std::string getTagName() const noexcept;
     
     bool hasText() const noexcept;
     std::string getText() const noexcept;
-    
-    
-    
-    const mycss_declaration_entry_t* parseDeclaration(myencoding_t encoding , const HTMLAttribute&) const noexcept;
-    
-    
+
     const Iterator begin() const
     {
         return Iterator( _node , _modest  );
@@ -98,10 +94,9 @@ public:
     }
     
     CSSDeclaration getDeclarationByType( mycss_property_type_t type) const noexcept;
+    CSSDeclaration parseDeclaration(myencoding_t encoding , const HTMLAttribute&) const noexcept;
     
     
-    modest_t* _modest;
-    myhtml_tree_node_t* _node;
 };
 
 

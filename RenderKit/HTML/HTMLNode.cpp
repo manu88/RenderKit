@@ -41,27 +41,7 @@ HTMLNode HTMLNode::getChild() const noexcept
     return HTMLNode( myhtml_node_child(_node) , _modest);
 }
 
-const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttribute & attribute) const noexcept
-{
-    assert(attribute.isValid());
-    
-    if( _modest->mycss_entry->declaration == nullptr)
-        return nullptr;
-    
-    mystatus_t out_status = MyCORE_STATUS_ERROR;
-    const mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( _modest->mycss_entry->declaration ,
-                                                                   encoding,
-                                                                   attribute._attr->value.data,
-                                                                   attribute._attr->value.length,
-                                                                   &out_status);
-    
-    if( out_status == 0)
-    {
-        return dec_entry;
-    }
-    
-    return nullptr;
-}
+
 
 HTMLAttribute HTMLNode::getAttributeByName( const std::string &name) const noexcept
 {
@@ -87,6 +67,28 @@ HTMLAttribute HTMLNode::getAttribute( const std::string &key) const noexcept
     }
     
     return attr;
+}
+
+CSSDeclaration HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttribute & attribute) const noexcept
+{
+    assert(attribute.isValid());
+    
+    if( _modest->mycss_entry->declaration == nullptr)
+        return nullptr;
+    
+    mystatus_t out_status = MyCORE_STATUS_ERROR;
+    mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( _modest->mycss_entry->declaration ,
+                                                                         encoding,
+                                                                         attribute._attr->value.data,
+                                                                         attribute._attr->value.length,
+                                                                         &out_status);
+    
+    if( out_status == 0)
+    {
+        return CSSDeclaration(dec_entry);
+    }
+    
+    return CSSDeclaration(nullptr);
 }
 
 CSSDeclaration HTMLNode::getDeclarationByType( mycss_property_type_t type) const noexcept
