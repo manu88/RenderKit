@@ -9,15 +9,11 @@
 
 #include <assert.h>
 #include <ctype.h>
-#include <functional>
-
 
 #include <modest/render/binding.h>
 
-#include "CSSEntry.hpp"
 #include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
-#include "HTMLParser.hpp"
 #include "HTMLNode.hpp"
 
 static int is_empty(const char *s)
@@ -220,22 +216,78 @@ void HTMLRenderer::printBlockTree() const
 }
 
 
-bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNode& node )
+/*static*/bool HTMLRenderer::parseStyle( HTMLBlockElement*block , const CSSDeclaration& decl)
+{
+    assert(block);
+    
+    for( const CSSDeclaration &d : decl)
+    {
+        if( d.getType() == MyCSS_PROPERTY_TYPE_WIDTH)
+        {
+            block->size.width =  d.parseBlockWidth();
+            if( d.getValueType() == MyCSS_PROPERTY_WIDTH__LENGTH)
+            {
+                block->size.wPercent = false;
+            }
+            else if( d.getValueType() == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
+            {
+                block->size.wPercent = true;
+            }
+            
+        }
+        else if( d.getType() == MyCSS_PROPERTY_TYPE_HEIGHT)
+        {
+            block->size.height = d.parseBlockHeight();
+            
+            if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__LENGTH)
+            {
+                block->size.hPercent = false;
+            }
+            else if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
+            {
+                block->size.hPercent = true;
+                
+            }
+        }
+        else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
+        {
+            assert(false); // todo
+        }
+        else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND)
+        {
+            const GXColor col =  d.parseBackgroundColor();
+            
+            block->backgroundColor = col;
+        }
+        else if ( d.getType() == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
+        {
+            //mycss_values_border_t
+            block->drawFrame = true;
+        }
+        else if( d.getType() == MyCSS_PROPERTY_TYPE_FLOAT)
+        {
+            block->floatProp =(const mycss_property_float_t) d.getValueType();
+        }
+        
+        else
+        {
+            printf("Unknown prop  %x\n" , d.getValueType());
+            assert(false);
+        }
+    }
+    
+    return true;
+}
+
+bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
 {
 
     assert(block);
     assert(block->_parent); // just checking tree consistency
     assert(node.isValid());
-    //assert(parentNode.isValid());
-    assert(modest);
-    
 
     myhtml_tree_node_t* htmlNode = node._node;
     assert(htmlNode);
-    
-
-
-
     
     /* Start class ATTR */
     HTMLAttribute attrClass = node.getAttributeByName("class");
@@ -247,88 +299,29 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
         printf("Class : '%s'" , classSel);
     }
     /* END class ATTR */
-    
-    
-    /* Start Style ATTR */
-    
-    
-    
+    /*
     CSSDeclaration borderStyle = node.getDeclarationByType(MyCSS_PROPERTY_TYPE_BORDER_STYLE);
-    
-    //modest_declaration_by_type(modest, htmlNode, MyCSS_PROPERTY_TYPE_BORDER_STYLE);//MyCSS_PROPERTY_TYPE_BORDER);
-    
-    
+
     if( borderStyle._decl)// && border->value)
     {
         block->drawFrame = true;
     }
+    */
+    /* Start Style ATTR */
     
     HTMLAttribute attr_style = node.getAttributeByName("style");
 
+    
     if(attr_style.isValid())
     {
         
         const CSSDeclaration dec_entry = node.parseDeclaration(MyENCODING_UTF_8, attr_style);
-        
-        const mycss_declaration_entry_t* next = dec_entry._decl;
-        while (next)
+        if(!parseStyle(block, dec_entry))
         {
-            const CSSDeclaration d(next);
-            
-            if( d.getType() == MyCSS_PROPERTY_TYPE_WIDTH)
-            {
-                block->size.width =  d.parseBlockWidth();
-                if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
-                {
-                    block->size.wPercent = false;
-                }
-                else if( next->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
-                {
-                    block->size.wPercent = true;
-                }
-                
-            }
-            else if( d.getType() == MyCSS_PROPERTY_TYPE_HEIGHT)
-            {
-                block->size.height = d.parseBlockHeight();
-                
-                if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
-                {
-                    block->size.hPercent = false;
-                }
-                else if( next->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
-                {
-                    block->size.hPercent = true;
-                    
-                }
-            }
-            else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
-            {
-                assert(false); // todo
-            }
-            else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND)
-            {
-                const GXColor col =  d.parseBackgroundColor();
-                
-                block->backgroundColor = col;
-            }
-            else if ( d.getType() == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
-            {
-                //mycss_values_border_t
-                block->drawFrame = true;
-            }
-            else if( d.getType() == MyCSS_PROPERTY_TYPE_FLOAT)
-            {
-                block->floatProp =(const mycss_property_float_t) next->value_type;
-            }
-            
-            else
-            {
-                printf("Unknown prop  %x\n" , next->type);
-                assert(false);
-            }
-            next = next->next;
+            assert(false);
         }
+        
+
     }
     
     /* END Style ATTR */
@@ -373,7 +366,7 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
             
             block->type = HTMLBlockElement::Block;
             
-            if( addChild(block, modest, htmlNode ) )
+            if( addChild(block,  htmlNode ) )
             {
                 if( !block->text.empty())
                 {

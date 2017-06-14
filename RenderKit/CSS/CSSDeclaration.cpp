@@ -29,9 +29,15 @@ CSSDeclaration::~CSSDeclaration()
 
 mycss_property_type_t CSSDeclaration::getType() const noexcept
 {
+    assert(_decl);
     return _decl->type;
 }
 
+unsigned int CSSDeclaration::getValueType() const noexcept
+{
+    assert(_decl);
+    return _decl->value_type;
+}
 
 
 GXColor CSSDeclaration::parseBackgroundColor() const noexcept

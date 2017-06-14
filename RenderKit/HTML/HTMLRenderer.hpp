@@ -12,7 +12,7 @@
 #include <modest/modest.h>
 
 #include "Element.hpp"
-//#include "HTMLTree.hpp"
+
 #include "GXGeometry.hpp"
 #include "Document.hpp"
 class HTMLNode;
@@ -35,7 +35,8 @@ public:
 private:
     
     bool computeTree();
-    bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node );
+    bool addChild(HTMLBlockElement*block , const HTMLNode& node );
+    static bool parseStyle( HTMLBlockElement*block , const CSSDeclaration& decl);
     bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     
     modest_render_tree_t *_renderTree;

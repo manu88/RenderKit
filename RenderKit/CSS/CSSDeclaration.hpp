@@ -9,6 +9,7 @@
 #ifndef CSSDeclaration_hpp
 #define CSSDeclaration_hpp
 
+#include <iterator>
 
 #include <mycss/declaration/myosi.h>
 #include <GXColor.hpp>
@@ -22,17 +23,63 @@ public:
     
     
     mycss_property_type_t getType() const noexcept;
+    unsigned int getValueType() const noexcept;
     
     GXColor parseBackgroundColor() const noexcept;
     float parseBlockWidth() const noexcept;
     float parseBlockHeight() const noexcept;
     
+
+    
+    
+    class Iterator : public std::iterator<std::forward_iterator_tag, CSSDeclaration>
+    {
+        friend class CSSDeclaration;
+    private:
+        Iterator( const mycss_declaration_entry_t *decl):
+        _decl(decl)
+        {}
+        
+    public:
+        bool operator!=( const Iterator& rhs)
+        {
+            return _decl != rhs._decl;
+        }
+        
+        bool operator==( const Iterator& rhs)
+        {
+            return _decl == rhs._decl;
+        }
+        
+        Iterator& operator++()
+        {
+            _decl = _decl->next;
+            return *this;
+        };
+        
+        CSSDeclaration operator*()
+        {
+            return CSSDeclaration( _decl );
+        };
+        
+        const mycss_declaration_entry_t *_decl;
+    };
+    
+    const Iterator begin() const
+    {
+        return Iterator( _decl  );
+    }
+    
+    const Iterator end() const
+    {
+        return Iterator(  nullptr );
+    }
+    
     
     const mycss_declaration_entry_t *_decl;
     
-    static GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
-    
 private:
+    static GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
     static float parseFloatIntAttribute( const  mycss_declaration_entry_t* node ) noexcept;
     static float parseBlockWidth( const mycss_declaration_entry_t* node) noexcept;
     static float parseBlockHeight( const mycss_declaration_entry_t* node) noexcept;
