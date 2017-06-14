@@ -15,6 +15,8 @@
 #include <myhtml/myhtml.h>
 #include <mycss/mycss.h>
 
+#include <modest/myosi.h> // modest_t
+#include <modest/modest.h> // modest
 #include "HTMLTree.hpp"
 #include "HTMLAttribute.hpp"
 
@@ -22,14 +24,15 @@ class HTMLNode
 {
 public:
     
+    
     class Iterator : public std::iterator<std::forward_iterator_tag, HTMLNode>
     {
     public:
-        Iterator( myhtml_tree_node_t *node , myhtml_tree_t* tree) :
-        _node(node),
-        _tree(tree)
+        Iterator( myhtml_tree_node_t *node , modest_t* modest) :
+        _modest(modest),
+        _node(node)
         {
-        
+            
         }
         
         bool operator!=( const Iterator& rhs)
@@ -50,16 +53,17 @@ public:
         
         HTMLNode operator*()
         {
-            return HTMLNode( _node , _tree);
+            return HTMLNode( _node , _modest);
         };
         
+        modest_t* _modest;
         myhtml_tree_node_t *_node;
-        myhtml_tree_t* _tree;
     };
     
-    HTMLNode(myhtml_tree_node_t* node , myhtml_tree_t* tree):
-    _node(node) ,
-    _tree(tree)
+    
+    HTMLNode(myhtml_tree_node_t* node , modest_t* modest):
+    _modest(modest),
+    _node(node)
     {}
 
     std::string getTagName() const noexcept;
@@ -69,39 +73,31 @@ public:
     
     
     
-    const mycss_declaration_entry_t * parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const myhtml_tree_attr_t * attribute) const noexcept;
+    const mycss_declaration_entry_t* parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const HTMLAttribute&) const noexcept;
     
     
     const Iterator begin() const
     {
-        return Iterator( _node->child , _tree );
+        return Iterator( _node , _modest  );
     }
     
     const Iterator end() const
     {
-        return Iterator( nullptr , _tree);
+        return Iterator(  nullptr , _modest );
     }
     
     HTMLAttribute getAttributeByName( const std::string &name) const noexcept;
     HTMLAttribute getAttribute( const std::string &key) const noexcept;
     
+    bool isValid() const noexcept
+    {
+        return _modest && _node;
+    }
+    
+    
+    modest_t* _modest;
     myhtml_tree_node_t* _node;
-    myhtml_tree_t* _tree;
 };
-class HTMLTree
-{
-public:
-    HTMLTree();
-    ~HTMLTree();
-    
-    bool parseContent( const char* buf , size_t len);
-    
-    myhtml_tree_t *_tree;
-    myhtml_t* _html;
-private:
-    
-    
-    
-};
+
 
 #endif /* HTMLTree_hpp */

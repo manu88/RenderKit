@@ -8,23 +8,15 @@
 
 
 #include <assert.h>
+#include <ctype.h>
+#include <functional>
+#include <modest/declaration.h>
+
+#include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
 #include "HTMLParser.hpp"
-#include <ctype.h>
 
 
-/*static*/ std::unordered_map<const char* , const GXColor> HTMLRenderer::ColorsNames =
-{
-    { "red"      , GXColors::Red},
-    { "blue"     , GXColors::Blue},
-    { "green"    , GXColorMake( 0 , 0.5 , 0)},
-    { "yellow"   , GXColorMake( 1.0 , 1. , 0)},
-    { "magenta"  , GXColorMake(0.96, 0, 0.96)},
-    { "cyan"     , GXColorMake(0., 1, 1)}
-    //[UIColor colorWithRed:0.00f green:1.00f blue:1.00f alpha:1.0f];
-    
-    
-};
 
 
 
@@ -204,7 +196,12 @@ void HTMLRenderer::printBlockTree() const
             printf("\t");
         
         printf("Got child (type %i) %s ", block->type , block->tag.c_str());
-        printf("size w=%f %s h=%f %s ",block->size.width, block->size.wPercent?"%" : "px" , block->size.height , block->size.hPercent?"%" : "px");
+        printf("size w=%f %s h=%f %s %s",
+               block->size.width,
+               block->size.wPercent?"%" : "px" ,
+               block->size.height ,
+               block->size.hPercent?"%" : "px",
+               block->drawFrame?"with frame":"");
         printf("\n");
         
         for ( const HTMLBlockElement* c : block->_children)
@@ -233,6 +230,28 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     printf(" %s" , node.getTagName().c_str());
 
     
+    /* Start class ATTR */
+    HTMLAttribute attrClass = node.getAttributeByName("class");
+    
+    if( attrClass.isValid())
+    {
+        const char* classSel = attrClass.getValue();
+        
+        printf("Class : '%s'" , classSel);
+    }
+    /* END class ATTR */
+    
+    
+    /* Start Style ATTR */
+    
+    mycss_declaration_entry_t *borderStyle = modest_declaration_by_type(modest, htmlNode, MyCSS_PROPERTY_TYPE_BORDER_STYLE);//MyCSS_PROPERTY_TYPE_BORDER);
+    
+    
+    if( borderStyle)// && border->value)
+    {
+        block->drawFrame = true;
+    }
+    
     HTMLAttribute attr_style = node.getAttributeByName("style");
 
     if(attr_style.isValid())
@@ -240,7 +259,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
         
         const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,
                                                                            modest->mycss_entry->declaration,
-                                                                           attr_style._attr);
+                                                                           attr_style);
         
         const mycss_declaration_entry_t* next = dec_entry;
         while (next)
@@ -288,10 +307,16 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
                 
                 block->backgroundColor = col;
             }
+            else if (next->type == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
+            {
+                //mycss_values_border_t
+                block->drawFrame = true;
+            }
             else if( next->type == MyCSS_PROPERTY_TYPE_FLOAT)
             {
                 block->floatProp =(const mycss_property_float_t) next->value_type;
             }
+            
             else
             {
                 printf("Unknown prop  %x\n" , next->type);
@@ -300,10 +325,12 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
             next = next->next;
         }
     }
+    
+    /* END Style ATTR */
 
     for ( const auto &iter : node )
     {
-        assert(iter._node && iter._tree);
+        assert(iter._node && iter._modest->myhtml_tree);
 
         const std::string text = iter.getText();
         
@@ -347,7 +374,7 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
         case MODEST_RENDER_TREE_NODE_TYPE_BLOCK:
         {
             printf("block");
-            HTMLNode htmlNode(node->html_node , modest->myhtml_tree );
+            HTMLNode htmlNode(node->html_node , modest );
             
             block->type = HTMLBlockElement::Block;
             
@@ -478,9 +505,9 @@ GXColor HTMLRenderer::parseBackgroundColor( const mycss_declaration_entry_t* nod
                     size_t length;
                     const char *name = mycss_values_color_name_by_id(colorVal->value.name_id, &length);
                     
-                    if( ColorsNames.count( name))
+                    if( CSSColor::ColorsNames.count( name))
                     {
-                        retColor = ColorsNames.at(name);
+                        retColor = CSSColor::ColorsNames.at(name);
                     }
                     else
                     {

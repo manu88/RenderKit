@@ -11,7 +11,7 @@
 #include <modest/render/tree.h>
 #include <modest/modest.h>
 
-#include <unordered_map>
+
 
 #include "Element.hpp"
 #include "HTMLTree.hpp"
@@ -45,7 +45,7 @@ private:
     float parseBlockWidth( const mycss_declaration_entry_t* node);
     float parseBlockHeight( const mycss_declaration_entry_t* node);
     
-    static std::unordered_map<const char* , const GXColor> ColorsNames;
+    
     
     HTMLBlockElement* _root;
 };

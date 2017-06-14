@@ -12,13 +12,17 @@
 #include <string>
 #include <modest/modest.h>
 #include <modest/render/tree_node.h>
-
+#include <modest/finder/finder.h> // modest_finder_t
+#include <modest/finder/myosi.h> // modest_finder_thread_t
 
 
 
 class HTMLParser
 {
 public:
+    
+    enum{ FinderThreadsNum = 2};
+    
     HTMLParser();
     ~HTMLParser();
     
@@ -30,9 +34,13 @@ public:
     bool render();
     
     modest_t *_modest;
+    modest_finder_t* _finder;
+    modest_finder_thread_t *_finderThread;
     modest_render_tree_node_t * _renderNode;
     
 private:
+    
+    bool parseCSS();
     
     void parseHTML();
 

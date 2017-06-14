@@ -62,6 +62,7 @@ public:
     Type type;
     std::string tag;
     GXColor backgroundColor;
+    bool drawFrame;
     ESize  size;
     std::string text;
     std::string src;

@@ -147,7 +147,16 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
 
     context->setFillColor( block->backgroundColor);
 
+    if( block->drawFrame)
+    {
+        context->setStrokeColor(GXColors::Black);
+    }
     context->fill();
+    if( block->drawFrame)
+    {
+        context->stroke();
+    }
+    
 
     printf("\n");
     

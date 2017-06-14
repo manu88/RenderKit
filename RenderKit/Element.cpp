@@ -13,6 +13,7 @@
 HTMLBlockElement::HTMLBlockElement():
 type(Unknown),
 backgroundColor(GXColorInvalid),
+drawFrame(false),
 size( ESizeInvalid ),
 floatProp( MyCSS_PROPERTY_FLOAT_UNSET ),
 _parent(nullptr),
