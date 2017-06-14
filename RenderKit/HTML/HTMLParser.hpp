@@ -33,14 +33,17 @@ public:
     
     bool render();
     
+    mycss_t* _cssParser;
     modest_t *_modest;
     modest_finder_t* _finder;
     modest_finder_thread_t *_finderThread;
     modest_render_tree_node_t * _renderNode;
     
 private:
-    
+    myhtml_tree_t * parse_html(const char* data, size_t data_size);
     bool parseCSS();
+    mycss_entry_t * parseCSS(const char* data, size_t data_size);
+    
     
     void parseHTML();
 

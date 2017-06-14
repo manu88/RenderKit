@@ -42,6 +42,9 @@ const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encodin
 {
     assert(attribute.isValid());
     
+    if( declaration == nullptr)
+        return nullptr;
+    
     mystatus_t out_status = MyCORE_STATUS_ERROR;
     const mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( declaration ,
                                                                    encoding,

@@ -8,10 +8,8 @@
 
 #ifndef HTMLRenderer_hpp
 #define HTMLRenderer_hpp
-#include <modest/render/tree.h>
+#include <modest/render/tree.h> //modest_render_tree_node_t
 #include <modest/modest.h>
-
-
 
 #include "Element.hpp"
 #include "HTMLTree.hpp"
