@@ -168,6 +168,159 @@
 		596D48FE1EF137940011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48FD1EF137940011158B /* main.cpp */; };
 		596D49031EF137A00011158B /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49001EF137A00011158B /* AppDelegate.cpp */; };
 		596D49041EF137A00011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49021EF137A00011158B /* main.cpp */; };
+		596D49071EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE071EDF3C9F00E59956 /* serialization.c */; };
+		596D49081EF1389B0011158B /* tokenizer_end.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF071EDF3C9F00E59956 /* tokenizer_end.c */; };
+		596D49091EF1389B0011158B /* property.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD9C1EDF3C9F00E59956 /* property.c */; };
+		596D490A1EF1389B0011158B /* path.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF3C1EDF3C9F00E59956 /* path.c */; };
+		596D490B1EF1389B0011158B /* mcsimple.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDD81EDF3C9F00E59956 /* mcsimple.c */; };
+		596D490C1EF1389B0011158B /* mycss.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE1A1EDF3C9F00E59956 /* mycss.c */; };
+		596D490D1EF1389B0011158B /* callback.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CED51EDF3C9F00E59956 /* callback.c */; };
+		596D490E1EF1389B0011158B /* tokenizer_global.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE781EDF3C9F00E59956 /* tokenizer_global.c */; };
+		596D490F1EF1389B0011158B /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE171EDF3C9F00E59956 /* state.c */; };
+		596D49101EF1389B0011158B /* mythread.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDC41EDF3C9F00E59956 /* mythread.c */; };
+		596D49111EF1389B0011158B /* tree_node.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA91EDF3C9F00E59956 /* tree_node.c */; };
+		596D49121EF1389B0011158B /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE131EDF3C9F00E59956 /* init.c */; };
+		596D49131EF1389B0011158B /* thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF1A1EDF3C9F00E59956 /* thread.c */; };
+		596D49141EF1389B0011158B /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD9A1EDF3C9F00E59956 /* node.c */; };
+		596D49151EF1389B0011158B /* head.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEAE1EDF3C9F00E59956 /* head.c */; };
+		596D49161EF1389B0011158B /* url.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF4B1EDF3C9F00E59956 /* url.c */; };
+		596D49171EF1389B0011158B /* layer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD941EDF3C9F00E59956 /* layer.c */; };
+		596D49181EF1389B0011158B /* function_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE4F1EDF3C9F00E59956 /* function_parser.c */; };
+		596D49191EF1389B0011158B /* stylesheet.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE6F1EDF3C9F00E59956 /* stylesheet.c */; };
+		596D491A1EF1389B0011158B /* mcobject_async.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDD51EDF3C9F00E59956 /* mcobject_async.c */; };
+		596D491B1EF1389B0011158B /* StringOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081921EDFEDA500D7EB1F /* StringOperations.cpp */; };
+		596D491C1EF1389B0011158B /* encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE9E1EDF3C9F00E59956 /* encoding.c */; };
+		596D491D1EF1389B0011158B /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEF51EDF3C9F00E59956 /* stream.c */; };
+		596D491E1EF1389B0011158B /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
+		596D491F1EF1389B0011158B /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE221EDF3C9F00E59956 /* init.c */; };
+		596D49201EF1389B0011158B /* mystring.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEE91EDF3C9F00E59956 /* mystring.c */; };
+		596D49211EF1389B0011158B /* rules.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEEF1EDF3C9F00E59956 /* rules.c */; };
+		596D49221EF1389B0011158B /* HTMLAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48E81EF137500011158B /* HTMLAttribute.cpp */; };
+		596D49231EF1389B0011158B /* CSSEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48DF1EF137300011158B /* CSSEntry.cpp */; };
+		596D49241EF1389B0011158B /* mynamespace.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEE41EDF3C9F00E59956 /* mynamespace.c */; };
+		596D49251EF1389B0011158B /* values.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE971EDF3C9F00E59956 /* values.c */; };
+		596D49261EF1389B0011158B /* pseudo.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE5E1EDF3C9F00E59956 /* pseudo.c */; };
+		596D49271EF1389B0011158B /* an_plus_b.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDE91EDF3C9F00E59956 /* an_plus_b.c */; };
+		596D49281EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE381EDF3C9F00E59956 /* parser.c */; };
+		596D49291EF1389B0011158B /* type.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDB71EDF3C9F00E59956 /* type.c */; };
+		596D492A1EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE901EDF3C9F00E59956 /* serialization.c */; };
+		596D492B1EF1389B0011158B /* pseudo_class.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD8A1EDF3C9F00E59956 /* pseudo_class.c */; };
+		596D492C1EF1389B0011158B /* pclt.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CECA1EDF3C9F00E59956 /* pclt.c */; };
+		596D492D1EF1389B0011158B /* consume.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE851EDF3C9F00E59956 /* consume.c */; };
+		596D492E1EF1389B0011158B /* mhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDE11EDF3C9F00E59956 /* mhash.c */; };
+		596D492F1EF1389B0011158B /* mctree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDDE1EDF3C9F00E59956 /* mctree.c */; };
+		596D49301EF1389B0011158B /* cmap.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEA81EDF3C9F00E59956 /* cmap.c */; };
+		596D49311EF1389B0011158B /* CSSParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48E11EF137300011158B /* CSSParser.cpp */; };
+		596D49321EF1389B0011158B /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE531EDF3C9F00E59956 /* init.c */; };
+		596D49331EF1389B0011158B /* entry.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDF91EDF3C9F00E59956 /* entry.c */; };
+		596D49341EF1389B0011158B /* HTMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48EC1EF137500011158B /* HTMLParser.cpp */; };
+		596D49351EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE041EDF3C9F00E59956 /* parser.c */; };
+		596D49361EF1389B0011158B /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF161EDF3C9F00E59956 /* memory.c */; };
+		596D49371EF1389B0011158B /* parser_background.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE3B1EDF3C9F00E59956 /* parser_background.c */; };
+		596D49381EF1389B0011158B /* tokenizer_end.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE751EDF3C9F00E59956 /* tokenizer_end.c */; };
+		596D49391EF1389B0011158B /* sheet.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDB51EDF3C9F00E59956 /* sheet.c */; };
+		596D493A1EF1389B0011158B /* tag.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEF81EDF3C9F00E59956 /* tag.c */; };
+		596D493B1EF1389B0011158B /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE651EDF3C9F00E59956 /* state.c */; };
+		596D493C1EF1389B0011158B /* hmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEB41EDF3C9F00E59956 /* hmtx.c */; };
+		596D493D1EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEEC1EDF3C9F00E59956 /* parser.c */; };
+		596D493E1EF1389B0011158B /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
+		596D493F1EF1389B0011158B /* parser_text_decoration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE3F1EDF3C9F00E59956 /* parser_text_decoration.c */; };
+		596D49401EF1389B0011158B /* parser_end.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF3A1EDF3C9F00E59956 /* parser_end.c */; };
+		596D49411EF1389B0011158B /* os_2.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEC71EDF3C9F00E59956 /* os_2.c */; };
+		596D49421EF1389B0011158B /* raw.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDB31EDF3C9F00E59956 /* raw.c */; };
+		596D49431EF1389B0011158B /* default.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDF41EDF3C9F00E59956 /* default.c */; };
+		596D49441EF1389B0011158B /* tokenizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE721EDF3C9F00E59956 /* tokenizer.c */; };
+		596D49451EF1389B0011158B /* charef.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CED81EDF3C9F00E59956 /* charef.c */; };
+		596D49461EF1389B0011158B /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF141EDF3C9F00E59956 /* io.c */; };
+		596D49471EF1389B0011158B /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081901EDFEDA500D7EB1F /* FileSystem.cpp */; };
+		596D49481EF1389B0011158B /* stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE6C1EDF3C9F00E59956 /* stack.c */; };
+		596D49491EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE5B1EDF3C9F00E59956 /* parser.c */; };
+		596D494A1EF1389B0011158B /* mcobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDD21EDF3C9F00E59956 /* mcobject.c */; };
+		596D494C1EF1389B0011158B /* HTMLTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48F01EF137500011158B /* HTMLTree.cpp */; };
+		596D494D1EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE291EDF3C9F00E59956 /* serialization.c */; };
+		596D494E1EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE2F1EDF3C9F00E59956 /* parser.c */; };
+		596D494F1EF1389B0011158B /* color.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE7D1EDF3C9F00E59956 /* color.c */; };
+		596D49501EF1389B0011158B /* binding.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA51EDF3C9F00E59956 /* binding.c */; };
+		596D49511EF1389B0011158B /* units.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE931EDF3C9F00E59956 /* units.c */; };
+		596D49521EF1389B0011158B /* HTMLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48EE1EF137500011158B /* HTMLRenderer.cpp */; };
+		596D49531EF1389B0011158B /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE681EDF3C9F00E59956 /* value.c */; };
+		596D49541EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE451EDF3C9F00E59956 /* serialization.c */; };
+		596D49551EF1389B0011158B /* glyf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEAB1EDF3C9F00E59956 /* glyf.c */; };
+		596D49561EF1389B0011158B /* perf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF181EDF3C9F00E59956 /* perf.c */; };
+		596D49571EF1389B0011158B /* maxp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEBB1EDF3C9F00E59956 /* maxp.c */; };
+		596D49581EF1389B0011158B /* shared.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE481EDF3C9F00E59956 /* shared.c */; };
+		596D49591EF1389B0011158B /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE341EDF3C9F00E59956 /* init.c */; };
+		596D495A1EF1389B0011158B /* loca.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEB71EDF3C9F00E59956 /* loca.c */; };
+		596D495B1EF1389B0011158B /* mcsync.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF1D1EDF3C9F00E59956 /* mcsync.c */; };
+		596D495C1EF1389B0011158B /* myhtml.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEE11EDF3C9F00E59956 /* myhtml.c */; };
+		596D495D1EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF481EDF3C9F00E59956 /* serialization.c */; };
+		596D495E1EF1389B0011158B /* entry_destroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDFC1EDF3C9F00E59956 /* entry_destroy.c */; };
+		596D495F1EF1389B0011158B /* myosi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDBE1EDF3C9F00E59956 /* myosi.c */; };
+		596D49601EF1389B0011158B /* hhea.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEB11EDF3C9F00E59956 /* hhea.c */; };
+		596D49611EF1389B0011158B /* host.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF301EDF3C9F00E59956 /* host.c */; };
+		596D49621EF1389B0011158B /* tag_init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEFC1EDF3C9F00E59956 /* tag_init.c */; };
+		596D49631EF1389B0011158B /* tokenizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF011EDF3C9F00E59956 /* tokenizer.c */; };
+		596D49641EF1389B0011158B /* check.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDED1EDF3C9F00E59956 /* check.c */; };
+		596D49651EF1389B0011158B /* name.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEC41EDF3C9F00E59956 /* name.c */; };
+		596D49661EF1389B0011158B /* parser_url.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE411EDF3C9F00E59956 /* parser_url.c */; };
+		596D49671EF1389B0011158B /* default.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDAC1EDF3C9F00E59956 /* default.c */; };
+		596D49681EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEF21EDF3C9F00E59956 /* serialization.c */; };
+		596D49691EF1389B0011158B /* image.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE8B1EDF3C9F00E59956 /* image.c */; };
+		596D496A1EF1389B0011158B /* modest.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD961EDF3C9F00E59956 /* modest.c */; };
+		596D496B1EF1389B0011158B /* tokenizer_doctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF041EDF3C9F00E59956 /* tokenizer_doctype.c */; };
+		596D496C1EF1389B0011158B /* mchar_async.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDCF1EDF3C9F00E59956 /* mchar_async.c */; };
+		596D496D1EF1389B0011158B /* mystring.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEA31EDF3C9F00E59956 /* mystring.c */; };
+		596D496E1EF1389B0011158B /* tokenizer_script.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF0A1EDF3C9F00E59956 /* tokenizer_script.c */; };
+		596D496F1EF1389B0011158B /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF4E1EDF3C9F00E59956 /* utils.c */; };
+		596D49701EF1389B0011158B /* data_process.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEDC1EDF3C9F00E59956 /* data_process.c */; };
+		596D49711EF1389B0011158B /* avl_tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDCC1EDF3C9F00E59956 /* avl_tree.c */; };
+		596D49721EF1389B0011158B /* HTMLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48EA1EF137500011158B /* HTMLContext.cpp */; };
+		596D49731EF1389B0011158B /* type.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD8F1EDF3C9F00E59956 /* type.c */; };
+		596D49741EF1389B0011158B /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
+		596D49751EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA01EDF3C9F00E59956 /* serialization.c */; };
+		596D49761EF1389B0011158B /* mcsync.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDDB1EDF3C9F00E59956 /* mcsync.c */; };
+		596D49771EF1389B0011158B /* myosi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF2C1EDF3C9F00E59956 /* myosi.c */; };
+		596D49781EF1389B0011158B /* WebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936400B1EEC442100A96EC8 /* WebView.cpp */; };
+		596D49791EF1389B0011158B /* function.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE4C1EDF3C9F00E59956 /* function.c */; };
+		596D497A1EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF371EDF3C9F00E59956 /* parser.c */; };
+		596D497B1EF1389B0011158B /* list.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE561EDF3C9F00E59956 /* list.c */; };
+		596D497C1EF1389B0011158B /* convert.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDF01EDF3C9F00E59956 /* convert.c */; };
+		596D497D1EF1389B0011158B /* init.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE001EDF3C9F00E59956 /* init.c */; };
+		596D497E1EF1389B0011158B /* vmtx.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CED01EDF3C9F00E59956 /* vmtx.c */; };
+		596D497F1EF1389B0011158B /* myosi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEC11EDF3C9F00E59956 /* myosi.c */; };
+		596D49801EF1389B0011158B /* incoming.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDBA1EDF3C9F00E59956 /* incoming.c */; };
+		596D49811EF1389B0011158B /* vhea.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CECD1EDF3C9F00E59956 /* vhea.c */; };
+		596D49821EF1389B0011158B /* serialization.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE621EDF3C9F00E59956 /* serialization.c */; };
+		596D49831EF1389B0011158B /* map.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDB01EDF3C9F00E59956 /* map.c */; };
+		596D49841EF1389B0011158B /* parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE261EDF3C9F00E59956 /* parser.c */; };
+		596D49851EF1389B0011158B /* punycode.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF3F1EDF3C9F00E59956 /* punycode.c */; };
+		596D49861EF1389B0011158B /* tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF0D1EDF3C9F00E59956 /* tree.c */; };
+		596D49871EF1389B0011158B /* mystring.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDC11EDF3C9F00E59956 /* mystring.c */; };
+		596D49881EF1389B0011158B /* glue.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD911EDF3C9F00E59956 /* glue.c */; };
+		596D49891EF1389B0011158B /* token.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEFE1EDF3C9F00E59956 /* token.c */; };
+		596D498B1EF1389B0011158B /* destroy.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE881EDF3C9F00E59956 /* destroy.c */; };
+		596D498C1EF1389B0011158B /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
+		596D498D1EF1389B0011158B /* scheme.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF431EDF3C9F00E59956 /* scheme.c */; };
+		596D498E1EF1389B0011158B /* thread_queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDC81EDF3C9F00E59956 /* thread_queue.c */; };
+		596D498F1EF1389B0011158B /* myosi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CF341EDF3C9F00E59956 /* myosi.c */; };
+		596D49901EF1389B0011158B /* mystring.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE1E1EDF3C9F00E59956 /* mystring.c */; };
+		596D49911EF1389B0011158B /* myfont.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CEBE1EDF3C9F00E59956 /* myfont.c */; };
+		596D49921EF1389B0011158B /* begin.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA31EDF3C9F00E59956 /* begin.c */; };
+		596D49931EF1389B0011158B /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE2C1EDF3C9F00E59956 /* state.c */; };
+		596D49941EF1389B0011158B /* entry.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE0E1EDF3C9F00E59956 /* entry.c */; };
+		596D49951EF1389B0011158B /* thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD8D1EDF3C9F00E59956 /* thread.c */; };
+		596D49961EF1389B0011158B /* raw_property.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD9E1EDF3C9F00E59956 /* raw_property.c */; };
+		596D49971EF1389B0011158B /* detect.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE9B1EDF3C9F00E59956 /* detect.c */; };
+		596D49981EF1389B0011158B /* utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDE51EDF3C9F00E59956 /* utils.c */; };
+		596D49991EF1389B0011158B /* parser_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE3D1EDF3C9F00E59956 /* parser_image.c */; };
+		596D499A1EF1389B0011158B /* state.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE0B1EDF3C9F00E59956 /* state.c */; };
+		596D499B1EF1389B0011158B /* tree.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CDA71EDF3C9F00E59956 /* tree.c */; };
+		596D499C1EF1389B0011158B /* color_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CE811EDF3C9F00E59956 /* color_parser.c */; };
+		596D499E1EF1389B0011158B /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
+		596D499F1EF1389B0011158B /* libVisualKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59363F621EEC412A00A96EC8 /* libVisualKit.dylib */; };
+		596D49A91EF138DF0011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49A81EF138DF0011158B /* main.cpp */; };
+		596D49AC1EF1398C0011158B /* UnitTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49AA1EF1398C0011158B /* UnitTestClass.cpp */; };
+		596D49AF1EF139D80011158B /* TestElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49AD1EF139D80011158B /* TestElement.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -344,6 +497,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		596D49A01EF1389B0011158B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		5978CCB61EDF3BC900E59956 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -382,6 +544,12 @@
 		596D49001EF137A00011158B /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		596D49011EF137A00011158B /* AppDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
 		596D49021EF137A00011158B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		596D49A41EF1389B0011158B /* UnitTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		596D49A81EF138DF0011158B /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		596D49AA1EF1398C0011158B /* UnitTestClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UnitTestClass.cpp; path = UnitTests/UnitTestClass.cpp; sourceTree = SOURCE_ROOT; };
+		596D49AB1EF1398C0011158B /* UnitTestClass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = UnitTestClass.hpp; path = UnitTests/UnitTestClass.hpp; sourceTree = SOURCE_ROOT; };
+		596D49AD1EF139D80011158B /* TestElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestElement.cpp; sourceTree = "<group>"; };
+		596D49AE1EF139D80011158B /* TestElement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestElement.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -874,6 +1042,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		596D499D1EF1389B0011158B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				596D499E1EF1389B0011158B /* libGX.dylib in Frameworks */,
+				596D499F1EF1389B0011158B /* libVisualKit.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5978CCB51EDF3BC900E59956 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -950,6 +1127,18 @@
 			path = TestUI;
 			sourceTree = "<group>";
 		};
+		596D49A71EF138DF0011158B /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				596D49A81EF138DF0011158B /* main.cpp */,
+				596D49AA1EF1398C0011158B /* UnitTestClass.cpp */,
+				596D49AB1EF1398C0011158B /* UnitTestClass.hpp */,
+				596D49AD1EF139D80011158B /* TestElement.cpp */,
+				596D49AE1EF139D80011158B /* TestElement.hpp */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 		5978CCAF1EDF3BC900E59956 = {
 			isa = PBXGroup;
 			children = (
@@ -959,6 +1148,7 @@
 				5978CD801EDF3C9F00E59956 /* source */,
 				5978CCBA1EDF3BC900E59956 /* RenderKit */,
 				596D48FC1EF137940011158B /* TestTerm */,
+				596D49A71EF138DF0011158B /* UnitTests */,
 				596D48FF1EF137A00011158B /* TestUI */,
 				5978CCB91EDF3BC900E59956 /* Products */,
 				5936400F1EEC449100A96EC8 /* Frameworks */,
@@ -970,6 +1160,7 @@
 			children = (
 				5978CCB81EDF3BC900E59956 /* RenderKit */,
 				593640071EEC439E00A96EC8 /* TestUI */,
+				596D49A41EF1389B0011158B /* UnitTests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1862,6 +2053,23 @@
 			productReference = 593640071EEC439E00A96EC8 /* TestUI */;
 			productType = "com.apple.product-type.tool";
 		};
+		596D49051EF1389B0011158B /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 596D49A11EF1389B0011158B /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				596D49061EF1389B0011158B /* Sources */,
+				596D499D1EF1389B0011158B /* Frameworks */,
+				596D49A01EF1389B0011158B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnitTests;
+			productName = RenderKit;
+			productReference = 596D49A41EF1389B0011158B /* UnitTests */;
+			productType = "com.apple.product-type.tool";
+		};
 		5978CCB71EDF3BC900E59956 /* RenderKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5978CCBF1EDF3BC900E59956 /* Build configuration list for PBXNativeTarget "RenderKit" */;
@@ -1914,6 +2122,7 @@
 			targets = (
 				5978CCB71EDF3BC900E59956 /* RenderKit */,
 				59363F721EEC439E00A96EC8 /* TestUI */,
+				596D49051EF1389B0011158B /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2100,6 +2309,164 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		596D49061EF1389B0011158B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				596D49071EF1389B0011158B /* serialization.c in Sources */,
+				596D49081EF1389B0011158B /* tokenizer_end.c in Sources */,
+				596D49091EF1389B0011158B /* property.c in Sources */,
+				596D490A1EF1389B0011158B /* path.c in Sources */,
+				596D490B1EF1389B0011158B /* mcsimple.c in Sources */,
+				596D490C1EF1389B0011158B /* mycss.c in Sources */,
+				596D490D1EF1389B0011158B /* callback.c in Sources */,
+				596D490E1EF1389B0011158B /* tokenizer_global.c in Sources */,
+				596D490F1EF1389B0011158B /* state.c in Sources */,
+				596D49101EF1389B0011158B /* mythread.c in Sources */,
+				596D49111EF1389B0011158B /* tree_node.c in Sources */,
+				596D49121EF1389B0011158B /* init.c in Sources */,
+				596D49131EF1389B0011158B /* thread.c in Sources */,
+				596D49141EF1389B0011158B /* node.c in Sources */,
+				596D49151EF1389B0011158B /* head.c in Sources */,
+				596D49161EF1389B0011158B /* url.c in Sources */,
+				596D49171EF1389B0011158B /* layer.c in Sources */,
+				596D49181EF1389B0011158B /* function_parser.c in Sources */,
+				596D49191EF1389B0011158B /* stylesheet.c in Sources */,
+				596D491A1EF1389B0011158B /* mcobject_async.c in Sources */,
+				596D491B1EF1389B0011158B /* StringOperations.cpp in Sources */,
+				596D491C1EF1389B0011158B /* encoding.c in Sources */,
+				596D491D1EF1389B0011158B /* stream.c in Sources */,
+				596D491E1EF1389B0011158B /* Element.cpp in Sources */,
+				596D491F1EF1389B0011158B /* init.c in Sources */,
+				596D49201EF1389B0011158B /* mystring.c in Sources */,
+				596D49211EF1389B0011158B /* rules.c in Sources */,
+				596D49221EF1389B0011158B /* HTMLAttribute.cpp in Sources */,
+				596D49231EF1389B0011158B /* CSSEntry.cpp in Sources */,
+				596D49241EF1389B0011158B /* mynamespace.c in Sources */,
+				596D49251EF1389B0011158B /* values.c in Sources */,
+				596D49261EF1389B0011158B /* pseudo.c in Sources */,
+				596D49271EF1389B0011158B /* an_plus_b.c in Sources */,
+				596D49281EF1389B0011158B /* parser.c in Sources */,
+				596D49291EF1389B0011158B /* type.c in Sources */,
+				596D492A1EF1389B0011158B /* serialization.c in Sources */,
+				596D492B1EF1389B0011158B /* pseudo_class.c in Sources */,
+				596D492C1EF1389B0011158B /* pclt.c in Sources */,
+				596D492D1EF1389B0011158B /* consume.c in Sources */,
+				596D492E1EF1389B0011158B /* mhash.c in Sources */,
+				596D492F1EF1389B0011158B /* mctree.c in Sources */,
+				596D49301EF1389B0011158B /* cmap.c in Sources */,
+				596D49311EF1389B0011158B /* CSSParser.cpp in Sources */,
+				596D49321EF1389B0011158B /* init.c in Sources */,
+				596D49331EF1389B0011158B /* entry.c in Sources */,
+				596D49341EF1389B0011158B /* HTMLParser.cpp in Sources */,
+				596D49351EF1389B0011158B /* parser.c in Sources */,
+				596D49361EF1389B0011158B /* memory.c in Sources */,
+				596D49371EF1389B0011158B /* parser_background.c in Sources */,
+				596D49381EF1389B0011158B /* tokenizer_end.c in Sources */,
+				596D49391EF1389B0011158B /* sheet.c in Sources */,
+				596D493A1EF1389B0011158B /* tag.c in Sources */,
+				596D493B1EF1389B0011158B /* state.c in Sources */,
+				596D493C1EF1389B0011158B /* hmtx.c in Sources */,
+				596D493D1EF1389B0011158B /* parser.c in Sources */,
+				596D493E1EF1389B0011158B /* declaration.c in Sources */,
+				596D493F1EF1389B0011158B /* parser_text_decoration.c in Sources */,
+				596D49401EF1389B0011158B /* parser_end.c in Sources */,
+				596D49411EF1389B0011158B /* os_2.c in Sources */,
+				596D49421EF1389B0011158B /* raw.c in Sources */,
+				596D49431EF1389B0011158B /* default.c in Sources */,
+				596D49441EF1389B0011158B /* tokenizer.c in Sources */,
+				596D49451EF1389B0011158B /* charef.c in Sources */,
+				596D49461EF1389B0011158B /* io.c in Sources */,
+				596D49471EF1389B0011158B /* FileSystem.cpp in Sources */,
+				596D49481EF1389B0011158B /* stack.c in Sources */,
+				596D49491EF1389B0011158B /* parser.c in Sources */,
+				596D494A1EF1389B0011158B /* mcobject.c in Sources */,
+				596D494C1EF1389B0011158B /* HTMLTree.cpp in Sources */,
+				596D494D1EF1389B0011158B /* serialization.c in Sources */,
+				596D494E1EF1389B0011158B /* parser.c in Sources */,
+				596D494F1EF1389B0011158B /* color.c in Sources */,
+				596D49501EF1389B0011158B /* binding.c in Sources */,
+				596D49511EF1389B0011158B /* units.c in Sources */,
+				596D49521EF1389B0011158B /* HTMLRenderer.cpp in Sources */,
+				596D49531EF1389B0011158B /* value.c in Sources */,
+				596D49541EF1389B0011158B /* serialization.c in Sources */,
+				596D49551EF1389B0011158B /* glyf.c in Sources */,
+				596D49561EF1389B0011158B /* perf.c in Sources */,
+				596D49571EF1389B0011158B /* maxp.c in Sources */,
+				596D49581EF1389B0011158B /* shared.c in Sources */,
+				596D49591EF1389B0011158B /* init.c in Sources */,
+				596D495A1EF1389B0011158B /* loca.c in Sources */,
+				596D495B1EF1389B0011158B /* mcsync.c in Sources */,
+				596D495C1EF1389B0011158B /* myhtml.c in Sources */,
+				596D495D1EF1389B0011158B /* serialization.c in Sources */,
+				596D495E1EF1389B0011158B /* entry_destroy.c in Sources */,
+				596D495F1EF1389B0011158B /* myosi.c in Sources */,
+				596D49601EF1389B0011158B /* hhea.c in Sources */,
+				596D49611EF1389B0011158B /* host.c in Sources */,
+				596D49621EF1389B0011158B /* tag_init.c in Sources */,
+				596D49631EF1389B0011158B /* tokenizer.c in Sources */,
+				596D49641EF1389B0011158B /* check.c in Sources */,
+				596D49651EF1389B0011158B /* name.c in Sources */,
+				596D49661EF1389B0011158B /* parser_url.c in Sources */,
+				596D49671EF1389B0011158B /* default.c in Sources */,
+				596D49681EF1389B0011158B /* serialization.c in Sources */,
+				596D49A91EF138DF0011158B /* main.cpp in Sources */,
+				596D49691EF1389B0011158B /* image.c in Sources */,
+				596D496A1EF1389B0011158B /* modest.c in Sources */,
+				596D496B1EF1389B0011158B /* tokenizer_doctype.c in Sources */,
+				596D496C1EF1389B0011158B /* mchar_async.c in Sources */,
+				596D496D1EF1389B0011158B /* mystring.c in Sources */,
+				596D496E1EF1389B0011158B /* tokenizer_script.c in Sources */,
+				596D496F1EF1389B0011158B /* utils.c in Sources */,
+				596D49701EF1389B0011158B /* data_process.c in Sources */,
+				596D49711EF1389B0011158B /* avl_tree.c in Sources */,
+				596D49721EF1389B0011158B /* HTMLContext.cpp in Sources */,
+				596D49731EF1389B0011158B /* type.c in Sources */,
+				596D49741EF1389B0011158B /* match.c in Sources */,
+				596D49751EF1389B0011158B /* serialization.c in Sources */,
+				596D49761EF1389B0011158B /* mcsync.c in Sources */,
+				596D49771EF1389B0011158B /* myosi.c in Sources */,
+				596D49781EF1389B0011158B /* WebView.cpp in Sources */,
+				596D49791EF1389B0011158B /* function.c in Sources */,
+				596D497A1EF1389B0011158B /* parser.c in Sources */,
+				596D497B1EF1389B0011158B /* list.c in Sources */,
+				596D497C1EF1389B0011158B /* convert.c in Sources */,
+				596D497D1EF1389B0011158B /* init.c in Sources */,
+				596D497E1EF1389B0011158B /* vmtx.c in Sources */,
+				596D497F1EF1389B0011158B /* myosi.c in Sources */,
+				596D49AF1EF139D80011158B /* TestElement.cpp in Sources */,
+				596D49801EF1389B0011158B /* incoming.c in Sources */,
+				596D49811EF1389B0011158B /* vhea.c in Sources */,
+				596D49821EF1389B0011158B /* serialization.c in Sources */,
+				596D49AC1EF1398C0011158B /* UnitTestClass.cpp in Sources */,
+				596D49831EF1389B0011158B /* map.c in Sources */,
+				596D49841EF1389B0011158B /* parser.c in Sources */,
+				596D49851EF1389B0011158B /* punycode.c in Sources */,
+				596D49861EF1389B0011158B /* tree.c in Sources */,
+				596D49871EF1389B0011158B /* mystring.c in Sources */,
+				596D49881EF1389B0011158B /* glue.c in Sources */,
+				596D49891EF1389B0011158B /* token.c in Sources */,
+				596D498B1EF1389B0011158B /* destroy.c in Sources */,
+				596D498C1EF1389B0011158B /* finder.c in Sources */,
+				596D498D1EF1389B0011158B /* scheme.c in Sources */,
+				596D498E1EF1389B0011158B /* thread_queue.c in Sources */,
+				596D498F1EF1389B0011158B /* myosi.c in Sources */,
+				596D49901EF1389B0011158B /* mystring.c in Sources */,
+				596D49911EF1389B0011158B /* myfont.c in Sources */,
+				596D49921EF1389B0011158B /* begin.c in Sources */,
+				596D49931EF1389B0011158B /* state.c in Sources */,
+				596D49941EF1389B0011158B /* entry.c in Sources */,
+				596D49951EF1389B0011158B /* thread.c in Sources */,
+				596D49961EF1389B0011158B /* raw_property.c in Sources */,
+				596D49971EF1389B0011158B /* detect.c in Sources */,
+				596D49981EF1389B0011158B /* utils.c in Sources */,
+				596D49991EF1389B0011158B /* parser_image.c in Sources */,
+				596D499A1EF1389B0011158B /* state.c in Sources */,
+				596D499B1EF1389B0011158B /* tree.c in Sources */,
+				596D499C1EF1389B0011158B /* color_parser.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5978CCB41EDF3BC900E59956 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2272,6 +2639,20 @@
 			};
 			name = Release;
 		};
+		596D49A21EF1389B0011158B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		596D49A31EF1389B0011158B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		5978CCBD1EDF3BC900E59956 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2393,6 +2774,15 @@
 			buildConfigurations = (
 				593640051EEC439E00A96EC8 /* Debug */,
 				593640061EEC439E00A96EC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		596D49A11EF1389B0011158B /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				596D49A21EF1389B0011158B /* Debug */,
+				596D49A31EF1389B0011158B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
