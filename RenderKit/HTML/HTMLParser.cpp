@@ -121,9 +121,8 @@ bool HTMLParser::parseContent( Document &doc, const char* buf , size_t len)
 
     }
 
-    
-    
-    /* crteate and init Finder */
+
+    /* create and init Finder */
     _finder = modest_finder_create();
     
     mystatus_t status = modest_finder_init( _finder );

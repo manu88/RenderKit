@@ -13,11 +13,11 @@
 #include <iterator>
 
 #include <myhtml/myhtml.h>
-#include <mycss/mycss.h>
+//#include <mycss/mycss.h>
 
 #include <modest/myosi.h> // modest_t
 
-
+#include "CSSDeclaration.hpp"
 #include "HTMLAttribute.hpp"
 
 class HTMLNode
@@ -74,7 +74,7 @@ public:
     
     
     
-    const mycss_declaration_entry_t* parseDeclaration(myencoding_t encoding , mycss_declaration_t* declaration, const HTMLAttribute&) const noexcept;
+    const mycss_declaration_entry_t* parseDeclaration(myencoding_t encoding , const HTMLAttribute&) const noexcept;
     
     
     const Iterator begin() const
@@ -96,6 +96,8 @@ public:
     {
         return _modest && _node;
     }
+    
+    CSSDeclaration getDeclarationByType( mycss_property_type_t type) const noexcept;
     
     
     modest_t* _modest;

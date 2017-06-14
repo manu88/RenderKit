@@ -9,6 +9,7 @@
 #include <assert.h>
 #include "HTMLNode.hpp"
 #include <modest/modest.h> // modest
+#include <modest/declaration.h> // modest_declaration_by_type
 
 std::string HTMLNode::getTagName() const noexcept
 {
@@ -40,17 +41,15 @@ HTMLNode HTMLNode::getChild() const noexcept
     return HTMLNode( myhtml_node_child(_node) , _modest);
 }
 
-const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding ,
-                                                            mycss_declaration_t* declaration,
-                                                            const HTMLAttribute & attribute) const noexcept
+const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttribute & attribute) const noexcept
 {
     assert(attribute.isValid());
     
-    if( declaration == nullptr)
+    if( _modest->mycss_entry->declaration == nullptr)
         return nullptr;
     
     mystatus_t out_status = MyCORE_STATUS_ERROR;
-    const mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( declaration ,
+    const mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( _modest->mycss_entry->declaration ,
                                                                    encoding,
                                                                    attribute._attr->value.data,
                                                                    attribute._attr->value.length,
@@ -88,4 +87,9 @@ HTMLAttribute HTMLNode::getAttribute( const std::string &key) const noexcept
     }
     
     return attr;
+}
+
+CSSDeclaration HTMLNode::getDeclarationByType( mycss_property_type_t type) const noexcept
+{
+    return CSSDeclaration( modest_declaration_by_type(_modest, _node, type) );
 }

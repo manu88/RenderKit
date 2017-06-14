@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include <functional>
 
-#include <modest/declaration.h>
+
 #include <modest/render/binding.h>
 
 #include "CSSEntry.hpp"
@@ -251,10 +251,14 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     
     /* Start Style ATTR */
     
-    mycss_declaration_entry_t *borderStyle = modest_declaration_by_type(modest, htmlNode, MyCSS_PROPERTY_TYPE_BORDER_STYLE);//MyCSS_PROPERTY_TYPE_BORDER);
     
     
-    if( borderStyle)// && border->value)
+    CSSDeclaration borderStyle = node.getDeclarationByType(MyCSS_PROPERTY_TYPE_BORDER_STYLE);
+    
+    //modest_declaration_by_type(modest, htmlNode, MyCSS_PROPERTY_TYPE_BORDER_STYLE);//MyCSS_PROPERTY_TYPE_BORDER);
+    
+    
+    if( borderStyle._decl)// && border->value)
     {
         block->drawFrame = true;
     }
@@ -264,9 +268,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     if(attr_style.isValid())
     {
         
-        const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8,
-                                                                           modest->mycss_entry->declaration,
-                                                                           attr_style);
+        const mycss_declaration_entry_t *dec_entry = node.parseDeclaration(MyENCODING_UTF_8, attr_style);
         const mycss_declaration_entry_t* next = dec_entry;
         while (next)
         {
