@@ -87,6 +87,8 @@ public:
         return Iterator(  nullptr , _modest );
     }
     
+    HTMLNode getChild() const noexcept;
+    
     HTMLAttribute getAttributeByName( const std::string &name) const noexcept;
     HTMLAttribute getAttribute( const std::string &key) const noexcept;
     

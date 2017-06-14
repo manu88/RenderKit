@@ -18,8 +18,10 @@ class HTMLNodeCollection
 {
 public:
     HTMLNodeCollection( myhtml_collection_t *collection , modest_t* modest);
-    ~HTMLNodeCollection();
+
     
+    ~HTMLNodeCollection();
+
     bool isValid() const noexcept
     {
         return _collection != nullptr;

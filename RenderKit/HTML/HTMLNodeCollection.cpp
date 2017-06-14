@@ -15,11 +15,12 @@ HTMLNodeCollection::HTMLNodeCollection( myhtml_collection_t *collection , modest
 _collection(collection),
 _modest(modest)
 {
-    
+
 }
 
 HTMLNodeCollection::~HTMLNodeCollection()
 {
+    printf("Delete HTMLNodeCollection\n");
     if( _collection)
     {
         myhtml_collection_destroy( _collection);

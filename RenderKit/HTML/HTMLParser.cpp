@@ -68,11 +68,16 @@ HTMLParser::~HTMLParser()
 HTMLNodeCollection HTMLParser::getNodesByTagID(myhtml_tag_id_t tagId) const noexcept
 {
     HTMLNodeCollection collect(nullptr , _modest);
-    
+ 
+    if( !_modest)
+    {
+        return collect;
+    }
     
     mystatus_t status = MyCORE_STATUS_ERROR;
     myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, tagId, &status);
     
+    printf("Collection size %zi \n" , c->length);
     if( status)
     {
         collect._collection = c;
@@ -84,52 +89,21 @@ HTMLNodeCollection HTMLParser::getNodesByTagID(myhtml_tag_id_t tagId) const noex
 std::string HTMLParser::getTitle() const
 {
     std::string ret;
-    
-    
+
     HTMLNodeCollection titleCollect = getNodesByTagID( MyHTML_TAG_TITLE );
     
-    if( titleCollect.isValid() && titleCollect.getSize() )
+    if (titleCollect.isValid() && titleCollect.getSize() )
     {
-        const HTMLNode textNode =  titleCollect.at(0);
-        assert(textNode.isValid());
+        const HTMLNode nText = titleCollect.at(0).getChild();
         
-        if(textNode.isValid())
-        {
-            if(textNode.hasText())
-            {
-                
-                return textNode.getText();
-            }
+        if( nText.isValid() && nText.hasText())
+        {   
+            return nText.getText();
         }
     }
     
+    return "";
     
-    return ret;
-    /*
-    
-    mystatus_t status = MyCORE_STATUS_ERROR;
-    myhtml_collection_t *collec = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_TITLE, &status);
-    HTMLNodeCollection collection(collec);
-    
-    if(status ==0 && collection.isValid() && collection._collection->list && collection.getSize())
-    {
-        myhtml_tree_node_t *text_node = myhtml_node_child( collection._collection->list[0]);
-        
-        if(text_node)
-        {
-            const char* text = myhtml_node_text(text_node, NULL);
-            
-            if(text)
-            {
-                //myhtml_collection_destroy(collection);
-                return text;
-            }
-        }
-    }
-     
-    
-    return ret;
-     */
 }
 
 myhtml_tree_t * HTMLParser::parse_html(const char* data, size_t data_size)
@@ -145,7 +119,7 @@ myhtml_tree_t * HTMLParser::parse_html(const char* data, size_t data_size)
     assert(status == 0);
     
     myhtml_callback_tree_node_insert_set(tree, modest_glue_callback_myhtml_insert_node, _modest);
-    //myhtml_callback_tree_node_insert_set(tree, cai, cai_ctx);
+
     status = myhtml_parse(tree, MyENCODING_UTF_8, data, data_size);
     assert(status == 0);
     
@@ -222,33 +196,29 @@ bool HTMLParser::parseCSS()
 {
     assert(_modest);
     
+    const HTMLNodeCollection collect = getNodesByTagID(MyHTML_TAG_STYLE);
+
     myhtml_collection_t *collection = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_STYLE, NULL);
     
-    
+    //if(collect.isValid() && collect.getSize())//
     if(collection && collection->list && collection->length)
     {
         myhtml_tree_node_t *text_node = myhtml_node_child(collection->list[0]);
-        
+        //const HTMLNode textNode = collect.at(0);
         bool ret = false;
         
+        //if(textNode.isValid())
         if(text_node)
         {
             
             const char* cssStyle = myhtml_node_text(text_node, NULL);
-            printf("Style : '%s' \n" , cssStyle);
-            if( cssStyle )
-            {
-                _modest->mycss_entry = parseCSS( cssStyle, strlen( cssStyle));
-                
-                
-                ret = _modest->mycss_entry != nullptr;
-                
-                
-                
-            }
+            //const std::string &cssTxt = textNode.getText();
             
             
-            
+            //_modest->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
+            _modest->mycss_entry = parseCSS( cssStyle, strlen(cssStyle) );
+            ret = _modest->mycss_entry != nullptr;
+
         }
         myhtml_collection_destroy(collection);
         return ret;
@@ -266,16 +236,17 @@ bool HTMLParser::render()
 {
     if( _render)
     {
-        modest_render_tree_clean_all(_render);
+        //modest_render_tree_clean_all(_render);
         //modest_render_tree_destroy(_render , true);
         //_render = nullptr;
     }
     else
     {
         _render = modest_render_tree_create();
+        assert(modest_render_tree_init( _render ) == 0);
     }
     
-    assert(modest_render_tree_init( _render ) == 0);
+    
     
     _renderNode = modest_render_binding( _modest, _render, _modest->myhtml_tree);
     

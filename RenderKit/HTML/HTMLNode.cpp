@@ -34,7 +34,11 @@ std::string HTMLNode::getText() const noexcept
     return std::string();
 }
 
-
+HTMLNode HTMLNode::getChild() const noexcept
+{
+    assert(isValid());
+    return HTMLNode( myhtml_node_child(_node) , _modest);
+}
 
 const mycss_declaration_entry_t* HTMLNode::parseDeclaration(myencoding_t encoding ,
                                                             mycss_declaration_t* declaration,
