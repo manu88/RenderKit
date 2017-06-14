@@ -321,6 +321,7 @@
 		596D49A91EF138DF0011158B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49A81EF138DF0011158B /* main.cpp */; };
 		596D49AC1EF1398C0011158B /* UnitTestClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49AA1EF1398C0011158B /* UnitTestClass.cpp */; };
 		596D49AF1EF139D80011158B /* TestElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49AD1EF139D80011158B /* TestElement.cpp */; };
+		596D49B21EF13E340011158B /* TestHTMLAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B01EF13E340011158B /* TestHTMLAttribute.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -550,6 +551,8 @@
 		596D49AB1EF1398C0011158B /* UnitTestClass.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = UnitTestClass.hpp; path = UnitTests/UnitTestClass.hpp; sourceTree = SOURCE_ROOT; };
 		596D49AD1EF139D80011158B /* TestElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestElement.cpp; sourceTree = "<group>"; };
 		596D49AE1EF139D80011158B /* TestElement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestElement.hpp; sourceTree = "<group>"; };
+		596D49B01EF13E340011158B /* TestHTMLAttribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestHTMLAttribute.cpp; sourceTree = "<group>"; };
+		596D49B11EF13E340011158B /* TestHTMLAttribute.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestHTMLAttribute.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -1133,6 +1136,8 @@
 				596D49A81EF138DF0011158B /* main.cpp */,
 				596D49AA1EF1398C0011158B /* UnitTestClass.cpp */,
 				596D49AB1EF1398C0011158B /* UnitTestClass.hpp */,
+				596D49B01EF13E340011158B /* TestHTMLAttribute.cpp */,
+				596D49B11EF13E340011158B /* TestHTMLAttribute.hpp */,
 				596D49AD1EF139D80011158B /* TestElement.cpp */,
 				596D49AE1EF139D80011158B /* TestElement.hpp */,
 			);
@@ -2456,6 +2461,7 @@
 				596D49921EF1389B0011158B /* begin.c in Sources */,
 				596D49931EF1389B0011158B /* state.c in Sources */,
 				596D49941EF1389B0011158B /* entry.c in Sources */,
+				596D49B21EF13E340011158B /* TestHTMLAttribute.cpp in Sources */,
 				596D49951EF1389B0011158B /* thread.c in Sources */,
 				596D49961EF1389B0011158B /* raw_property.c in Sources */,
 				596D49971EF1389B0011158B /* detect.c in Sources */,

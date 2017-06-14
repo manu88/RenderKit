@@ -9,15 +9,21 @@
 #include <stdio.h>
 #include <assert.h>
 #include "UnitTestClass.hpp"
+
+
 #include "TestElement.hpp"
+#include "TestHTMLAttribute.hpp"
 
 int main(int argc, const char * argv[])
 {
     
     
     UnitTestClass::addTest( new TestElement() );
+    UnitTestClass::addTest( new TestHTMLAttribute() );
     
-    assert(UnitTestClass::runTests());
+    UnitTestClass::runTests();
+
+    UnitTestClass::clear();
     
     return 0;
 }
