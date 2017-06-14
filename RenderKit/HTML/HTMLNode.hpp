@@ -27,14 +27,15 @@ public:
     
     class Iterator : public std::iterator<std::forward_iterator_tag, HTMLNode>
     {
-    public:
+        friend class HTMLNode;
+    private:
         Iterator( myhtml_tree_node_t *node , modest_t* modest) :
         _modest(modest),
         _node(node)
         {
             
         }
-        
+    public:
         bool operator!=( const Iterator& rhs)
         {
             return _node != rhs._node;

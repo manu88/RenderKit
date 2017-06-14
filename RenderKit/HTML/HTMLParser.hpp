@@ -15,8 +15,6 @@
 #include <modest/finder/finder.h> // modest_finder_t
 #include <modest/finder/myosi.h> // modest_finder_thread_t
 
-
-
 class HTMLParser
 {
 public:
@@ -38,6 +36,7 @@ public:
     modest_finder_t* _finder;
     modest_finder_thread_t *_finderThread;
     modest_render_tree_node_t * _renderNode;
+    modest_render_tree_t *_render;
     
 private:
     myhtml_tree_t * parse_html(const char* data, size_t data_size);

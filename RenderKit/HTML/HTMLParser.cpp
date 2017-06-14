@@ -20,7 +20,8 @@
 
 HTMLParser::HTMLParser():
 _finder     ( nullptr ),
-_renderNode ( nullptr )
+_renderNode ( nullptr ),
+_render     ( nullptr )
 {
     _modest = modest_create();
     assert(_modest);
@@ -80,6 +81,7 @@ std::string HTMLParser::getTitle() const
             
             if(text)
             {
+                myhtml_collection_destroy(collection);
                 return text;
             }
         }
@@ -185,20 +187,29 @@ bool HTMLParser::parseCSS()
     {
         myhtml_tree_node_t *text_node = myhtml_node_child(collection->list[0]);
         
+        bool ret = false;
+        
         if(text_node)
         {
+            
             const char* cssStyle = myhtml_node_text(text_node, NULL);
             printf("Style : '%s' \n" , cssStyle);
             if( cssStyle )
             {
                 _modest->mycss_entry = parseCSS( cssStyle, strlen( cssStyle));
                 
-                return _modest->mycss_entry != nullptr;
-                //mycss_entry_
+                
+                ret = _modest->mycss_entry != nullptr;
+                
+                
                 
             }
             
+            
+            
         }
+        myhtml_collection_destroy(collection);
+        return ret;
     }
      // no syle node found
     
@@ -211,11 +222,20 @@ bool HTMLParser::parseCSS()
 
 bool HTMLParser::render()
 {
+    if( _render)
+    {
+        modest_render_tree_clean_all(_render);
+        //modest_render_tree_destroy(_render , true);
+        //_render = nullptr;
+    }
+    else
+    {
+        _render = modest_render_tree_create();
+    }
     
-    modest_render_tree_t *render = modest_render_tree_create();
-    assert(modest_render_tree_init(render) == 0);
+    assert(modest_render_tree_init( _render ) == 0);
     
-    _renderNode = modest_render_binding( _modest, render, _modest->myhtml_tree);
+    _renderNode = modest_render_binding( _modest, _render, _modest->myhtml_tree);
     
     return _renderNode != nullptr ;
 }

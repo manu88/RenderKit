@@ -36,10 +36,10 @@ public:
     static void clear()
     {
         std::for_each(_testList.begin(), _testList.end(), [](UnitTestClass* test)
-                      {
-                          delete test;
-                          test = nullptr;
-                      });
+        {
+            delete test;
+            test = nullptr;
+        });
         
         _testList.clear();
     }

@@ -19,8 +19,9 @@ bool TestHTMLNode::start()
     
     
     
-    for (const HTMLNode& c : node )
+    for (const HTMLNode& c: node )
     {
+        (void)c;
         assert(false);
     }
     
