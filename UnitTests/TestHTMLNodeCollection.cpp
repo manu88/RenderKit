@@ -10,7 +10,7 @@
 #include "HTMLNodeCollection.hpp"
 bool TestHTMLNodeCollection::start()
 {
-    HTMLNodeCollection c1(nullptr);
+    HTMLNodeCollection c1(nullptr , nullptr);
     
     assert(!c1.isValid());
     

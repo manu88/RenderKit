@@ -67,7 +67,7 @@ HTMLParser::~HTMLParser()
 
 HTMLNodeCollection HTMLParser::getNodesByTagID(myhtml_tag_id_t tagId) const noexcept
 {
-    HTMLNodeCollection collect(nullptr);
+    HTMLNodeCollection collect(nullptr , _modest);
     
     
     mystatus_t status = MyCORE_STATUS_ERROR;
@@ -86,20 +86,19 @@ std::string HTMLParser::getTitle() const
     std::string ret;
     
     
-    HTMLNodeCollection titleCollect = getNodesByTagID(MyHTML_TAG_TITLE);
+    HTMLNodeCollection titleCollect = getNodesByTagID( MyHTML_TAG_TITLE );
     
     if( titleCollect.isValid() && titleCollect.getSize() )
     {
-        myhtml_tree_node_t *text_node = myhtml_node_child( titleCollect._collection->list[0]);
+        const HTMLNode textNode =  titleCollect.at(0);
+        assert(textNode.isValid());
         
-        if(text_node)
+        if(textNode.isValid())
         {
-            const char* text = myhtml_node_text(text_node, NULL);
-            
-            if(text)
+            if(textNode.hasText())
             {
-                //myhtml_collection_destroy(collection);
-                return text;
+                
+                return textNode.getText();
             }
         }
     }

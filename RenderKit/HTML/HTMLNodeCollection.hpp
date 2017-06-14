@@ -10,11 +10,14 @@
 #define HTMLNodeCollection_hpp
 
 #include <myhtml/myosi.h>
+#include <modest/myosi.h> // modest_t
+#include "HTMLNode.hpp"
+
 
 class HTMLNodeCollection
 {
 public:
-    HTMLNodeCollection( myhtml_collection_t *collection);
+    HTMLNodeCollection( myhtml_collection_t *collection , modest_t* modest);
     ~HTMLNodeCollection();
     
     bool isValid() const noexcept
@@ -23,8 +26,12 @@ public:
     }
     
     size_t getSize() const noexcept;
+    HTMLNode at( size_t index) const noexcept;
     
     myhtml_collection_t *_collection;
+    modest_t *_modest;
+    
+    
 };
 
 #endif /* HTMLNodeCollection_hpp */

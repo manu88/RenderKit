@@ -11,8 +11,9 @@
 #include "HTMLNodeCollection.hpp"
 
 
-HTMLNodeCollection::HTMLNodeCollection( myhtml_collection_t *collection):
-_collection(collection)
+HTMLNodeCollection::HTMLNodeCollection( myhtml_collection_t *collection , modest_t* modest):
+_collection(collection),
+_modest(modest)
 {
     
 }
@@ -32,4 +33,11 @@ size_t HTMLNodeCollection::getSize() const noexcept
     assert(isValid());
 
     return _collection->length;
+}
+
+HTMLNode HTMLNodeCollection::at( size_t index) const noexcept
+{
+    assert(isValid());
+    
+    return HTMLNode( _collection->list[index] , _modest );
 }
