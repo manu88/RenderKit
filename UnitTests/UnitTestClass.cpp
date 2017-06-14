@@ -34,3 +34,23 @@ bool UnitTestClass::run()
     
     return true;
 }
+
+/*static*/ bool UnitTestClass::runTests()
+{
+    UnitTestClass* t = nullptr;
+    
+    while ( !_testList.empty()  )
+    {
+        
+        t = _testList.back();
+        if(t)
+        {
+            t->run();
+            _testList.pop_back();
+            delete t;
+        }
+        
+    }
+    
+    return true;
+}

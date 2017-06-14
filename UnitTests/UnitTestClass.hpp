@@ -31,17 +31,7 @@ public:
         _testList.push_back(test);
     }
     
-    static bool runTests()
-    {
-        for( UnitTestClass* t : _testList)
-        {
-            if(!t->run())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    static bool runTests();
     
     static void clear()
     {

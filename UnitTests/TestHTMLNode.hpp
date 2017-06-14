@@ -11,8 +11,6 @@
 
 #include "UnitTestClass.hpp"
 
-
-
 class TestHTMLNode : public UnitTestClass
 {
 public:
