@@ -12,6 +12,7 @@
 #include <functional>
 #include <modest/declaration.h>
 
+#include "CSSEntry.hpp"
 #include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
 #include "HTMLParser.hpp"
@@ -32,14 +33,10 @@ static int is_empty(const char *s)
 
 HTMLRenderer::HTMLRenderer():
 _root(nullptr)
-{
-    
-}
+{}
 
 HTMLRenderer::~HTMLRenderer()
-{
-    
-}
+{}
 
 
 bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
@@ -92,16 +89,11 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             
         }
         
-        
         if(node->child)
         {
             depth++;
             node = node->child;
-            
-            
-            
-            //
-            
+
             HTMLBlockElement* p = current;
             current = new HTMLBlockElement;
             //current->size = p->size;
@@ -123,7 +115,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             
             HTMLBlockElement* parent = current->_parent;
             current = new HTMLBlockElement;
-            //current->size = parent->size;
+
             current->_parent = parent;
             parent->_children.push_back(current);
         }
@@ -131,8 +123,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
     
     
     _root->size = { (float)viewPortSize.width  , (float)viewPortSize.height , false , false};
-    
-    
+
     return computeTree();
 }
 
@@ -215,17 +206,19 @@ void HTMLRenderer::printBlockTree() const
 }
 
 
-bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent)
+bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNode& node )
 {
-    myhtml_tree_node_t* htmlNode = node._node;
-    
-    assert(block);
-    assert(block->_parent);
-    
-    assert(parent);
-    assert(modest);
-    assert(htmlNode);
 
+    assert(block);
+    assert(block->_parent); // just checking tree consistency
+    assert(node.isValid());
+    //assert(parentNode.isValid());
+    assert(modest);
+    
+
+    myhtml_tree_node_t* htmlNode = node._node;
+    assert(htmlNode);
+    
     block->tag = node.getTagName();
     printf(" %s" , node.getTagName().c_str());
 
@@ -267,7 +260,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
 
             if( next->type == MyCSS_PROPERTY_TYPE_WIDTH)
             {
-                block->size.width = parseBlockWidth(next);
+                block->size.width =  CSSEntry::parseBlockWidth(next);
                 if( next->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
                 {
                     //printf(" in pixels ");
@@ -283,7 +276,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_HEIGHT)
             {
-                block->size.height = parseBlockHeight(next);
+                block->size.height = CSSEntry::parseBlockHeight(next);
                 
                 if( next->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
                 {
@@ -303,7 +296,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
             }
             else if( next->type == MyCSS_PROPERTY_TYPE_BACKGROUND)
             {
-                const GXColor col =  parseBackgroundColor(next);
+                const GXColor col =  CSSEntry::parseBackgroundColor(next);
                 
                 block->backgroundColor = col;
             }
@@ -378,9 +371,8 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
             
             block->type = HTMLBlockElement::Block;
             
-            if(addChild(block, modest, htmlNode , node->parent))
+            if( addChild(block, modest, htmlNode ) )
             {
-            
                 if( !block->text.empty())
                 {
                     //printf(" text '%s' ",block->text.c_str() );
@@ -427,125 +419,6 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
 
-float HTMLRenderer::parseFloatIntAttribute( const mycss_declaration_entry_t* node )
-{
-    assert(node);
-    float retSize = -1;
 
-    mycss_values_length_t* val = (mycss_values_length_t*) node->value;
-    
-    if( val->is_float)
-    {
-        const float *v = (float*) node->value;
-        retSize = *v;
-        
-    }
-    else
-    {
-        const int *v = (int*) node->value;
-        retSize = (float)*v;
-        
-    }
-    
-    
-    return retSize;
-}
-float  HTMLRenderer::parseBlockWidth( const mycss_declaration_entry_t* node)
-{
-    assert(node);
-
-    
-    if( node->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
-    {
-        //printf(" in pixels ");
-    }
-    else if( node->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
-    {
-        //printf(" in percents ");
-    }
-    
-    return parseFloatIntAttribute(node);
-}
-
-float HTMLRenderer::parseBlockHeight( const mycss_declaration_entry_t* node)
-{
-    assert(node);
-    
-    if( node->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
-    {
-        //printf(" in pixels ");
-    }
-    else if( node->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
-    {
-        //printf(" in percents ");
-    }
-    
-    return parseFloatIntAttribute(node);
-}
-
-GXColor HTMLRenderer::parseBackgroundColor( const mycss_declaration_entry_t* node)
-{
-    assert(node);
-    GXColor retColor = GXColorInvalid;
-    
-    mycss_values_background_list_t *list =(mycss_values_background_list_t *) node->value;
-    
-    for(size_t i = 0; i < list->entries_length; i++)
-    {
-        mycss_values_background_t* bg = &list->entries[i];
-
-        if(bg->color)
-        {
-            if( bg->color->value_type == MyCSS_PROPERTY_VALUE__COLOR)
-            {
-                mycss_values_color_t* colorVal = (mycss_values_color_t*)bg->color->value;
-                
-                if( colorVal->type == MyCSS_VALUES_COLOR_TYPE_NAMED)
-                {
-                    size_t length;
-                    const char *name = mycss_values_color_name_by_id(colorVal->value.name_id, &length);
-                    
-                    if( CSSColor::ColorsNames.count( name))
-                    {
-                        retColor = CSSColor::ColorsNames.at(name);
-                    }
-                    else
-                    {
-                        assert(false);// color to add to ColorsNames
-                    }
-                }
-                else if( colorVal->type == MyCSS_VALUES_COLOR_TYPE_RGBA)
-                {
-                    if(colorVal->type_value == MyCSS_VALUES_COLOR_TYPE_VALUE_PERCENTAGE)
-                    {
-                        printf("Color percent \n");
-                        assert(false); // to do :)
-                    }
-                    else if(colorVal->type_value == MyCSS_VALUES_COLOR_TYPE_VALUE_NUMBER)
-                    {
-                        auto convValueCol = [](mycss_values_number_t& v)
-                        {
-                            return (float) v.is_float? v.value.f : v.value.i /255.f;
-                        };
-                        
-                        retColor = GXColorMake( convValueCol(colorVal->value.rgba_number.r),
-                                               convValueCol(colorVal->value.rgba_number.g),
-                                               convValueCol(colorVal->value.rgba_number.b),
-                                               convValueCol(colorVal->value.rgba_number.alpha.value.number)
-                                               //colorVal->value.rgba_number.alpha.value.number.value.i / 255.f
-                                               );
-                    }
-                }
-            }
-            else
-            {
-                assert(false);
-                
-            }
-        }
-    }
-    
-    return retColor;
-}
 
 

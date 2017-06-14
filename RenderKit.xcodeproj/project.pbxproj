@@ -161,6 +161,8 @@
 		595B965E1EED3B1B00B366CC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965D1EED3B1B00B366CC /* main.cpp */; };
 		595B96611EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		595B96621EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
+		596D48D61EF129A40011158B /* CSSEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48D41EF129A40011158B /* CSSEntry.cpp */; };
+		596D48D71EF129A40011158B /* CSSEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48D41EF129A40011158B /* CSSEntry.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -372,6 +374,8 @@
 		595B965F1EED40F500B366CC /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		595B96601EED40F500B366CC /* Element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
 		596D48CE1EF126160011158B /* CSSColors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSColors.hpp; sourceTree = "<group>"; };
+		596D48D41EF129A40011158B /* CSSEntry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSSEntry.cpp; sourceTree = "<group>"; };
+		596D48D51EF129A40011158B /* CSSEntry.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSEntry.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -956,6 +960,8 @@
 				595B96601EED40F500B366CC /* Element.hpp */,
 				593640161EEC472300A96EC8 /* CSSParser.cpp */,
 				593640171EEC472300A96EC8 /* CSSParser.hpp */,
+				596D48D41EF129A40011158B /* CSSEntry.cpp */,
+				596D48D51EF129A40011158B /* CSSEntry.hpp */,
 				59B32C131EEE591C0002846B /* HTMLAttribute.cpp */,
 				59B32C141EEE591C0002846B /* HTMLAttribute.hpp */,
 				59CBC6991EE18F4500BC2D67 /* HTMLTree.cpp */,
@@ -2020,6 +2026,7 @@
 				59363FCC1EEC439E00A96EC8 /* parser_url.c in Sources */,
 				59363FCD1EEC439E00A96EC8 /* default.c in Sources */,
 				59363FCE1EEC439E00A96EC8 /* serialization.c in Sources */,
+				596D48D71EF129A40011158B /* CSSEntry.cpp in Sources */,
 				59363FCF1EEC439E00A96EC8 /* image.c in Sources */,
 				59363FD01EEC439E00A96EC8 /* modest.c in Sources */,
 				59363FD11EEC439E00A96EC8 /* tokenizer_doctype.c in Sources */,
@@ -2138,6 +2145,7 @@
 				5978CF511EDF3C9F00E59956 /* declaration.c in Sources */,
 				5978CFB31EDF3C9F00E59956 /* parser_text_decoration.c in Sources */,
 				5978D0441EDF3CA000E59956 /* parser_end.c in Sources */,
+				596D48D61EF129A40011158B /* CSSEntry.cpp in Sources */,
 				5978D0011EDF3CA000E59956 /* os_2.c in Sources */,
 				59B32C111EED708D0002846B /* HTMLRenderer.cpp in Sources */,
 				5978CF641EDF3C9F00E59956 /* raw.c in Sources */,

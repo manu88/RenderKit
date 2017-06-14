@@ -36,14 +36,11 @@ public:
 private:
     
     bool computeTree();
-    bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node , modest_render_tree_node_t* parent);
+    bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node );
     bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     
-    GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
     
-    float parseFloatIntAttribute( const  mycss_declaration_entry_t* node );
-    float parseBlockWidth( const mycss_declaration_entry_t* node);
-    float parseBlockHeight( const mycss_declaration_entry_t* node);
+    
     
     
     
