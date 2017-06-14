@@ -54,7 +54,7 @@ bool HTMLRenderer::prepare(Document &doc)
         assert(modest_render_tree_init( _renderTree ) == 0);
     }
     
-    doc._renderNode = modest_render_binding( doc._modest, _renderTree, doc._modest->myhtml_tree);
+    doc._renderNode = modest_render_binding( doc.getModest(), _renderTree, doc.getModest()->myhtml_tree);
     
     return doc._renderNode != nullptr ;
 }
@@ -63,7 +63,7 @@ bool HTMLRenderer::prepare(Document &doc)
 bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
 {
     printf("HTMLRenderer::render\n");
-    assert(doc._modest);
+    assert(doc.getModest());
     assert(viewPortSize.height > 0 && viewPortSize.width > 0);
     
     if( _root)
@@ -84,7 +84,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
         /* We skip html & body nodes */
         if( node->html_node)
         {
-            const char *tag = myhtml_tag_name_by_id( doc._modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
+            const char *tag = myhtml_tag_name_by_id( doc.getModest()->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
             if(  strcmp(tag, "html") == 0 || strcmp(tag, "body") == 0)
             {
                 node = node->child;
@@ -101,7 +101,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
             _root = current;
         }
         
-        if(node_serialization(current , doc._modest, node ))
+        if(node_serialization(current , doc.getModest(), node ))
         {
             
         }
@@ -408,12 +408,5 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
     
     return true;
 }
-
-
-/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
-
-/* **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** **** */
-
-
 
 

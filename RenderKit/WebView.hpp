@@ -26,9 +26,9 @@ public:
     std::string getTitle() const;
 
     bool refresh();
-    bool setDocument( Document &);
+    bool setDocument( Document *);
     
-    Document _doc;
+    
     
 private:
     bool handleFocus() override
@@ -40,6 +40,7 @@ private:
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
+    Document *_doc;
     HTMLRenderer _renderer;
 };
 

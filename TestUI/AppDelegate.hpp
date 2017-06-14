@@ -25,6 +25,8 @@ protected:
     
     WebView _webView;
     HTMLParser _parser;
+    
+    Document *doc;
 };
 
 #endif /* AppDelegate_hpp */

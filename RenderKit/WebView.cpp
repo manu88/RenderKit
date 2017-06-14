@@ -11,7 +11,8 @@
 #include "HTMLParser.hpp"
 
 
-WebView::WebView()
+WebView::WebView():
+_doc(nullptr)
 {
     background = GXColors::White;
 }
@@ -22,24 +23,24 @@ WebView::~WebView()
 
 std::string WebView::getTitle() const
 {
-    return _doc.getTitle();
+    return _doc->getTitle();
 }
 
 
 bool WebView::refresh()
 {
-    return setDocument(_doc);
+    return setDocument( _doc );
 }
 
-bool WebView::setDocument( Document &doc)
+bool WebView::setDocument( Document *doc)
 {
-
+    _doc = doc;
     bool ret = false;
     
-    if( _renderer.prepare(doc))
+    if( _renderer.prepare(*doc))
     {
         
-        assert(_renderer.render( getSize(), doc));
+        assert(_renderer.render( getSize(), *doc));
         
         _renderer.printBlockTree();
         

@@ -11,13 +11,49 @@
 #include "HTMLNode.hpp"
 
 Document::Document():
-_modest(nullptr),
 _renderNode(nullptr)
 {
-    _modest = modest_create();
-    assert(_modest);
-    assert(modest_init(_modest) == 0);
     
+    _modest.reset(new MWrapper() );
+    
+
+}
+
+Document::Document(Document& )
+{
+    assert(false);// to investigate ...
+}
+
+Document& Document::operator=( const Document &rhs)
+{
+    _modest = rhs._modest;
+    return *this;
+}
+
+Document::~Document()
+{
+    /*
+    if( _modest)
+    {
+        
+        mycss_t *mycss = _modest->mycss_entry->mycss;
+        mycss_entry_destroy( _modest->mycss_entry, true);
+        mycss_destroy(mycss, true);
+        
+        myhtml_t* myhtml = _modest->myhtml_tree->myhtml;
+        myhtml_tree_destroy( _modest->myhtml_tree);
+        myhtml_destroy(myhtml);
+        
+        modest_clean(_modest);
+        modest_destroy(_modest , true);
+        _modest = nullptr;
+    }
+     */
+}
+
+bool Document::isValid() const noexcept
+{
+    return _modest.get();
 }
 
 std::string Document::getTitle() const
@@ -42,15 +78,17 @@ std::string Document::getTitle() const
 
 HTMLNodeCollection Document::getNodesByTagID(myhtml_tag_id_t tagId) const noexcept
 {
-    HTMLNodeCollection collect(nullptr , _modest);
+    assert(isValid());
     
-    if( !_modest)
+    HTMLNodeCollection collect(nullptr , _modest.get()->_modest);
+    
+    if( !_modest.get())
     {
         return collect;
     }
     
     mystatus_t status = MyCORE_STATUS_ERROR;
-    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, tagId, &status);
+    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( _modest.get()->_modest->myhtml_tree, NULL, tagId, &status);
     
     if( status)
     {

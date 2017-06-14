@@ -8,7 +8,7 @@
 
 #include <assert.h>
 #include "HTMLNode.hpp"
-
+#include <modest/modest.h> // modest
 
 std::string HTMLNode::getTagName() const noexcept
 {

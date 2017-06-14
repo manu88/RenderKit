@@ -33,13 +33,7 @@ public:
     bool parseContent(Document&, const std::string &buf);
     bool parseContent(Document&, const char* buf , size_t len);
     
-
-    
-    
-    //HTMLNodeCollection getNodesByTagID(myhtml_tag_id_t tagId) const noexcept;
-    
     mycss_t* _cssParser;
-    modest_t * X_modest;
     modest_finder_t* _finder;
     modest_finder_thread_t *_finderThread;
     

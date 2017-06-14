@@ -21,9 +21,13 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test2.html";
     const std::string html = FileSystem::getFileText( file);
     
-    assert( _parser.parseContent(_webView._doc, html));
     
-    if(_webView.setDocument( _webView._doc))
+    doc = new Document;
+    
+    
+    assert( _parser.parseContent(*doc, html));
+    
+    if(_webView.setDocument( doc))
     {
         
     }
@@ -38,5 +42,5 @@ void AppDelegate::applicationDidLoad( CLApplication* app)
 
 void AppDelegate::applicationWillStop( CLApplication* app)
 {
-    
+    delete doc;
 }

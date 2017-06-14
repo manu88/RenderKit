@@ -10,19 +10,37 @@
 #define Document_hpp
 
 #include <string>
+#include <memory> // shared_ptr
+
 #include <modest/myosi.h> // modest_t
 #include <modest/render/tree_node.h> //  modest_render_tree_node_t
+
 #include "HTMLNodeCollection.hpp"
+#include "MWrapper.hpp"
+
 class Document
 {
 public:
     Document();
+    ~Document();
+    
+    Document(Document&);
+    Document& operator=( const Document &);
+    
     std::string getTitle() const;
     
+    bool isValid() const noexcept;
     
     HTMLNodeCollection getNodesByTagID(myhtml_tag_id_t tagId) const noexcept;
     
-    modest_t *_modest;
+    modest_t* getModest() const
+    {
+        return _modest.get()->_modest;
+    }
+    
+
+    std::shared_ptr<MWrapper> _modest;
+    
     modest_render_tree_node_t * _renderNode;
 };
 
