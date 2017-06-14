@@ -198,29 +198,24 @@ bool HTMLParser::parseCSS()
     
     const HTMLNodeCollection collect = getNodesByTagID(MyHTML_TAG_STYLE);
 
-    myhtml_collection_t *collection = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_STYLE, NULL);
     
-    //if(collect.isValid() && collect.getSize())//
-    if(collection && collection->list && collection->length)
+    if(collect.isValid() && collect.getSize())//
     {
-        myhtml_tree_node_t *text_node = myhtml_node_child(collection->list[0]);
-        //const HTMLNode textNode = collect.at(0);
+        
+        const HTMLNode textNode = collect.at(0).getChild();
+        
         bool ret = false;
         
-        //if(textNode.isValid())
-        if(text_node)
+        if(textNode.isValid() && textNode.hasText())
         {
+            const std::string &cssTxt = textNode.getText();
             
-            const char* cssStyle = myhtml_node_text(text_node, NULL);
-            //const std::string &cssTxt = textNode.getText();
+            _modest->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
             
-            
-            //_modest->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
-            _modest->mycss_entry = parseCSS( cssStyle, strlen(cssStyle) );
             ret = _modest->mycss_entry != nullptr;
 
         }
-        myhtml_collection_destroy(collection);
+
         return ret;
     }
      // no syle node found

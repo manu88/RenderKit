@@ -12,6 +12,7 @@
 
 
 #include "TestElement.hpp"
+#include "TestDocument.hpp"
 #include "TestHTMLAttribute.hpp"
 #include "testHTMLNode.hpp"
 #include "testHTMLNodeCollection.hpp"
@@ -19,7 +20,7 @@
 int main(int argc, const char * argv[])
 {
     
-    
+    UnitTestClass::addTest( new TestDocument() );
     UnitTestClass::addTest( new TestElement() );
     UnitTestClass::addTest( new TestHTMLAttribute() );
     UnitTestClass::addTest( new TestHTMLNode() );
