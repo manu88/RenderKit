@@ -42,11 +42,11 @@ bool UnitTestClass::run()
     while ( !_testList.empty()  )
     {
         
-        t = _testList.back();
+        t = _testList.front();
         if(t)
         {
             t->run();
-            _testList.pop_back();
+            _testList.erase(_testList.begin());
             delete t;
         }
         

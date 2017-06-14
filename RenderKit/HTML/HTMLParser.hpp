@@ -15,6 +15,8 @@
 #include <modest/finder/finder.h> // modest_finder_t
 #include <modest/finder/myosi.h> // modest_finder_thread_t
 
+#include "HTMLNodeCollection.hpp"
+
 class HTMLParser
 {
 public:
@@ -30,6 +32,9 @@ public:
     bool parseContent( const char* buf , size_t len);
     
     bool render();
+    
+    
+    HTMLNodeCollection getNodesByTagID(myhtml_tag_id_t tagId) const noexcept;
     
     mycss_t* _cssParser;
     modest_t *_modest;

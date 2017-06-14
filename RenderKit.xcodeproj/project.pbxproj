@@ -320,6 +320,10 @@
 		596D49AF1EF139D80011158B /* TestElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49AD1EF139D80011158B /* TestElement.cpp */; };
 		596D49B21EF13E340011158B /* TestHTMLAttribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B01EF13E340011158B /* TestHTMLAttribute.cpp */; };
 		596D49B51EF14D710011158B /* TestHTMLNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B31EF14D710011158B /* TestHTMLNode.cpp */; };
+		596D49B81EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B61EF1971C0011158B /* HTMLNodeCollection.cpp */; };
+		596D49B91EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B61EF1971C0011158B /* HTMLNodeCollection.cpp */; };
+		596D49BA1EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49B61EF1971C0011158B /* HTMLNodeCollection.cpp */; };
+		596D49BD1EF19BF80011158B /* TestHTMLNodeCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49BB1EF19BF80011158B /* TestHTMLNodeCollection.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -551,6 +555,10 @@
 		596D49B11EF13E340011158B /* TestHTMLAttribute.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestHTMLAttribute.hpp; sourceTree = "<group>"; };
 		596D49B31EF14D710011158B /* TestHTMLNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestHTMLNode.cpp; sourceTree = "<group>"; };
 		596D49B41EF14D710011158B /* TestHTMLNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestHTMLNode.hpp; sourceTree = "<group>"; };
+		596D49B61EF1971C0011158B /* HTMLNodeCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLNodeCollection.cpp; sourceTree = "<group>"; };
+		596D49B71EF1971C0011158B /* HTMLNodeCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTMLNodeCollection.hpp; sourceTree = "<group>"; };
+		596D49BB1EF19BF80011158B /* TestHTMLNodeCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestHTMLNodeCollection.cpp; sourceTree = "<group>"; };
+		596D49BC1EF19BF80011158B /* TestHTMLNodeCollection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestHTMLNodeCollection.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -1104,6 +1112,8 @@
 				596D48EF1EF137500011158B /* HTMLRenderer.hpp */,
 				596D48F01EF137500011158B /* HTMLNode.cpp */,
 				596D48F11EF137500011158B /* HTMLNode.hpp */,
+				596D49B61EF1971C0011158B /* HTMLNodeCollection.cpp */,
+				596D49B71EF1971C0011158B /* HTMLNodeCollection.hpp */,
 			);
 			path = HTML;
 			sourceTree = "<group>";
@@ -1138,6 +1148,8 @@
 				596D49AE1EF139D80011158B /* TestElement.hpp */,
 				596D49B31EF14D710011158B /* TestHTMLNode.cpp */,
 				596D49B41EF14D710011158B /* TestHTMLNode.hpp */,
+				596D49BB1EF19BF80011158B /* TestHTMLNodeCollection.cpp */,
+				596D49BC1EF19BF80011158B /* TestHTMLNodeCollection.hpp */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -2225,6 +2237,7 @@
 				59363FAF1EEC439E00A96EC8 /* io.c in Sources */,
 				59363FB01EEC439E00A96EC8 /* FileSystem.cpp in Sources */,
 				59363FB11EEC439E00A96EC8 /* stack.c in Sources */,
+				596D49B91EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */,
 				59363FB21EEC439E00A96EC8 /* parser.c in Sources */,
 				59363FB31EEC439E00A96EC8 /* mcobject.c in Sources */,
 				596D49041EF137A00011158B /* main.cpp in Sources */,
@@ -2396,6 +2409,7 @@
 				596D49551EF1389B0011158B /* glyf.c in Sources */,
 				596D49561EF1389B0011158B /* perf.c in Sources */,
 				596D49571EF1389B0011158B /* maxp.c in Sources */,
+				596D49BA1EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */,
 				596D49581EF1389B0011158B /* shared.c in Sources */,
 				596D49591EF1389B0011158B /* init.c in Sources */,
 				596D495A1EF1389B0011158B /* loca.c in Sources */,
@@ -2432,6 +2446,7 @@
 				596D49791EF1389B0011158B /* function.c in Sources */,
 				596D497A1EF1389B0011158B /* parser.c in Sources */,
 				596D497B1EF1389B0011158B /* list.c in Sources */,
+				596D49BD1EF19BF80011158B /* TestHTMLNodeCollection.cpp in Sources */,
 				596D497C1EF1389B0011158B /* convert.c in Sources */,
 				596D497D1EF1389B0011158B /* init.c in Sources */,
 				596D497E1EF1389B0011158B /* vmtx.c in Sources */,
@@ -2600,6 +2615,7 @@
 				5978CF6B1EDF3C9F00E59956 /* mystring.c in Sources */,
 				5978CF571EDF3C9F00E59956 /* glue.c in Sources */,
 				5978D0211EDF3CA000E59956 /* token.c in Sources */,
+				596D49B81EF1971C0011158B /* HTMLNodeCollection.cpp in Sources */,
 				596D48FA1EF137500011158B /* HTMLNode.cpp in Sources */,
 				5978CFDD1EDF3C9F00E59956 /* destroy.c in Sources */,
 				5978CF521EDF3C9F00E59956 /* finder.c in Sources */,

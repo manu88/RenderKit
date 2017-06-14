@@ -18,6 +18,7 @@
 
 #include "HTMLParser.hpp"
 
+
 HTMLParser::HTMLParser():
 _finder     ( nullptr ),
 _renderNode ( nullptr ),
@@ -64,16 +65,32 @@ HTMLParser::~HTMLParser()
     }
 }
 
+HTMLNodeCollection HTMLParser::getNodesByTagID(myhtml_tag_id_t tagId) const noexcept
+{
+    HTMLNodeCollection collect(nullptr);
+    
+    
+    mystatus_t status = MyCORE_STATUS_ERROR;
+    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, tagId, &status);
+    
+    if( status)
+    {
+        collect._collection = c;
+    }
+    
+    return collect;
+}
+
 std::string HTMLParser::getTitle() const
 {
     std::string ret;
     
-    myhtml_collection_t *collection = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_TITLE, NULL);
     
+    HTMLNodeCollection titleCollect = getNodesByTagID(MyHTML_TAG_TITLE);
     
-    if(collection && collection->list && collection->length)
+    if( titleCollect.isValid() && titleCollect.getSize() )
     {
-        myhtml_tree_node_t *text_node = myhtml_node_child(collection->list[0]);
+        myhtml_tree_node_t *text_node = myhtml_node_child( titleCollect._collection->list[0]);
         
         if(text_node)
         {
@@ -81,13 +98,39 @@ std::string HTMLParser::getTitle() const
             
             if(text)
             {
-                myhtml_collection_destroy(collection);
+                //myhtml_collection_destroy(collection);
                 return text;
             }
         }
     }
     
+    
     return ret;
+    /*
+    
+    mystatus_t status = MyCORE_STATUS_ERROR;
+    myhtml_collection_t *collec = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, MyHTML_TAG_TITLE, &status);
+    HTMLNodeCollection collection(collec);
+    
+    if(status ==0 && collection.isValid() && collection._collection->list && collection.getSize())
+    {
+        myhtml_tree_node_t *text_node = myhtml_node_child( collection._collection->list[0]);
+        
+        if(text_node)
+        {
+            const char* text = myhtml_node_text(text_node, NULL);
+            
+            if(text)
+            {
+                //myhtml_collection_destroy(collection);
+                return text;
+            }
+        }
+    }
+     
+    
+    return ret;
+     */
 }
 
 myhtml_tree_t * HTMLParser::parse_html(const char* data, size_t data_size)
