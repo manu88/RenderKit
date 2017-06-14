@@ -9,72 +9,46 @@
 #include "CLApplication.hpp"
 #include "WebView.hpp"
 #include "HTMLParser.hpp"
-#include "FileSystem.hpp"
 
-WebView::WebView():
-_parser(nullptr)
+
+WebView::WebView()
 {
     background = GXColors::White;
 }
 
 WebView::~WebView()
 {
-    if( _parser)
-    {
-        delete _parser;
-    }
 }
 
 std::string WebView::getTitle() const
 {
-    return _parser->getTitle();
+    return _doc.getTitle();
 }
 
 
 bool WebView::refresh()
 {
-    if( _currentURL.empty())
-        return false;
-    
-    
-    return openFile(getCurrentURL());
+    return setDocument(_doc);
 }
 
-bool WebView::openFile( const std::string &file)
+bool WebView::setDocument( Document &doc)
 {
-    if( !_parser)
-    {
-        _parser = new HTMLParser();
-    }
-    
-    assert( _parser );
-    
-    const std::string html = FileSystem::getFileText( file);
 
-    bool ret = _parser->parseContent(html.c_str(), strlen(html.c_str()));
+    bool ret = false;
     
-    if( ret)
+    if( _renderer.prepare(doc))
     {
-        if( !_parser->render())
-        {
-            ret = false;
-        }
-        else
-        {
-            // we're ok
-            printf("Parse OK \n");
-            
-            assert(_renderer.render( getSize(), _parser));
-            
-            _currentURL = file;
-            _renderer.printBlockTree();
-            
-            CLApplication::instance()->setName( getTitle() );
-            setNeedsRedraw();
-        }
         
+        assert(_renderer.render( getSize(), doc));
+        
+        _renderer.printBlockTree();
+        
+        CLApplication::instance()->setName( getTitle() );
+        setNeedsRedraw();
+        return true;
     }
     return ret;
+
 }
 
 bool WebView::keyPressed(  const GXKey &key )
@@ -111,11 +85,7 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
     context->setFontSize(20.f);
     
-    printf("Paint %s block at %i %i " ,block->tag.c_str() , realPos.x , realPos.y);
-    
-    
-    
-    //GXSize realSize = GXSizeInvalid;
+
 
     assert(block->size.width != -1 && block->size.wPercent == false);
     
@@ -135,14 +105,13 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     
     if( block->floatProp == MyCSS_PROPERTY_FLOAT_RIGHT)
     {
-        printf("Float right");
         realPos.x = block->_parent->_xFloatRight - block->realSize.width;
         block->_parent->_xFloatRight -= block->realSize.width;
     }
     
     
     context->beginPath();
-    printf(" Add rect %i %i %i %i " , realPos.x , realPos.y , block->realSize.width , block->realSize.height);
+
     context->addRect(GXRectMake( realPos, block->realSize));
 
     context->setFillColor( block->backgroundColor);
@@ -158,7 +127,7 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     }
     
 
-    printf("\n");
+    
     
     GXPoint cPos = realPos;
     for (HTMLBlockElement* c : block->_children)

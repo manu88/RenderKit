@@ -13,6 +13,8 @@
 #include "VKView.hpp"
 #include "HTMLRenderer.hpp"
 
+#include "Document.hpp"
+
 class HTMLParser;
 
 class WebView : public VKView
@@ -24,12 +26,9 @@ public:
     std::string getTitle() const;
 
     bool refresh();
-    bool openFile( const std::string &file);
+    bool setDocument( Document &);
     
-    const std::string &getCurrentURL() const noexcept
-    {
-        return _currentURL;
-    }
+    Document _doc;
     
 private:
     bool handleFocus() override
@@ -41,9 +40,6 @@ private:
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
-    
-    std::string _currentURL;
-    HTMLParser *_parser;
     HTMLRenderer _renderer;
 };
 

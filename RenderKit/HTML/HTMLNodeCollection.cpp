@@ -20,7 +20,6 @@ _modest(modest)
 
 HTMLNodeCollection::~HTMLNodeCollection()
 {
-    printf("Delete HTMLNodeCollection\n");
     if( _collection)
     {
         myhtml_collection_destroy( _collection);

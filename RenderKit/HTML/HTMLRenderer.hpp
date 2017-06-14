@@ -14,7 +14,7 @@
 #include "Element.hpp"
 //#include "HTMLTree.hpp"
 #include "GXGeometry.hpp"
-
+#include "Document.hpp"
 class HTMLNode;
 class HTMLParser;
 
@@ -23,8 +23,8 @@ class HTMLRenderer
 public:
     HTMLRenderer();
     ~HTMLRenderer();
-    
-    bool render( const GXSize& viewPortSize, HTMLParser* );
+    bool prepare(Document &doc);
+    bool render( const GXSize& viewPortSize, Document& doc );
     
     HTMLBlockElement* getRoot() const noexcept
     {
@@ -38,11 +38,7 @@ private:
     bool addChild(HTMLBlockElement*block , modest* modest, const HTMLNode& node );
     bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     
-    
-    
-    
-    
-    
+    modest_render_tree_t *_renderTree;
     HTMLBlockElement* _root;
 };
 

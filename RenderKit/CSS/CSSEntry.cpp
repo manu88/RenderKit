@@ -36,18 +36,18 @@ float CSSEntry::parseFloatIntAttribute( const mycss_declaration_entry_t* node )
     
     return retSize;
 }
-float  CSSEntry::parseBlockWidth( const mycss_declaration_entry_t* node)
+float CSSEntry::parseBlockWidth( const mycss_declaration_entry_t* node)
 {
     assert(node);
     
     
     if( node->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
     {
-        //printf(" in pixels ");
+
     }
     else if( node->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
     {
-        //printf(" in percents ");
+
     }
     
     return parseFloatIntAttribute(node);
@@ -59,11 +59,11 @@ float CSSEntry::parseBlockHeight( const mycss_declaration_entry_t* node)
     
     if( node->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
     {
-        //printf(" in pixels ");
+
     }
     else if( node->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
     {
-        //printf(" in percents ");
+
     }
     
     return parseFloatIntAttribute(node);
@@ -104,8 +104,7 @@ GXColor CSSEntry::parseBackgroundColor( const mycss_declaration_entry_t* node)
                 {
                     if(colorVal->type_value == MyCSS_VALUES_COLOR_TYPE_VALUE_PERCENTAGE)
                     {
-                        printf("Color percent \n");
-                        assert(false); // to do :)
+                        assert(false); // Color percent to do :)
                     }
                     else if(colorVal->type_value == MyCSS_VALUES_COLOR_TYPE_VALUE_NUMBER)
                     {

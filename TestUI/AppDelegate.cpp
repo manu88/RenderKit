@@ -8,18 +8,27 @@
 
 #include "AppDelegate.hpp"
 #include "CLApplication.hpp"
+#include "FileSystem.hpp"
 
 void AppDelegate::applicationWillLoad( CLApplication* app)
 {
     app->setName("WebKit");
     
     app->setKeyboardResponder( &_webView);
-    app->pushView(&_webView);
     
-    if(_webView.openFile("/Users/manueldeneu/Documents/projets/dev/RenderKit/test2.html"))
+    app->pushView(&_webView);
+
+    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test2.html";
+    const std::string html = FileSystem::getFileText( file);
+    
+    assert( _parser.parseContent(_webView._doc, html));
+    
+    if(_webView.setDocument( _webView._doc))
     {
         
     }
+    
+    
 }
 
 void AppDelegate::applicationDidLoad( CLApplication* app)

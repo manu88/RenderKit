@@ -11,11 +11,13 @@
 
 #include <string>
 #include <modest/modest.h>
-#include <modest/render/tree_node.h>
+
 #include <modest/finder/finder.h> // modest_finder_t
 #include <modest/finder/myosi.h> // modest_finder_thread_t
 
 #include "HTMLNodeCollection.hpp"
+
+class Document;
 
 class HTMLParser
 {
@@ -26,26 +28,26 @@ public:
     HTMLParser();
     ~HTMLParser();
     
-    std::string getTitle() const;
+    //std::string getTitle() const;
     
-    bool parseContent( const std::string &buf);
-    bool parseContent( const char* buf , size_t len);
+    bool parseContent(Document&, const std::string &buf);
+    bool parseContent(Document&, const char* buf , size_t len);
     
-    bool render();
+
     
     
-    HTMLNodeCollection getNodesByTagID(myhtml_tag_id_t tagId) const noexcept;
+    //HTMLNodeCollection getNodesByTagID(myhtml_tag_id_t tagId) const noexcept;
     
     mycss_t* _cssParser;
-    modest_t *_modest;
+    modest_t * X_modest;
     modest_finder_t* _finder;
     modest_finder_thread_t *_finderThread;
-    modest_render_tree_node_t * _renderNode;
-    modest_render_tree_t *_render;
+    
+    
     
 private:
-    myhtml_tree_t * parse_html(const char* data, size_t data_size);
-    bool parseCSS();
+    myhtml_tree_t * parse_html(Document&,const char* data, size_t data_size);
+    bool parseCSS(Document&);
     mycss_entry_t * parseCSS(const char* data, size_t data_size);
     
     

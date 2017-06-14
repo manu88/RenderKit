@@ -10,7 +10,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <functional>
+
 #include <modest/declaration.h>
+#include <modest/render/binding.h>
 
 #include "CSSEntry.hpp"
 #include "CSSColors.hpp"
@@ -29,6 +31,7 @@ static int is_empty(const char *s)
 }
 
 HTMLRenderer::HTMLRenderer():
+_renderTree(nullptr),
 _root(nullptr)
 {}
 
@@ -36,13 +39,32 @@ HTMLRenderer::~HTMLRenderer()
 {}
 
 
-bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
+bool HTMLRenderer::prepare(Document &doc)
 {
-    assert(parser);
+    printf("HTMLRenderer::prepare\n");
+    if( _renderTree)
+    {
+        //modest_render_tree_clean_all(_render);
+        //modest_render_tree_destroy(_render , true);
+        //_render = nullptr;
+    }
+    else
+    {
+        _renderTree = modest_render_tree_create();
+        assert(modest_render_tree_init( _renderTree ) == 0);
+    }
+    
+    doc._renderNode = modest_render_binding( doc._modest, _renderTree, doc._modest->myhtml_tree);
+    
+    return doc._renderNode != nullptr ;
+}
+
+
+bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
+{
+    printf("HTMLRenderer::render\n");
+    assert(doc._modest);
     assert(viewPortSize.height > 0 && viewPortSize.width > 0);
-    
-    printf("Render size %i %i \n" , viewPortSize.width , viewPortSize.height);
-    
     
     if( _root)
     {
@@ -52,7 +74,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
     
     
     assert(_root == nullptr);
-    modest_render_tree_node_t* node = parser->_renderNode;
+    modest_render_tree_node_t* node = doc._renderNode;
     size_t depth = 0;
     
     
@@ -62,7 +84,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
         /* We skip html & body nodes */
         if( node->html_node)
         {
-            const char *tag = myhtml_tag_name_by_id( parser->_modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
+            const char *tag = myhtml_tag_name_by_id( doc._modest->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
             if(  strcmp(tag, "html") == 0 || strcmp(tag, "body") == 0)
             {
                 node = node->child;
@@ -79,7 +101,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
             _root = current;
         }
         
-        if(node_serialization(current , parser->_modest, node ))
+        if(node_serialization(current , doc._modest, node ))
         {
             
         }
@@ -97,13 +119,13 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
         }
         else
         {
-            while(node != parser->_renderNode && node->next == NULL)
+            while(node != doc._renderNode && node->next == NULL)
             {
                 depth--;
                 node = node->parent;
             }
             
-            if(node == parser->_renderNode)
+            if(node == doc._renderNode)
                 break;
             
             node = node->next;
@@ -125,9 +147,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, HTMLParser* parser )
 bool HTMLRenderer::computeTree()
 {
     assert(_root);
-    
-    printf("\nCompute Tree\n");
-    
+
     std::function<void(HTMLBlockElement*) > computeBlock = [&computeBlock] (HTMLBlockElement* block)
     {
         if( block->size.width == -1)
@@ -157,7 +177,6 @@ bool HTMLRenderer::computeTree()
         
         if( block->size.height == -1)
         {
-            //printf("Max Height = %f\n" , maxHeight);
             block->size.height = maxHeight;
             block->size.hPercent = false;
         }
@@ -214,8 +233,8 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     myhtml_tree_node_t* htmlNode = node._node;
     assert(htmlNode);
     
-    block->tag = node.getTagName();
-    printf(" %s" , node.getTagName().c_str());
+
+
 
     
     /* Start class ATTR */
@@ -328,7 +347,6 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block ,modest* modest, const HTMLNo
     {
         const char* imgSrc = imgAttr.getValue();
         assert(imgSrc);
-        //printf("Img res = '%s' \n" , imgSrc);
         block->src  = imgSrc;
         
     }
@@ -341,20 +359,11 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
 {
     assert(block);
     
-    modest_render_tree_node_t* n = node->parent;
-    
-    printf("\n");
-    while (n)
-    {
-        printf("\t");
-        n = n->parent;
-    }
-    printf("<");
     switch (node->type)
     {
         case MODEST_RENDER_TREE_NODE_TYPE_BLOCK:
         {
-            printf("block");
+
             HTMLNode htmlNode(node->html_node , modest );
             
             block->type = HTMLBlockElement::Block;
@@ -367,28 +376,26 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
                 }
                 if( block->backgroundColor != GXColorInvalid)
                 {
-                    printf(" backColor %f %f %f %f" ,
-                           block->backgroundColor.r , block->backgroundColor.g , block->backgroundColor.b , block->backgroundColor.a );
                 }
                 if( block->size != ESizeInvalid )
                 {
-                    printf(" size %f %f" , block->size.width , block->size.height);
+
                 }
                 if(  block->size.height == -1  )
                 {
-                    printf("No size defined\n");
+
                 }
             }
             break;
         }
         case MODEST_RENDER_TREE_NODE_TYPE_VIEWPORT:
-            printf("viewport");
+
             block->type = HTMLBlockElement::Viewport;
             
             break;
             
         case MODEST_RENDER_TREE_NODE_TYPE_ANONYMOUS:
-            printf("anonymous");
+
             break;
             
         default:
@@ -397,7 +404,7 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
     
     
     
-    printf(">");
+
     
     return true;
 }

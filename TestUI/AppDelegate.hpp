@@ -12,7 +12,7 @@
 #include "CLApplicationDelegate.hpp"
 
 #include "WebView.hpp"
-
+#include "HTMLParser.hpp"
 class AppDelegate : public CLApplicationDelegate
 {
 public:
@@ -24,7 +24,7 @@ protected:
     void applicationWillStop( CLApplication* app) override;
     
     WebView _webView;
-    
+    HTMLParser _parser;
 };
 
 #endif /* AppDelegate_hpp */

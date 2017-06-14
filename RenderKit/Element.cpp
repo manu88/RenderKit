@@ -47,17 +47,17 @@ struct ChildComparor
          2   1
          3   2
          */
-        printf("Compare %p (%x) with  %p (%x)\n " ,lhs, lhs->floatProp , rhs,rhs->floatProp);
         return false; //lhs->getZPos() > rhs->getZPos();
     }
 };
 
 void HTMLBlockElement::reorder()
 {
-    printf("Start reoder\n");
+    /*
     for( const HTMLBlockElement* c : _children)
     {
-        printf("Child %p \n" , (void*)c);
+ 
     }
     std::sort(_children.begin() , _children.end(), ChildComparor() );
+     */
 }

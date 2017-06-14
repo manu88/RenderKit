@@ -13,27 +13,19 @@
 #include <modest/finder/thread.h>
 #include <modest/render/tree.h>
 #include <modest/render/tree_node.h>
-#include <modest/render/binding.h>
+
 #include <modest/glue.h>
 
 #include "HTMLParser.hpp"
-
+#include "Document.hpp"
 
 HTMLParser::HTMLParser():
-_finder     ( nullptr ),
-_renderNode ( nullptr ),
-_render     ( nullptr )
+_finder     ( nullptr )
 {
-    _modest = modest_create();
-    assert(_modest);
-    assert(modest_init(_modest) == 0);
-    
-
     _cssParser = mycss_create();
     assert(_cssParser);
     assert(mycss_init( _cssParser ) == 0);
-    
-    
+   
 }
 
 HTMLParser::~HTMLParser()
@@ -48,6 +40,7 @@ HTMLParser::~HTMLParser()
         modest_finder_destroy(_finder, true);
         _finder = nullptr;
     }
+    /*
     if( _modest)
     {
         
@@ -63,51 +56,12 @@ HTMLParser::~HTMLParser()
         modest_destroy(_modest , true);
         _modest = nullptr;
     }
+     */
 }
 
-HTMLNodeCollection HTMLParser::getNodesByTagID(myhtml_tag_id_t tagId) const noexcept
+myhtml_tree_t * HTMLParser::parse_html(Document& doc,const char* data, size_t data_size)
 {
-    HTMLNodeCollection collect(nullptr , _modest);
- 
-    if( !_modest)
-    {
-        return collect;
-    }
-    
-    mystatus_t status = MyCORE_STATUS_ERROR;
-    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( _modest->myhtml_tree, NULL, tagId, &status);
-    
-    printf("Collection size %zi \n" , c->length);
-    if( status)
-    {
-        collect._collection = c;
-    }
-    
-    return collect;
-}
-
-std::string HTMLParser::getTitle() const
-{
-    std::string ret;
-
-    HTMLNodeCollection titleCollect = getNodesByTagID( MyHTML_TAG_TITLE );
-    
-    if (titleCollect.isValid() && titleCollect.getSize() )
-    {
-        const HTMLNode nText = titleCollect.at(0).getChild();
-        
-        if( nText.isValid() && nText.hasText())
-        {   
-            return nText.getText();
-        }
-    }
-    
-    return "";
-    
-}
-
-myhtml_tree_t * HTMLParser::parse_html(const char* data, size_t data_size)
-{
+    assert(doc._modest);
     myhtml_t* myhtml = myhtml_create();
     mystatus_t status = myhtml_init(myhtml, MyHTML_OPTIONS_DEFAULT, 1, 0);
     
@@ -118,7 +72,7 @@ myhtml_tree_t * HTMLParser::parse_html(const char* data, size_t data_size)
     
     assert(status == 0);
     
-    myhtml_callback_tree_node_insert_set(tree, modest_glue_callback_myhtml_insert_node, _modest);
+    myhtml_callback_tree_node_insert_set(tree, modest_glue_callback_myhtml_insert_node, doc._modest);
 
     status = myhtml_parse(tree, MyENCODING_UTF_8, data, data_size);
     assert(status == 0);
@@ -147,21 +101,22 @@ mycss_entry_t* HTMLParser::parseCSS(const char* data, size_t data_size)
     
 }
 
-bool HTMLParser::parseContent( const std::string &buf)
+bool HTMLParser::parseContent( Document &doc, const std::string &buf)
 {
-    return parseContent(buf.c_str(), buf.size());
+    return parseContent(doc, buf.c_str(), buf.size());
 }
 
-bool HTMLParser::parseContent( const char* buf , size_t len)
+bool HTMLParser::parseContent( Document &doc, const char* buf , size_t len)
 {
-    assert(_modest);
+    printf("HTMLParser::parseContent\n");
+    assert(doc._modest);
     
-    _modest->myhtml_tree = parse_html(buf, len);
+    doc._modest->myhtml_tree = parse_html( doc , buf, len);
     
 
-    if( parseCSS())
+    if( parseCSS( doc))
     {
-        printf("Has CSS declarations \n");
+
     }
 
     
@@ -178,25 +133,29 @@ bool HTMLParser::parseContent( const char* buf , size_t len)
     modest_finder_thread_init( _finder, _finderThread, FinderThreadsNum );
     
     /* get stylesheet */
-    mycss_stylesheet_t *stylesheet = mycss_entry_stylesheet(_modest->mycss_entry);
+    mycss_stylesheet_t *stylesheet = mycss_entry_stylesheet( doc._modest->mycss_entry );
     
     if( stylesheet)
     {
         /* comparison selectors and tree nodes */
-        status = modest_finder_thread_process(_modest, _finderThread, _modest->myhtml_tree->node_html, stylesheet->sel_list_first);
+        status = modest_finder_thread_process( doc._modest,
+                                              _finderThread,
+                                              doc._modest->myhtml_tree->node_html,
+                                              stylesheet->sel_list_first
+                                              );
         assert(status == MyCORE_STATUS_OK);
     }
     
     
 
-    return _modest->myhtml_tree;// && _modest->mycss_entry;
+    return doc._modest->myhtml_tree;// && _modest->mycss_entry;
 }
 
-bool HTMLParser::parseCSS()
+bool HTMLParser::parseCSS(Document& doc)
 {
-    assert(_modest);
+    assert(doc._modest);
     
-    const HTMLNodeCollection collect = getNodesByTagID(MyHTML_TAG_STYLE);
+    const HTMLNodeCollection collect = doc.getNodesByTagID(MyHTML_TAG_STYLE);
 
     
     if(collect.isValid() && collect.getSize())//
@@ -210,9 +169,9 @@ bool HTMLParser::parseCSS()
         {
             const std::string &cssTxt = textNode.getText();
             
-            _modest->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
+            doc._modest->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
             
-            ret = _modest->mycss_entry != nullptr;
+            ret = doc._modest->mycss_entry != nullptr;
 
         }
 
@@ -220,31 +179,10 @@ bool HTMLParser::parseCSS()
     }
      // no syle node found
     
-    _modest->mycss_entry = parseCSS( "", 0);
+    doc._modest->mycss_entry = parseCSS( "", 0);
     
     return false;
 }
 
 
-
-bool HTMLParser::render()
-{
-    if( _render)
-    {
-        //modest_render_tree_clean_all(_render);
-        //modest_render_tree_destroy(_render , true);
-        //_render = nullptr;
-    }
-    else
-    {
-        _render = modest_render_tree_create();
-        assert(modest_render_tree_init( _render ) == 0);
-    }
-    
-    
-    
-    _renderNode = modest_render_binding( _modest, _render, _modest->myhtml_tree);
-    
-    return _renderNode != nullptr ;
-}
 

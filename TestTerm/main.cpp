@@ -5,6 +5,7 @@
 #include "FileSystem.hpp"
 #include "HTMLRenderer.hpp"
 #include "HTMLParser.hpp"
+#include "Document.hpp"
 
 int main(int argc, const char * argv[])
 {
@@ -12,15 +13,16 @@ int main(int argc, const char * argv[])
     
     const std::string html = FileSystem::getFileText( argv[1]);
     
-    assert(parser.parseContent(html));
-    assert(parser.render());
+    Document doc;
+    assert(parser.parseContent( doc , html));
+    
  
-    printf("Title '%s'\n" , parser.getTitle().c_str());
+    printf("Title '%s'\n" , doc.getTitle().c_str());
     
     HTMLRenderer renderer;
-    
+    assert(renderer.prepare(doc));
     GXSize viewSize = GXSizeMake(1920, 1080);
-    assert(renderer.render( viewSize, &parser));
+    assert(renderer.render( viewSize, doc));
     
     renderer.printBlockTree();
 

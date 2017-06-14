@@ -12,6 +12,6 @@
 bool TestDocument::start()
 {
     Document doc;
-    
+    assert(doc._modest);
     return true;
 }
