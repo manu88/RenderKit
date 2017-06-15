@@ -49,11 +49,13 @@ DocumentParser::~DocumentParser()
     
 }
 
-mystatus_t serialization_callback(const char* data, size_t len, void* ctx)
+
+CSSStylesheet DocumentParser::getStyle() const noexcept
 {
-    printf("%.*s", (int)len, data);
-    return MyCORE_STATUS_OK;
+    return CSSStylesheet(stylesheet);
 }
+
+
 
 bool DocumentParser::createHTMLParser()
 {
@@ -122,72 +124,6 @@ mycss_entry_t* DocumentParser::parse_css(const char* data, size_t data_size)
 }
 
 
-void DocumentParser::get_properties_and_print(modest_t* modest, mycss_entry_t *mycss_entry , myhtml_tree_node_t* node)
-{
-    
-    //myhtml_tree_node_t* node_div =  node;//collection->list[0];
-
-    myhtml_tree_attr_t * styleAttr = myhtml_attribute_by_key( node, "style", strlen("style"));
-
-    printf("CSS stylesheet \n");
-    
-    printf("\t");
-    mycss_declaration_entry_t *padding_left = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_PADDING_LEFT);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, padding_left, MyCSS_PROPERTY_TYPE_PADDING_LEFT, serialization_callback, NULL);
-    
-    printf("\n\t");
-    mycss_declaration_entry_t *color = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_COLOR);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, color, MyCSS_PROPERTY_TYPE_COLOR, serialization_callback, NULL);
-    
-    printf("\n\t");
-    mycss_declaration_entry_t *display = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_DISPLAY);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, display, MyCSS_PROPERTY_TYPE_DISPLAY, serialization_callback, NULL);
-    
-    printf("\n\t");
-    mycss_declaration_entry_t *floatV = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_FLOAT);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, floatV, MyCSS_PROPERTY_TYPE_FLOAT, serialization_callback, NULL);
-    printf("\n");
-    
-    if( mycss_entry && styleAttr)
-    {
-        mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( mycss_entry->declaration ,
-                                                                       MyENCODING_UTF_8,
-                                                                       styleAttr->value.data,
-                                                                       styleAttr->value.length,
-                                                                       NULL);
-        if( !dec_entry)
-        {
-            printf("No tag Style attr \n");
-            return;
-        }
-        printf("Style attr : \n");
-
-        const mycss_declaration_entry_t* next = dec_entry;
-        while (next)
-        {
-            printf("\tGot declaration %i " , next->type);
-            if( next->type == MyCSS_PROPERTY_TYPE_FLOAT)
-            {
-                mycss_property_float_t floatProp =(const mycss_property_float_t) next->value_type;
-                printf(" : float " );
-                if( floatProp == MyCSS_PROPERTY_FLOAT_LEFT)
-                {
-                    printf(" left");
-                }
-                else if( floatProp == MyCSS_PROPERTY_FLOAT_RIGHT)
-                {
-                    printf(" right");
-                }
-                
-                printf("\n");
-            }
-            printf("\n");
-            next = next->next;
-        }
-    }
-    
-//    return collection;
-}
 
 bool DocumentParser::createFinder()
 {
@@ -257,14 +193,5 @@ bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
         printf("%s\n\n", css);
     }
     
-    
-
-    printf("Incoming tree:\n\t");
-    myhtml_serialization_tree_callback( doc.getModest()->myhtml_tree->node_html, serialization_callback, NULL);
-    
-    
-
-    
-
     return true;
 }

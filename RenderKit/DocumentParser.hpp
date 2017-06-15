@@ -11,7 +11,10 @@
 
 #include <modest/finder/finder.h>
 #include <modest/finder/thread.h>
+#include <mycss/myosi.h> //mycss_stylesheet_t
 #include <string>
+
+#include "CSSStylesheet.hpp"
 class Document;
 
 class DocumentParser
@@ -23,7 +26,7 @@ public:
     bool load( Document & , const char* buffer , size_t bufLen);
     
     
-    static void get_properties_and_print(modest_t* modest,mycss_entry_t *mycss_entry, myhtml_tree_node_t* node);
+    CSSStylesheet getStyle() const noexcept;
     
 private:
     myhtml_tree_t *parse_html(const char* data, size_t data_size, myhtml_callback_tree_node_f cai, modest_t* modest);

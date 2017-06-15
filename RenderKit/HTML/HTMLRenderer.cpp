@@ -12,6 +12,7 @@
 
 #include <modest/render/binding.h>
 
+#include "Constants.hpp"
 #include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
 #include "HTMLNode.hpp"
@@ -281,6 +282,11 @@ void HTMLRenderer::printBlockTree() const
     return true;
 }
 
+
+
+
+
+
 bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
 {
 
@@ -311,14 +317,15 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
     }
      */
     
-    printf("######## start Test \n");
-    DocumentParser::get_properties_and_print( node._modest,node._modest->mycss_entry,htmlNode);
+    
+    node.printCSSProperties();
+    //get_properties_and_print( node._modest,node._modest->mycss_entry,node._node);
     
     
-    printf("######## end Test \n");
+
     /* Start Style ATTR */
     
-    HTMLAttribute attr_style = node.getAttributeByName("style");
+    HTMLAttribute attr_style = node.getAttributeByName( TagNames::Style );
 
     
     if(attr_style.isValid())

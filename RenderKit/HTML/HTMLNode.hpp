@@ -97,6 +97,8 @@ public:
     CSSDeclaration parseDeclaration(myencoding_t encoding , const HTMLAttribute&) const noexcept;
     
     
+    
+    void printCSSProperties() const noexcept;
 };
 
 

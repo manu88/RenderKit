@@ -32,6 +32,7 @@ public:
     }
     
     void printBlockTree() const;
+    
 private:
     
     bool computeTree();
