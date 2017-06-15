@@ -122,49 +122,44 @@ mycss_entry_t* DocumentParser::parse_css(const char* data, size_t data_size)
 }
 
 
-myhtml_collection_t * DocumentParser::get_properties_and_print(modest_t* modest,
-                                                               myhtml_tree_t* myhtml_tree,
-                                                               mycss_entry_t *mycss_entry ,
-                                                               myhtml_tree_node_t* node)
+void DocumentParser::get_properties_and_print(modest_t* modest, mycss_entry_t *mycss_entry , myhtml_tree_node_t* node)
 {
-    myhtml_collection_t *collection = myhtml_get_nodes_by_tag_id(myhtml_tree, NULL, MyHTML_TAG_DIV, NULL);
     
-    if(collection == NULL || collection->length < 1)
-    {
-        DIE("Can't find HTML nodes\n");
-    }
-    
-    myhtml_tree_node_t* node_div =  node;//collection->list[0];
+    //myhtml_tree_node_t* node_div =  node;//collection->list[0];
 
-    myhtml_tree_attr_t * styleAttr = myhtml_attribute_by_key( node_div, "style", strlen("style"));
+    myhtml_tree_attr_t * styleAttr = myhtml_attribute_by_key( node, "style", strlen("style"));
 
     printf("CSS stylesheet \n");
     
     printf("\t");
-    mycss_declaration_entry_t *padding_left = modest_declaration_by_type(modest, node_div, MyCSS_PROPERTY_TYPE_PADDING_LEFT);
+    mycss_declaration_entry_t *padding_left = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_PADDING_LEFT);
     mycss_declaration_serialization_entry_by_type(mycss_entry, padding_left, MyCSS_PROPERTY_TYPE_PADDING_LEFT, serialization_callback, NULL);
     
     printf("\n\t");
-    mycss_declaration_entry_t *color = modest_declaration_by_type(modest, node_div, MyCSS_PROPERTY_TYPE_COLOR);
+    mycss_declaration_entry_t *color = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_COLOR);
     mycss_declaration_serialization_entry_by_type(mycss_entry, color, MyCSS_PROPERTY_TYPE_COLOR, serialization_callback, NULL);
     
     printf("\n\t");
-    mycss_declaration_entry_t *display = modest_declaration_by_type(modest, node_div, MyCSS_PROPERTY_TYPE_DISPLAY);
+    mycss_declaration_entry_t *display = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_DISPLAY);
     mycss_declaration_serialization_entry_by_type(mycss_entry, display, MyCSS_PROPERTY_TYPE_DISPLAY, serialization_callback, NULL);
     
     printf("\n\t");
-    mycss_declaration_entry_t *floatV = modest_declaration_by_type(modest, node_div, MyCSS_PROPERTY_TYPE_FLOAT);
+    mycss_declaration_entry_t *floatV = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_FLOAT);
     mycss_declaration_serialization_entry_by_type(mycss_entry, floatV, MyCSS_PROPERTY_TYPE_FLOAT, serialization_callback, NULL);
     printf("\n");
     
-    if( styleAttr)
+    if( mycss_entry && styleAttr)
     {
         mycss_declaration_entry_t *dec_entry = mycss_declaration_parse( mycss_entry->declaration ,
                                                                        MyENCODING_UTF_8,
                                                                        styleAttr->value.data,
                                                                        styleAttr->value.length,
                                                                        NULL);
-
+        if( !dec_entry)
+        {
+            printf("No tag Style attr \n");
+            return;
+        }
         printf("Style attr : \n");
 
         const mycss_declaration_entry_t* next = dec_entry;
@@ -191,59 +186,78 @@ myhtml_collection_t * DocumentParser::get_properties_and_print(modest_t* modest,
         }
     }
     
-    return collection;
+//    return collection;
 }
 
-void DocumentParser::print( Document &doc )
+bool DocumentParser::createFinder()
 {
-    
-}
-
-bool DocumentParser::load(Document &doc)
-{
-    const char *html = "<html><head><style type=\"text/css\">div {padding: 130px 3em; color: rgba(23 10 200 / 0.4) }</style></head><body><div style=\"float:right\"></div>";
-    //const char *css = "div {padding: 130px 3em; color: rgba(23 10 200 / 0.4) }";
-    
-
-    mystatus_t status = 0;
-
-    doc.getModest()->myhtml_tree = parse_html(html, strlen(html), modest_glue_callback_myhtml_insert_node, doc.getModest());
-    
-    
-    
-    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( doc.getModest()->myhtml_tree, NULL, MyHTML_TAG_STYLE, &status);
-    assert(status == 0 && c && c->length == 1);
-    
-    myhtml_tree_node_t* styleNode = c->list[0];
-    
-    const char *css =  myhtml_node_text(styleNode->child, NULL);
-    assert(css);
-    
-    doc.getModest()->mycss_entry = parse_css(css, strlen(css));
-    
-    stylesheet = mycss_entry_stylesheet( doc.getModest()->mycss_entry);
-    
-    
-    finder = modest_finder_create();
-    status = modest_finder_init(finder);
-    
-    check_status("Can't init Modest Finder object\n");
-    
-    
-    finder_thread = modest_finder_thread_create();
-    modest_finder_thread_init(finder, finder_thread, 2);
-    
-    
-    status = modest_finder_thread_process( doc.getModest(),
-                                           finder_thread,
-                                           doc.getModest()->myhtml_tree->node_html,
-                                           stylesheet->sel_list_first
-                                          );
-    
-    check_status("Can't find by selectors with thread\n");
+    if( finder == nullptr)
+    {
+        finder = modest_finder_create();
+        mystatus_t status = MyCORE_STATUS_ERROR;
         
-    printf("Incoming stylesheet:\n\t");
-    printf("%s\n\n", css);
+        status = modest_finder_init(finder);
+        assert(status == 0);
+        
+    }
+    if( finder_thread == nullptr)
+    {
+        finder_thread = modest_finder_thread_create();
+        
+        mystatus_t status = MyCORE_STATUS_ERROR;
+        status  = modest_finder_thread_init(finder, finder_thread, 2);
+        
+        assert(status == 0);
+    }
+    
+    return finder != nullptr && finder_thread != nullptr;
+}
+
+bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
+{
+
+    doc.getModest()->myhtml_tree = parse_html(html, bufLen, modest_glue_callback_myhtml_insert_node, doc.getModest());
+    
+    /* find style node */
+    
+    mystatus_t status = 0;
+    myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( doc.getModest()->myhtml_tree, NULL, MyHTML_TAG_STYLE, &status);
+    assert(status == 0);
+    
+    if( c && c->length == 1)
+    {
+        myhtml_tree_node_t* styleNode = c->list[0];
+        
+        const char *css =  myhtml_node_text(styleNode->child, NULL);
+        assert(css);
+        
+        doc.getModest()->mycss_entry = parse_css(css, strlen(css));
+        
+        
+        /* find style node */
+        
+        if( doc.getModest()->mycss_entry )
+        {
+            stylesheet = mycss_entry_stylesheet( doc.getModest()->mycss_entry);
+            createFinder();
+            
+            status = modest_finder_thread_process( doc.getModest(),
+                                                  finder_thread,
+                                                  doc.getModest()->myhtml_tree->node_html,
+                                                  stylesheet->sel_list_first
+                                                  );
+            
+            check_status("Can't find by selectors with thread\n");
+            
+        }
+        
+        
+        
+        printf("Incoming stylesheet in <style>:\n\t");
+        printf("%s\n\n", css);
+    }
+    
+    
 
     printf("Incoming tree:\n\t");
     myhtml_serialization_tree_callback( doc.getModest()->myhtml_tree->node_html, serialization_callback, NULL);

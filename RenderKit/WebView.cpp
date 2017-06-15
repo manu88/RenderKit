@@ -8,7 +8,7 @@
 
 #include "CLApplication.hpp"
 #include "WebView.hpp"
-#include "HTMLParser.hpp"
+//#include "HTMLParser.hpp"
 
 
 WebView::WebView():

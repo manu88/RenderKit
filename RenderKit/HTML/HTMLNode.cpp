@@ -73,6 +73,9 @@ CSSDeclaration HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttri
 {
     assert(attribute.isValid());
     
+    if( !_modest->mycss_entry)
+        return nullptr;
+    
     if( _modest->mycss_entry->declaration == nullptr)
         return nullptr;
     

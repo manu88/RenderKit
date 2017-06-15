@@ -12,7 +12,13 @@ int main(int argc, const char * argv[])
 {
     Document doc;
     DocumentParser p;
-    p.load( doc);
+    
+    const std::string html = FileSystem::getFileText( argv[1]);
+
+    /*
+    = "<html><head><style type=\"text/css\">div {padding: 130px 3em; color: rgba(23 10 200 / 0.4) }</style></head><body><div style=\"float:right\"></div>";
+    */
+    p.load( doc , html.c_str() , html.size() );
     
     HTMLRenderer renderer;
     assert(renderer.prepare(doc));

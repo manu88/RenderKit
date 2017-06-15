@@ -18,13 +18,15 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     
     app->pushView(&_webView);
 
-    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test2.html";
+    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html";
     const std::string html = FileSystem::getFileText( file);
     
     
     doc = new Document;
     
-    assert( _parser.parseContent(*doc, html));
+    //assert( _parser.parseContent(*doc, html));
+    
+    _parser.load( *doc , html.c_str() , html.size() );
     
     if(_webView.setDocument( doc))
     {

@@ -312,13 +312,9 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
      */
     
     printf("######## start Test \n");
-    myhtml_collection_t * testCollect = DocumentParser::get_properties_and_print( node._modest,
-                                                                                  node._modest->myhtml_tree,
-                                                                                  node._modest->mycss_entry,
-                                                                                 htmlNode
-                                                                                 );
+    DocumentParser::get_properties_and_print( node._modest,node._modest->mycss_entry,htmlNode);
     
-    assert(testCollect); 
+    
     printf("######## end Test \n");
     /* Start Style ATTR */
     

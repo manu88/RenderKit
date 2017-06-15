@@ -12,7 +12,8 @@
 #include "CLApplicationDelegate.hpp"
 
 #include "WebView.hpp"
-#include "HTMLParser.hpp"
+
+#include "DocumentParser.hpp"
 class AppDelegate : public CLApplicationDelegate
 {
 public:
@@ -24,7 +25,7 @@ protected:
     void applicationWillStop( CLApplication* app) override;
     
     WebView _webView;
-    HTMLParser _parser;
+    DocumentParser _parser;
     
     Document *doc;
 };
