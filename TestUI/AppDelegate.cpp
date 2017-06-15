@@ -12,6 +12,7 @@
 
 void AppDelegate::applicationWillLoad( CLApplication* app)
 {
+    _webView.setDelegate( this );
     app->setName("WebKit");
     
     app->setKeyboardResponder( &_webView);
@@ -20,20 +21,27 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
 
     const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html";
     const std::string html = FileSystem::getFileText( file);
+
+    Document *doc = new Document();
+    doc->setContent( html);
+
+    _webView.openDocument( doc);
+    
+}
+
+bool AppDelegate::refreshRequest( WebView& view)
+{
+    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html";
+    const std::string html = FileSystem::getFileText( file);
     
     
-    doc = new Document;
     
-    //assert( _parser.parseContent(*doc, html));
+    Document *doc = new Document();
+    doc->setContent( html);
     
-    _parser.load( *doc , html.c_str() , html.size() );
+    _webView.openDocument( doc);
     
-    if(_webView.setDocument( doc))
-    {
-        
-    }
-    
-    
+    return true;
 }
 
 void AppDelegate::applicationDidLoad( CLApplication* app)
@@ -43,5 +51,5 @@ void AppDelegate::applicationDidLoad( CLApplication* app)
 
 void AppDelegate::applicationWillStop( CLApplication* app)
 {
-    delete doc;
+
 }

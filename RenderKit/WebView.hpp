@@ -14,8 +14,24 @@
 #include "HTMLRenderer.hpp"
 
 #include "Document.hpp"
-
+#include "DocumentParser.hpp"
 class HTMLParser;
+
+
+class WebView;
+class WebViewController
+{
+public:
+    virtual ~WebViewController(){}
+    
+    virtual bool refreshRequest( WebView& )
+    {
+        return false;
+    }
+protected:
+    WebViewController(){}
+};
+
 
 class WebView : public VKView
 {
@@ -26,9 +42,14 @@ public:
     std::string getTitle() const;
 
     bool refresh();
+    bool openDocument( Document *);
     bool setDocument( Document *);
     
     
+    void setDelegate( WebViewController* ctl)
+    {
+        delegate = ctl;
+    }
     
 private:
     bool handleFocus() override
@@ -40,8 +61,12 @@ private:
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
+    
+    WebViewController* delegate;
     Document *_doc;
+    DocumentParser _parser;
     HTMLRenderer _renderer;
+    
 };
 
 #endif /* WebView_hpp */

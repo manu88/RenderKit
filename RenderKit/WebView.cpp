@@ -12,7 +12,8 @@
 
 
 WebView::WebView():
-_doc(nullptr)
+_doc(nullptr),
+delegate(nullptr)
 {
     background = GXColors::White;
 }
@@ -29,7 +30,24 @@ std::string WebView::getTitle() const
 
 bool WebView::refresh()
 {
-    return setDocument( _doc );
+    if( delegate)
+        return delegate->refreshRequest( *this);
+    
+    return false;
+}
+
+bool WebView::openDocument( Document *doc)
+{
+    if( !doc)
+        return false;
+    
+    
+    if( _parser.load(*doc, doc->_docContent.c_str() , doc->_docContent.size()))
+    {
+        
+        return setDocument( doc );
+    }
+    return false;
 }
 
 bool WebView::setDocument( Document *doc)
@@ -44,7 +62,6 @@ bool WebView::setDocument( Document *doc)
         
         _renderer.printBlockTree();
         
-        CLApplication::instance()->setName( getTitle() );
         setNeedsRedraw();
         return true;
     }
