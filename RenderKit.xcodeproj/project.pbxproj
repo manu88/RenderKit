@@ -477,6 +477,9 @@
 		599081941EDFEDA500D7EB1F /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081901EDFEDA500D7EB1F /* FileSystem.cpp */; };
 		599081951EDFEDA500D7EB1F /* StringOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 599081921EDFEDA500D7EB1F /* StringOperations.cpp */; };
 		59B32C0E1EED6D6B0002846B /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
+		59DD26E21EF2924E00678233 /* CSSHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59DD26E01EF2924E00678233 /* CSSHelpers.cpp */; };
+		59DD26E31EF2924E00678233 /* CSSHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59DD26E01EF2924E00678233 /* CSSHelpers.cpp */; };
+		59DD26E41EF2924E00678233 /* CSSHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59DD26E01EF2924E00678233 /* CSSHelpers.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1063,6 +1066,8 @@
 		599081911EDFEDA500D7EB1F /* FileSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileSystem.hpp; sourceTree = "<group>"; };
 		599081921EDFEDA500D7EB1F /* StringOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringOperations.cpp; sourceTree = "<group>"; };
 		599081931EDFEDA500D7EB1F /* StringOperations.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringOperations.hpp; sourceTree = "<group>"; };
+		59DD26E01EF2924E00678233 /* CSSHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSSHelpers.cpp; sourceTree = "<group>"; };
+		59DD26E11EF2924E00678233 /* CSSHelpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSHelpers.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1116,6 +1121,8 @@
 		596D48DD1EF137300011158B /* CSS */ = {
 			isa = PBXGroup;
 			children = (
+				59DD26E01EF2924E00678233 /* CSSHelpers.cpp */,
+				59DD26E11EF2924E00678233 /* CSSHelpers.hpp */,
 				596D49D51EF276660011158B /* CSSStylesheet.cpp */,
 				596D49D61EF276660011158B /* CSSStylesheet.hpp */,
 				596D49CB1EF1DB3A0011158B /* CSSDeclaration.cpp */,
@@ -2280,6 +2287,7 @@
 				59363FB41EEC439E00A96EC8 /* serialization.c in Sources */,
 				59363FB51EEC439E00A96EC8 /* parser.c in Sources */,
 				59363FB61EEC439E00A96EC8 /* color.c in Sources */,
+				59DD26E31EF2924E00678233 /* CSSHelpers.cpp in Sources */,
 				59363FB71EEC439E00A96EC8 /* binding.c in Sources */,
 				596D49D81EF276660011158B /* CSSStylesheet.cpp in Sources */,
 				59363FB81EEC439E00A96EC8 /* units.c in Sources */,
@@ -2426,6 +2434,7 @@
 				596D493D1EF1389B0011158B /* parser.c in Sources */,
 				596D493E1EF1389B0011158B /* declaration.c in Sources */,
 				596D493F1EF1389B0011158B /* parser_text_decoration.c in Sources */,
+				59DD26E41EF2924E00678233 /* CSSHelpers.cpp in Sources */,
 				596D49401EF1389B0011158B /* parser_end.c in Sources */,
 				596D49411EF1389B0011158B /* os_2.c in Sources */,
 				596D49421EF1389B0011158B /* raw.c in Sources */,
@@ -2571,6 +2580,7 @@
 				5978CF541EDF3C9F00E59956 /* pseudo_class.c in Sources */,
 				5978D0031EDF3CA000E59956 /* pclt.c in Sources */,
 				5978CFDB1EDF3C9F00E59956 /* consume.c in Sources */,
+				59DD26E21EF2924E00678233 /* CSSHelpers.cpp in Sources */,
 				5978CF7F1EDF3C9F00E59956 /* mhash.c in Sources */,
 				5978CF7D1EDF3C9F00E59956 /* mctree.c in Sources */,
 				5978CFED1EDF3C9F00E59956 /* cmap.c in Sources */,

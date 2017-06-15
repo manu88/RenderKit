@@ -10,8 +10,7 @@
 #define CSSDeclaration_hpp
 
 #include <iterator>
-
-#include <mycss/declaration/myosi.h>
+#include <mycss/declaration/myosi.h> // mycss_declaration_entry_t
 #include <GXColor.hpp>
 
 class CSSDeclaration
@@ -80,11 +79,7 @@ public:
     mycss_declaration_entry_t *_decl;
     
 private:
-    static GXColor parseColor(const mycss_declaration_entry_t* node);
-    static GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
-    static float parseFloatIntAttribute( const  mycss_declaration_entry_t* node ) noexcept;
-    static float parseBlockWidth( const mycss_declaration_entry_t* node) noexcept;
-    static float parseBlockHeight( const mycss_declaration_entry_t* node) noexcept;
+    
 };
 
 #endif /* CSSDeclaration_hpp */
