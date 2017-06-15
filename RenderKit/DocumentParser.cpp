@@ -186,12 +186,15 @@ bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
             check_status("Can't find by selectors with thread\n");
             
         }
-        
-        
-        
+
         printf("Incoming stylesheet in <style>:\n\t");
         printf("%s\n\n", css);
+        
+        myhtml_collection_destroy(c);
+        
+        return true;
     }
+    assert( c == nullptr);
     
     return true;
 }
