@@ -115,15 +115,20 @@ void HTMLNode::printCSSProperties() const noexcept
     
     mycss_entry_t *mycss_entry = _modest->mycss_entry;
     myhtml_tree_node_t* node = _node;
-    printf("Style CSS stylesheet \n");
+    printf("MAIN Style CSS stylesheet \n");
     
     printf("\t");
-    mycss_declaration_entry_t *padding_left = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_PADDING_LEFT);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, padding_left, MyCSS_PROPERTY_TYPE_PADDING_LEFT, serialization_callback, NULL);
+    CSSDeclaration paddingLeft =  getDeclarationByType(MyCSS_PROPERTY_TYPE_PADDING_LEFT);
+    mycss_declaration_serialization_entry_by_type( mycss_entry,
+                                                   paddingLeft._decl,
+                                                   MyCSS_PROPERTY_TYPE_PADDING_LEFT,
+                                                   serialization_callback, NULL);
     
     printf("\n\t");
-    mycss_declaration_entry_t *color = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_COLOR);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, color, MyCSS_PROPERTY_TYPE_COLOR, serialization_callback, NULL);
+    CSSDeclaration color =  getDeclarationByType(MyCSS_PROPERTY_TYPE_COLOR);
+    const GXColor cc = color.parseColor();
+    
+    printf("color : r=%f g=%f b=%f a=%f" , cc.r , cc.g , cc.b , cc.a);
     
     printf("\n\t");
     mycss_declaration_entry_t *display = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_DISPLAY);
@@ -152,13 +157,19 @@ void HTMLNode::printCSSProperties() const noexcept
         }
         printf("tag Style attr : \n");
         
-        const mycss_declaration_entry_t* next = dec_entry;
-        while (next)
+        
+        const CSSDeclaration tagStyleDecl(dec_entry);
+        
+        for( const CSSDeclaration &d  : tagStyleDecl)
         {
-            printf("\tGot declaration %i " , next->type);
-            if( next->type == MyCSS_PROPERTY_TYPE_FLOAT)
+            printf("\tGot declaration %i " , d.getType());
+            if( d.getType() == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
             {
-                mycss_property_float_t floatProp =(const mycss_property_float_t) next->value_type;
+                printf(" : Border style ");
+            }
+            else if( d.getType() == MyCSS_PROPERTY_TYPE_FLOAT)
+            {
+                mycss_property_float_t floatProp =(const mycss_property_float_t) d.getValueType();
                 printf(" : float " );
                 if( floatProp == MyCSS_PROPERTY_FLOAT_LEFT)
                 {
@@ -172,8 +183,16 @@ void HTMLNode::printCSSProperties() const noexcept
                 printf("\n");
             }
             printf("\n");
+        }
+        /*
+        const mycss_declaration_entry_t* next = dec_entry;
+        while (next)
+        {
+            printf("\t2Got declaration %i " , next->type);
+
             next = next->next;
         }
+         */
     }
     
     printf("######## end CSSProperties \n");

@@ -17,7 +17,7 @@
 class CSSDeclaration
 {
 public:
-    CSSDeclaration( const mycss_declaration_entry_t *decl );
+    CSSDeclaration( mycss_declaration_entry_t *decl );
     ~CSSDeclaration();
     
     
@@ -26,6 +26,7 @@ public:
     unsigned int getValueType() const noexcept;
     
     GXColor parseBackgroundColor() const noexcept;
+    GXColor parseColor() const noexcept;
     float parseBlockWidth() const noexcept;
     float parseBlockHeight() const noexcept;
     
@@ -36,7 +37,7 @@ public:
     {
         friend class CSSDeclaration;
     private:
-        Iterator( const mycss_declaration_entry_t *decl):
+        Iterator( mycss_declaration_entry_t *decl):
         _decl(decl)
         {}
         
@@ -62,7 +63,7 @@ public:
             return CSSDeclaration( _decl );
         };
         
-        const mycss_declaration_entry_t *_decl;
+        mycss_declaration_entry_t *_decl;
     };
     
     const Iterator begin() const
@@ -76,9 +77,10 @@ public:
     }
     
     
-    const mycss_declaration_entry_t *_decl;
+    mycss_declaration_entry_t *_decl;
     
 private:
+    static GXColor parseColor(const mycss_declaration_entry_t* node);
     static GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
     static float parseFloatIntAttribute( const  mycss_declaration_entry_t* node ) noexcept;
     static float parseBlockWidth( const mycss_declaration_entry_t* node) noexcept;

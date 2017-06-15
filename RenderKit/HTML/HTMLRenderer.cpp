@@ -84,7 +84,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
         if( node->html_node)
         {
             const char *tag = myhtml_tag_name_by_id( doc.getModest()->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
-            if(  strcmp(tag, "html") == 0 || strcmp(tag, "body") == 0)
+            if(  strcmp(tag, TagNames::Html) == 0 || strcmp(tag, TagNames::Body ) == 0)
             {
                 node = node->child;
                 continue;
@@ -298,7 +298,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
     assert(htmlNode);
     
     /* Start class ATTR */
-    HTMLAttribute attrClass = node.getAttributeByName("class");
+    HTMLAttribute attrClass = node.getAttributeByName(AttributesNames::Class);
     
     if( attrClass.isValid())
     {

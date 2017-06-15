@@ -13,6 +13,16 @@
 namespace TagNames
 {
     static constexpr const char* Style = "style";
+    static constexpr const char* Body  = "body";
+    static constexpr const char* Html  = "html";
 }
+
+namespace AttributesNames
+{
+    static constexpr const char* Class = "class";
+    
+}
+
+//class
 
 #endif /* Constants_hpp */
