@@ -16,6 +16,8 @@
 #include "HTMLRenderer.hpp"
 #include "HTMLNode.hpp"
 
+#include "DocumentParser.hpp"
+
 static int is_empty(const char *s)
 {
     while (*s != '\0') {
@@ -37,7 +39,7 @@ HTMLRenderer::~HTMLRenderer()
 
 bool HTMLRenderer::prepare(Document &doc)
 {
-    printf("HTMLRenderer::prepare\n");
+    printf("\nHTMLRenderer::prepare\n");
     if( _renderTree)
     {
         //modest_render_tree_clean_all(_render);
@@ -299,6 +301,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         printf("Class : '%s'" , classSel);
     }
     /* END class ATTR */
+
     /*
     CSSDeclaration borderStyle = node.getDeclarationByType(MyCSS_PROPERTY_TYPE_BORDER_STYLE);
 
@@ -306,7 +309,17 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
     {
         block->drawFrame = true;
     }
-    */
+     */
+    
+    printf("######## start Test \n");
+    myhtml_collection_t * testCollect = DocumentParser::get_properties_and_print( node._modest,
+                                                                                  node._modest->myhtml_tree,
+                                                                                  node._modest->mycss_entry,
+                                                                                 htmlNode
+                                                                                 );
+    
+    assert(testCollect); 
+    printf("######## end Test \n");
     /* Start Style ATTR */
     
     HTMLAttribute attr_style = node.getAttributeByName("style");

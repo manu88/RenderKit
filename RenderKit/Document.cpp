@@ -13,10 +13,7 @@
 Document::Document():
 _renderNode(nullptr)
 {
-    
     _modest.reset(new MWrapper() );
-    
-
 }
 
 Document::Document(Document& )
@@ -32,23 +29,7 @@ Document& Document::operator=( const Document &rhs)
 
 Document::~Document()
 {
-    /*
-    if( _modest)
-    {
-        
-        mycss_t *mycss = _modest->mycss_entry->mycss;
-        mycss_entry_destroy( _modest->mycss_entry, true);
-        mycss_destroy(mycss, true);
-        
-        myhtml_t* myhtml = _modest->myhtml_tree->myhtml;
-        myhtml_tree_destroy( _modest->myhtml_tree);
-        myhtml_destroy(myhtml);
-        
-        modest_clean(_modest);
-        modest_destroy(_modest , true);
-        _modest = nullptr;
-    }
-     */
+
 }
 
 bool Document::isValid() const noexcept

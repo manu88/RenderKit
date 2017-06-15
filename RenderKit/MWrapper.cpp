@@ -20,6 +20,9 @@ _modest ( modest_create())
 
 MWrapper::~MWrapper()
 {
+    myhtml_tree_destroy( _modest->myhtml_tree);
+    mycss_entry_destroy( _modest->mycss_entry, true);
+    
     modest_clean(_modest);
     modest_destroy(_modest , true);
 }

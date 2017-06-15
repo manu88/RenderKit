@@ -24,7 +24,6 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     
     doc = new Document;
     
-    
     assert( _parser.parseContent(*doc, html));
     
     if(_webView.setDocument( doc))

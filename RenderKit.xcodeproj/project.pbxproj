@@ -331,6 +331,9 @@
 		596D49CD1EF1DB3A0011158B /* CSSDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49CB1EF1DB3A0011158B /* CSSDeclaration.cpp */; };
 		596D49CE1EF1DB3A0011158B /* CSSDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49CB1EF1DB3A0011158B /* CSSDeclaration.cpp */; };
 		596D49CF1EF1DB3A0011158B /* CSSDeclaration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49CB1EF1DB3A0011158B /* CSSDeclaration.cpp */; };
+		596D49D21EF25BD10011158B /* DocumentParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49D01EF25BD10011158B /* DocumentParser.cpp */; };
+		596D49D31EF25BD10011158B /* DocumentParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49D01EF25BD10011158B /* DocumentParser.cpp */; };
+		596D49D41EF25BD10011158B /* DocumentParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D49D01EF25BD10011158B /* DocumentParser.cpp */; };
 		5978CF511EDF3C9F00E59956 /* declaration.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD821EDF3C9F00E59956 /* declaration.c */; };
 		5978CF521EDF3C9F00E59956 /* finder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD851EDF3C9F00E59956 /* finder.c */; };
 		5978CF531EDF3C9F00E59956 /* match.c in Sources */ = {isa = PBXBuildFile; fileRef = 5978CD871EDF3C9F00E59956 /* match.c */; };
@@ -572,6 +575,8 @@
 		596D49C71EF1D2540011158B /* MWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MWrapper.hpp; sourceTree = "<group>"; };
 		596D49CB1EF1DB3A0011158B /* CSSDeclaration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSSDeclaration.cpp; path = RenderKit/CSS/CSSDeclaration.cpp; sourceTree = SOURCE_ROOT; };
 		596D49CC1EF1DB3A0011158B /* CSSDeclaration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CSSDeclaration.hpp; path = RenderKit/CSS/CSSDeclaration.hpp; sourceTree = SOURCE_ROOT; };
+		596D49D01EF25BD10011158B /* DocumentParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentParser.cpp; sourceTree = "<group>"; };
+		596D49D11EF25BD10011158B /* DocumentParser.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DocumentParser.hpp; sourceTree = "<group>"; };
 		5978CCB81EDF3BC900E59956 /* RenderKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RenderKit; sourceTree = BUILT_PRODUCTS_DIR; };
 		5978CCC41EDF3C9F00E59956 /* declaration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = declaration.h; sourceTree = "<group>"; };
 		5978CCC61EDF3C9F00E59956 /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = finder.h; sourceTree = "<group>"; };
@@ -1208,6 +1213,8 @@
 				595B96601EED40F500B366CC /* Element.hpp */,
 				596D49BE1EF1C1FD0011158B /* Document.cpp */,
 				596D49BF1EF1C1FD0011158B /* Document.hpp */,
+				596D49D01EF25BD10011158B /* DocumentParser.cpp */,
+				596D49D11EF25BD10011158B /* DocumentParser.hpp */,
 			);
 			path = RenderKit;
 			sourceTree = "<group>";
@@ -2274,6 +2281,7 @@
 				59363FBD1EEC439E00A96EC8 /* maxp.c in Sources */,
 				59363FBE1EEC439E00A96EC8 /* shared.c in Sources */,
 				59363FBF1EEC439E00A96EC8 /* init.c in Sources */,
+				596D49D31EF25BD10011158B /* DocumentParser.cpp in Sources */,
 				596D49CE1EF1DB3A0011158B /* CSSDeclaration.cpp in Sources */,
 				59363FC01EEC439E00A96EC8 /* loca.c in Sources */,
 				59363FC11EEC439E00A96EC8 /* mcsync.c in Sources */,
@@ -2480,6 +2488,7 @@
 				596D49811EF1389B0011158B /* vhea.c in Sources */,
 				596D49821EF1389B0011158B /* serialization.c in Sources */,
 				596D49AC1EF1398C0011158B /* UnitTestClass.cpp in Sources */,
+				596D49D41EF25BD10011158B /* DocumentParser.cpp in Sources */,
 				596D49831EF1389B0011158B /* map.c in Sources */,
 				596D49841EF1389B0011158B /* parser.c in Sources */,
 				596D49851EF1389B0011158B /* punycode.c in Sources */,
@@ -2591,6 +2600,7 @@
 				5978CFF91EDF3C9F00E59956 /* maxp.c in Sources */,
 				5978CFB91EDF3C9F00E59956 /* shared.c in Sources */,
 				595B96611EED40F500B366CC /* Element.cpp in Sources */,
+				596D49D21EF25BD10011158B /* DocumentParser.cpp in Sources */,
 				5978CFAB1EDF3C9F00E59956 /* init.c in Sources */,
 				5978CFF71EDF3C9F00E59956 /* loca.c in Sources */,
 				5978D0351EDF3CA000E59956 /* mcsync.c in Sources */,
