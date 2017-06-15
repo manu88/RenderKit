@@ -44,7 +44,10 @@ public:
     bool refresh();
     bool openDocument( Document *);
     bool setDocument( Document *);
-    
+    Document* getDocument()
+    {
+        return _doc;
+    }
     
     void setDelegate( WebViewController* ctl)
     {
