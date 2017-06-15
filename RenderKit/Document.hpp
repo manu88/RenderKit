@@ -21,11 +21,16 @@
 class Document
 {
 public:
-    Document();
+    Document( const std::string &content = "");
     ~Document();
     
     Document(Document&);
     Document& operator=( const Document &);
+    
+    void setContent(const std::string &content)
+    {
+        _docContent = content;
+    }
     
     std::string getTitle() const;
     
@@ -39,6 +44,7 @@ public:
     }
     
 
+    std::string _docContent;
     std::shared_ptr<MWrapper> _modest;
     
     modest_render_tree_node_t * _renderNode;

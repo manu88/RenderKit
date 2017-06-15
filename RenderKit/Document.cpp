@@ -10,7 +10,8 @@
 #include "Document.hpp"
 #include "HTMLNode.hpp"
 
-Document::Document():
+Document::Document(const std::string &content):
+_docContent(content),
 _renderNode(nullptr)
 {
     _modest.reset(new MWrapper() );
