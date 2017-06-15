@@ -44,30 +44,12 @@ float CSSHelpers::parseBlockWidth( const mycss_declaration_entry_t* node) noexce
     assert(node);
     
     
-    if( node->value_type == MyCSS_PROPERTY_WIDTH__LENGTH)
-    {
-        
-    }
-    else if( node->value_type == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
-    {
-        
-    }
-    
     return parseFloatIntAttribute(node);
 }
 
 float CSSHelpers::parseBlockHeight( const mycss_declaration_entry_t* node) noexcept
 {
     assert(node);
-    
-    if( node->value_type == MyCSS_PROPERTY_HEIGHT__LENGTH)
-    {
-        
-    }
-    else if( node->value_type == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
-    {
-        
-    }
     
     return parseFloatIntAttribute(node);
 }

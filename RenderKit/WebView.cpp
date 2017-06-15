@@ -58,6 +58,7 @@ bool WebView::keyPressed(  const GXKey &key )
     {
         printf("Start Refresh \n");
         refresh();
+
         return true;
     }
     

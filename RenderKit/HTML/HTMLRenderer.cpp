@@ -18,6 +18,7 @@
 #include "HTMLNode.hpp"
 
 #include "DocumentParser.hpp"
+#include "CSSHelpers.hpp"
 
 static int is_empty(const char *s)
 {
@@ -225,58 +226,91 @@ void HTMLRenderer::printBlockTree() const
     
     for( const CSSDeclaration &d : decl)
     {
-        if( d.getType() == MyCSS_PROPERTY_TYPE_WIDTH)
+        switch (d.getType())
         {
-            block->size.width =  d.parseBlockWidth();
-            if( d.getValueType() == MyCSS_PROPERTY_WIDTH__LENGTH)
+            case MyCSS_PROPERTY_TYPE_WIDTH:
             {
-                block->size.wPercent = false;
+                block->size.width =  d.parseBlockWidth();
+                if( d.getValueType() == MyCSS_PROPERTY_WIDTH__LENGTH)
+                {
+                    block->size.wPercent = false;
+                }
+                else if( d.getValueType() == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
+                {
+                    block->size.wPercent = true;
+                }
+
             }
-            else if( d.getValueType() == MyCSS_PROPERTY_WIDTH__PERCENTAGE)
+            break;
+            case MyCSS_PROPERTY_TYPE_HEIGHT:
             {
-                block->size.wPercent = true;
+                block->size.height = d.parseBlockHeight();
+                
+                if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__LENGTH)
+                {
+                    block->size.hPercent = false;
+                }
+                else if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
+                {
+                    block->size.hPercent = true;
+                    
+                }
             }
-            
-        }
-        else if( d.getType() == MyCSS_PROPERTY_TYPE_HEIGHT)
-        {
-            block->size.height = d.parseBlockHeight();
-            
-            if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__LENGTH)
+            break;
+            case MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE:
             {
-                block->size.hPercent = false;
+                assert(false); // todo
             }
-            else if( d.getValueType() == MyCSS_PROPERTY_HEIGHT__PERCENTAGE)
+            break;
+            case MyCSS_PROPERTY_TYPE_BACKGROUND:
             {
-                block->size.hPercent = true;
+                block->backgroundColor = d.getBackgroundColor();
+            }
+            break;
+            case MyCSS_PROPERTY_TYPE_BORDER_STYLE:
+            {
+                
+                mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
+                
+                mycss_property_border_style_t s = (mycss_property_border_style_t) border->width->value_type;
+                
+                block->drawFrame = s!=MyCSS_PROPERTY_BORDER_STYLE_NONE;
+            }
+
+            break;
+            case MyCSS_PROPERTY_TYPE_BORDER_COLOR:
+            {
+                mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
+
+                
+                
+                //printf("Got Border color \n" );
                 
             }
+            break;
+            case MyCSS_PROPERTY_TYPE_BORDER_WIDTH:
+            {
+                mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
+                const float width = CSSHelpers::parseFloatIntAttribute( border->width );
+                
+                //printf("Got Border width %f\n" , width);
+            }
+            break;
+            case MyCSS_PROPERTY_TYPE_FLOAT:
+            {
+                block->floatProp =(const mycss_property_float_t) d.getValueType();
+            }
+            break;
+                
+            default:
+                printf("Unknown prop  %x\n" , d.getType());
+                assert(false);
+                break;
         }
-        else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND_IMAGE)
-        {
-            assert(false); // todo
-        }
-        else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND)
-        {
-            const GXColor col =  d.getBackgroundColor();
-            
-            block->backgroundColor = col;
-        }
-        else if ( d.getType() == MyCSS_PROPERTY_TYPE_BORDER_STYLE)
-        {
-            //mycss_values_border_t
-            block->drawFrame = true;
-        }
-        else if( d.getType() == MyCSS_PROPERTY_TYPE_FLOAT)
-        {
-            block->floatProp =(const mycss_property_float_t) d.getValueType();
-        }
+
         
-        else
-        {
-            printf("Unknown prop  %x\n" , d.getValueType());
-            assert(false);
-        }
+
+        
     }
     
     return true;
@@ -307,7 +341,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         printf("Class : '%s'" , classSel);
     }
 
-    node.printCSSProperties();
+//    node.printCSSProperties();
     //get_properties_and_print( node._modest,node._modest->mycss_entry,node._node);
     
     
