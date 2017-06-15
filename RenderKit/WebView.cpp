@@ -63,6 +63,11 @@ bool WebView::setDocument( Document *doc)
         _renderer.printBlockTree();
         
         setNeedsRedraw();
+        
+        if( delegate)
+        {
+            delegate->didLoadDocument(*this);
+        }
         return true;
     }
     return ret;
@@ -97,7 +102,7 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
 
 void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXPoint &pos )
 {
-    
+    context->beginPath();
     assert(block->_parent || block == _renderer.getRoot());
     
     GXPoint realPos = pos;
@@ -138,6 +143,10 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     if( block->drawFrame)
     {
         context->setStrokeColor(GXColors::Black);
+        if( block->frameWidth > 0)
+        {
+            context->setStrokeWidth(block->frameWidth );
+        }
     }
     context->fill();
     if( block->drawFrame)

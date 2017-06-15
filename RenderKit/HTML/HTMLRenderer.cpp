@@ -291,7 +291,7 @@ void HTMLRenderer::printBlockTree() const
             case MyCSS_PROPERTY_TYPE_BORDER_WIDTH:
             {
                 mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
-                const float width = CSSHelpers::parseFloatIntAttribute( border->width );
+                block->frameWidth = CSSHelpers::parseFloatIntAttribute( border->width );
                 
                 //printf("Got Border width %f\n" , width);
             }

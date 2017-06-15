@@ -25,7 +25,21 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     Document *doc = new Document();
     doc->setContent( html);
 
-    _webView.openDocument( doc);
+    if(_webView.openDocument( doc))
+    {
+
+    }
+    
+}
+
+void AppDelegate::didLoadDocument( WebView& view)
+{
+    assert(view.getDocument());
+    
+    if( !view.getDocument()->getTitle().empty())
+    {
+        CLApplication::instance()->setName(view.getDocument()->getTitle());
+    }
     
 }
 

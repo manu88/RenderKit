@@ -28,6 +28,9 @@ public:
     {
         return false;
     }
+    
+    virtual void didLoadDocument( WebView& )
+    {}
 protected:
     WebViewController(){}
 };

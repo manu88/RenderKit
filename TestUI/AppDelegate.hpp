@@ -19,6 +19,7 @@ class AppDelegate : public CLApplicationDelegate , public WebViewController
 public:
     
     bool refreshRequest( WebView& ) override;
+    void didLoadDocument( WebView& ) override;
 protected:
     void applicationWillLoad( CLApplication* app) override;
     void applicationDidLoad( CLApplication* app) override;
