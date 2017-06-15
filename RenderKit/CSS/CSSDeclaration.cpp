@@ -13,9 +13,6 @@
 #include "CSSColors.hpp"
 #include "CSSHelpers.hpp"
 
-
-
-
 CSSDeclaration::CSSDeclaration( mycss_declaration_entry_t *decl):
 _decl(decl)
 {
@@ -25,6 +22,11 @@ _decl(decl)
 CSSDeclaration::~CSSDeclaration()
 {
     
+}
+
+bool CSSDeclaration::isValid() const noexcept
+{
+    return _decl != nullptr;
 }
 
 mycss_property_type_t CSSDeclaration::getType() const noexcept
@@ -40,12 +42,12 @@ unsigned int CSSDeclaration::getValueType() const noexcept
 }
 
 
-GXColor CSSDeclaration::parseBackgroundColor() const noexcept
+GXColor CSSDeclaration::getBackgroundColor() const noexcept
 {
     return CSSHelpers::parseBackgroundColor( _decl );
 }
 
-GXColor CSSDeclaration::parseColor() const noexcept
+GXColor CSSDeclaration::getColor() const noexcept
 {
     return CSSHelpers::parseColor(_decl);
 }

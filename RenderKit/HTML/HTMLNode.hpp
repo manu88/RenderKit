@@ -99,6 +99,7 @@ public:
     
     
     void printCSSProperties() const noexcept;
+    CSSDeclaration getSelectorByKey( const std::string &key)const noexcept;
 };
 
 

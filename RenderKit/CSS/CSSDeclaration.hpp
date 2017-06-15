@@ -20,14 +20,15 @@ public:
     ~CSSDeclaration();
     
     
-    
+    bool isValid() const noexcept;
     mycss_property_type_t getType() const noexcept;
     unsigned int getValueType() const noexcept;
     
-    GXColor parseBackgroundColor() const noexcept;
-    GXColor parseColor() const noexcept;
+    GXColor getBackgroundColor() const noexcept;
+    GXColor getColor() const noexcept;
     float parseBlockWidth() const noexcept;
     float parseBlockHeight() const noexcept;
+    
     
 
     

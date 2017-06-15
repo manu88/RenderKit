@@ -258,7 +258,7 @@ void HTMLRenderer::printBlockTree() const
         }
         else if( d.getType() == MyCSS_PROPERTY_TYPE_BACKGROUND)
         {
-            const GXColor col =  d.parseBackgroundColor();
+            const GXColor col =  d.getBackgroundColor();
             
             block->backgroundColor = col;
         }
@@ -306,18 +306,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         
         printf("Class : '%s'" , classSel);
     }
-    /* END class ATTR */
 
-    /*
-    CSSDeclaration borderStyle = node.getDeclarationByType(MyCSS_PROPERTY_TYPE_BORDER_STYLE);
-
-    if( borderStyle._decl)// && border->value)
-    {
-        block->drawFrame = true;
-    }
-     */
-    
-    
     node.printCSSProperties();
     //get_properties_and_print( node._modest,node._modest->mycss_entry,node._node);
     
@@ -325,19 +314,27 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
 
     /* Start Style ATTR */
     
+    CSSDeclaration defCSS = node.getSelectorByKey( node.getTagName());
+    
+    if(defCSS.isValid())
+    {
+        if(!parseStyle(block, defCSS))
+        {
+            assert(false);
+        }
+    }
+    
     HTMLAttribute attr_style = node.getAttributeByName( TagNames::Style );
 
-    
     if(attr_style.isValid())
     {
         
         const CSSDeclaration dec_entry = node.parseDeclaration(MyENCODING_UTF_8, attr_style);
+        
         if(!parseStyle(block, dec_entry))
         {
             assert(false);
         }
-        
-
     }
     
     /* END Style ATTR */

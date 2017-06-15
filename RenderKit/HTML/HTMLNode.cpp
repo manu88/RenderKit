@@ -99,45 +99,48 @@ CSSDeclaration HTMLNode::getDeclarationByType( mycss_property_type_t type) const
 {
     return CSSDeclaration( modest_declaration_by_type(_modest, _node, type) );
 }
-
+/*
 static mystatus_t serialization_callback(const char* data, size_t len, void* ctx)
 {
     printf("%.*s", (int)len, data);
     return MyCORE_STATUS_OK;
 }
-
+*/
+CSSDeclaration HTMLNode::getSelectorByKey( const std::string &key) const noexcept
+{
+    
+    mycss_selectors_list_t* sel = _modest->mycss_entry->selectors->list[0];
+    
+    while (sel)
+    {
+        assert(sel);
+        if( strcmp(key.c_str(), sel->entries_list->entry->key->data) == 0)
+        {
+            return CSSDeclaration(sel->declaration_entry);
+        }
+        
+        sel = sel->next;
+    }
+    
+    return CSSDeclaration(nullptr);
+}
 
 void HTMLNode::printCSSProperties() const noexcept
 {
     printf("######## start CSSProperties \n");
     
-    modest_t* modest = _modest;
-    
     mycss_entry_t *mycss_entry = _modest->mycss_entry;
     myhtml_tree_node_t* node = _node;
     printf("MAIN Style CSS stylesheet \n");
     
-    printf("\t");
-    CSSDeclaration paddingLeft =  getDeclarationByType(MyCSS_PROPERTY_TYPE_PADDING_LEFT);
-    mycss_declaration_serialization_entry_by_type( mycss_entry,
-                                                   paddingLeft._decl,
-                                                   MyCSS_PROPERTY_TYPE_PADDING_LEFT,
-                                                   serialization_callback, NULL);
+    CSSDeclaration defCSS = getSelectorByKey(getTagName());
+    assert(defCSS.isValid());
     
-    printf("\n\t");
-    CSSDeclaration color =  getDeclarationByType(MyCSS_PROPERTY_TYPE_COLOR);
-    const GXColor cc = color.parseColor();
-    
-    printf("color : r=%f g=%f b=%f a=%f" , cc.r , cc.g , cc.b , cc.a);
-    
-    printf("\n\t");
-    mycss_declaration_entry_t *display = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_DISPLAY);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, display, MyCSS_PROPERTY_TYPE_DISPLAY, serialization_callback, NULL);
-    
-    printf("\n\t");
-    mycss_declaration_entry_t *floatV = modest_declaration_by_type(modest, node, MyCSS_PROPERTY_TYPE_FLOAT);
-    mycss_declaration_serialization_entry_by_type(mycss_entry, floatV, MyCSS_PROPERTY_TYPE_FLOAT, serialization_callback, NULL);
-    printf("\n");
+    for (const CSSDeclaration &item : defCSS)
+    {
+        printf("\t got %x\n", item.getType());
+    }
+
     
     const char* kStyle = TagNames::Style;
     
