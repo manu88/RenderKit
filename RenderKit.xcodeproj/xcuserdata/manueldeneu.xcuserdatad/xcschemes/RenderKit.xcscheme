@@ -63,7 +63,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html"
+            argument = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test4.html"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

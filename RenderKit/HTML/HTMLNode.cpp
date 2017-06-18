@@ -108,20 +108,21 @@ static mystatus_t serialization_callback(const char* data, size_t len, void* ctx
 */
 CSSDeclaration HTMLNode::getSelectorByKey( const std::string &key) const noexcept
 {
-    
-    mycss_selectors_list_t* sel = _modest->mycss_entry->selectors->list[0];
-    
-    while (sel)
+    if( _modest->mycss_entry)
     {
-        assert(sel);
-        if( strcmp(key.c_str(), sel->entries_list->entry->key->data) == 0)
-        {
-            return CSSDeclaration(sel->declaration_entry);
-        }
+        mycss_selectors_list_t* sel = _modest->mycss_entry->selectors->list[0];
         
-        sel = sel->next;
+        while (sel)
+        {
+            assert(sel);
+            if( strcmp(key.c_str(), sel->entries_list->entry->key->data) == 0)
+            {
+                return CSSDeclaration(sel->declaration_entry);
+            }
+            
+            sel = sel->next;
+        }
     }
-    
     return CSSDeclaration(nullptr);
 }
 

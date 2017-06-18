@@ -37,6 +37,7 @@ HTMLBlockElement::~HTMLBlockElement()
     
 }
 
+
 struct ChildComparor
 {
     bool operator() (const HTMLBlockElement* lhs, const HTMLBlockElement* rhs) const

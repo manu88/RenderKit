@@ -8,6 +8,7 @@
 
 #include "CLApplication.hpp"
 #include "WebView.hpp"
+
 //#include "HTMLParser.hpp"
 
 
@@ -99,6 +100,10 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
 
 }
 
+/*static*/ void WebView::computeContentheight(GXContext* context , HTMLBlockElement* block)
+{
+    block->realSize.height = 100;
+}
 
 void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXPoint &pos )
 {
@@ -117,7 +122,11 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     block->realSize.height = (int) block->size.height;
 
     if( block->realSize.height == -1)
-        return;
+    {
+        computeContentheight(context , block);
+
+    }
+    
     
     if( block->size.hPercent)
     {
@@ -162,7 +171,7 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
         GXPoint p = realPos;
         p.y+=15;
         context->addText(p, block->text);
-        printf("Draw text at %i %i \n" , p.x , p.y);
+        printf("Draw text at %i %i '%s'\n" , p.x , p.y , block->text.c_str());
     }
     
     

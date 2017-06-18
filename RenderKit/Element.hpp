@@ -56,6 +56,8 @@ public:
     HTMLBlockElement();
     ~HTMLBlockElement();
     void reorder();
+    
+    
 
     /* Parsed from HTML/CSS code*/
     

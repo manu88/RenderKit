@@ -23,7 +23,7 @@ namespace StringOperations
     
     
     /*
-        Reduce a string by removing char passed in whitespace an filling internal separators with fill.
+        Reduce a string by removing char passed in whitespace and filling internal separators with fill.
      
         Examples:
             reduce("      test \t foo \t\t   bar \t\t\ " );

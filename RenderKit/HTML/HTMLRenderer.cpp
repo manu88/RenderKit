@@ -12,6 +12,7 @@
 
 #include <modest/render/binding.h>
 
+#include "StringOperations.hpp"
 #include "Constants.hpp"
 #include "CSSColors.hpp"
 #include "HTMLRenderer.hpp"
@@ -84,8 +85,10 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
         /* We skip html & body nodes */
         if( node->html_node)
         {
+            
             const char *tag = myhtml_tag_name_by_id( doc.getModest()->myhtml_tree, node->html_node->tag_id, NULL/*tag_length*/);
-            if(  strcmp(tag, TagNames::Html) == 0 || strcmp(tag, TagNames::Body ) == 0)
+            //printf("Node '%s' \n" ,tag );
+            if(  strcmp(tag, TagNames::Html) == 0)//  || strcmp(tag, TagNames::Body ) == 0)
             {
                 node = node->child;
                 continue;
@@ -190,6 +193,11 @@ bool HTMLRenderer::computeTree()
 
 void HTMLRenderer::printBlockTree() const
 {
+    if (!_root)
+    {
+        printf("No root in doc!\n");
+        return;
+    }
     printf("List Root \n");
     assert(_root);
     
@@ -201,12 +209,14 @@ void HTMLRenderer::printBlockTree() const
             printf("\t");
         
         printf("Got child (type %i) %s ", block->type , block->tag.c_str());
-        printf("size w=%f %s h=%f %s %s",
+        printf("size w=%f %s h=%f %s %s %s",
                block->size.width,
                block->size.wPercent?"%" : "px" ,
                block->size.height ,
                block->size.hPercent?"%" : "px",
-               block->drawFrame?"with frame":"");
+               block->drawFrame?"with frame":"",
+               block->text.empty()? "" : "with text"
+               );
         printf("\n");
         
         for ( const HTMLBlockElement* c : block->_children)
@@ -394,7 +404,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         
         if( !text.empty() && !is_empty(text.c_str()))
         {
-            block->text = text;
+            block->text = StringOperations::reduce(text , "","\n");
         }
 
     }

@@ -15,9 +15,6 @@ int main(int argc, const char * argv[])
     
     const std::string html = FileSystem::getFileText( argv[1]);
 
-    /*
-    = "<html><head><style type=\"text/css\">div {padding: 130px 3em; color: rgba(23 10 200 / 0.4) }</style></head><body><div style=\"float:right\"></div>";
-    */
     p.load( doc , html.c_str() , html.size() );
     
     HTMLRenderer renderer;
@@ -25,7 +22,7 @@ int main(int argc, const char * argv[])
     
     GXSize viewSize = GXSizeMake(1920, 1080);
     renderer.render(viewSize, doc);
-    
+    renderer.printBlockTree();
     
     return 0;
     /*

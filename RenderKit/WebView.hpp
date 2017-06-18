@@ -67,6 +67,7 @@ private:
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
+    static void computeContentheight(GXContext* context , HTMLBlockElement* block);
     
     WebViewController* delegate;
     Document *_doc;

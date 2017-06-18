@@ -160,36 +160,38 @@ bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
     myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( doc.getModest()->myhtml_tree, NULL, MyHTML_TAG_STYLE, &status);
     assert(status == 0);
     
-    if( c && c->length == 1)
+    if( c )
     {
-        myhtml_tree_node_t* styleNode = c->list[0];
-        
-        const char *css =  myhtml_node_text(styleNode->child, NULL);
-        assert(css);
-        
-        doc.getModest()->mycss_entry = parse_css(css, strlen(css));
-        
-        
-        /* find style node */
-        
-        if( doc.getModest()->mycss_entry )
+        if( c->length == 1)
         {
-            stylesheet = mycss_entry_stylesheet( doc.getModest()->mycss_entry);
-            createFinder();
+            myhtml_tree_node_t* styleNode = c->list[0];
             
-            status = modest_finder_thread_process( doc.getModest(),
-                                                  finder_thread,
-                                                  doc.getModest()->myhtml_tree->node_html,
-                                                  stylesheet->sel_list_first
-                                                  );
+            const char *css =  myhtml_node_text(styleNode->child, NULL);
+            assert(css);
             
-            check_status("Can't find by selectors with thread\n");
+            doc.getModest()->mycss_entry = parse_css(css, strlen(css));
             
-        }
+            
+            /* find style node */
+            
+            if( doc.getModest()->mycss_entry )
+            {
+                stylesheet = mycss_entry_stylesheet( doc.getModest()->mycss_entry);
+                createFinder();
+                
+                status = modest_finder_thread_process( doc.getModest(),
+                                                      finder_thread,
+                                                      doc.getModest()->myhtml_tree->node_html,
+                                                      stylesheet->sel_list_first
+                                                      );
+                
+                check_status("Can't find by selectors with thread\n");
+                
+            }
 
-        printf("Incoming stylesheet in <style>:\n\t");
-        printf("%s\n\n", css);
-        
+            printf("Incoming stylesheet in <style>:\n\t");
+            printf("%s\n\n", css);
+        }
         myhtml_collection_destroy(c);
         
         return true;
