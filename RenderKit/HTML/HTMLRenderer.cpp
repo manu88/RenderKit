@@ -328,18 +328,10 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
     assert(block->_parent); // just checking tree consistency
     assert(node.isValid());
 
-    myhtml_tree_node_t* htmlNode = node._node;
-    assert(htmlNode);
     
-    /* Start class ATTR */
-    HTMLAttribute attrClass = node.getAttributeByName(AttributesNames::Class);
+    assert(node._node);
     
-    if( attrClass.isValid())
-    {
-        const char* classSel = attrClass.getValue();
-        
-        printf("Class : '%s'" , classSel);
-    }
+    
 
 //    node.printCSSProperties();
     //get_properties_and_print( node._modest,node._modest->mycss_entry,node._node);
@@ -357,6 +349,26 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
             assert(false);
         }
     }
+    /* Start class ATTR */
+    HTMLAttribute attrClass = node.getAttributeByName(AttributesNames::Class);
+    
+    if( attrClass.isValid())
+    {
+        const char* classSel = attrClass.getValue();
+        
+        printf("Class : '%s'" , classSel);
+        assert(classSel);
+        
+        CSSDeclaration classCSS = node.getSelectorByKey( classSel);
+        
+        if(classCSS.isValid())
+        {
+            if(!parseStyle(block, classCSS))
+            {
+                assert(false);
+            }
+        }
+    }
     
     HTMLAttribute attr_style = node.getAttributeByName( TagNames::Style );
 
@@ -371,9 +383,10 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         }
     }
     
+
     /* END Style ATTR */
 
-    for ( const HTMLNode& iter : node )
+    for ( const HTMLNode& iter : node.getChild() )
     {
         assert(iter._node && iter._modest->myhtml_tree);
 
@@ -385,7 +398,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
         }
 
     }
-    
+
     HTMLAttribute imgAttr = node.getAttributeByName("src");
     
     if( imgAttr.isValid())

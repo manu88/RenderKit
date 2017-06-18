@@ -155,6 +155,15 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     }
     
 
+    if( !block->text.empty())
+    {
+        context->beginPath();
+        context->setFillColor(GXColors::Black);
+        GXPoint p = realPos;
+        p.y+=15;
+        context->addText(p, block->text);
+        printf("Draw text at %i %i \n" , p.x , p.y);
+    }
     
     
     GXPoint cPos = realPos;

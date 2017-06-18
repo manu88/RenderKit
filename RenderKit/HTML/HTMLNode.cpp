@@ -86,7 +86,7 @@ CSSDeclaration HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttri
                                                                          attribute._attr->value.data,
                                                                          attribute._attr->value.length,
                                                                          &out_status);
-    
+
     if( out_status == 0)
     {
         return CSSDeclaration(dec_entry);

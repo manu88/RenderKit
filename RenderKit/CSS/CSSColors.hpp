@@ -16,13 +16,15 @@ namespace CSSColor
 {
     const std::unordered_map<const char* , const GXColor> ColorsNames =
     {
-        { "red"      , GXColors::Red},
-        { "blue"     , GXColors::Blue},
-        { "green"    , GXColorMake( 0 , 0.5 , 0)},
-        { "yellow"   , GXColorMake( 1.0 , 1. , 0)},
-        { "magenta"  , GXColorMake(0.96, 0, 0.96)},
-        { "cyan"     , GXColorMake(0., 1, 1)},
-        { "gray"     , GXColorMakeWithWhite(0.5)},
+        { "white"       , GXColors::White},
+        { "red"         , GXColors::Red},
+        { "blue"        , GXColors::Blue},
+        { "green"       , GXColorMake( 0 , 0.5 , 0)},
+        { "yellow"      , GXColorMake( 1.0 , 1. , 0)},
+        { "magenta"     , GXColorMake(0.96, 0, 0.96)},
+        { "cyan"        , GXColorMake(0., 1, 1)},
+        { "gray"        , GXColorMakeWithWhite(0.5)},
+        { "lightgray"   , GXColorMakeWithWhite(0.83)},
         
     };
 };
