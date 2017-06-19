@@ -10,13 +10,25 @@
 #define Element_hpp
 
 
-#include <myhtml/myhtml.h>
+//#include <myhtml/myhtml.h>
 #include <string>
 #include <vector>
 #include "GXColor.hpp"
 #include "GXGeometry.hpp"
-#include <mycss/property/const.h>
+#include <mycss/property/const.h> // for MyCSS_PROPERTY_FLOAT_UNSET and others
+#include "HTMLNode.hpp"
 
+
+struct FontProperties
+{
+    float size;
+};
+
+static const FontProperties DefaultProperties =
+{ .size = 10.f };
+
+
+/* **** **** **** **** **** **** **** **** **** **** **** **** */
 
 struct ESize
 {
@@ -61,10 +73,9 @@ public:
 
     /* Parsed from HTML/CSS code*/
     
-    myhtml_tree_node_t *_node;
     
     Type type;
-    std::string tag;
+    //std::string tag;
     GXColor backgroundColor;
     bool drawFrame;
     float frameWidth;
@@ -75,13 +86,14 @@ public:
     
     std::vector<HTMLBlockElement*> _children;
     HTMLBlockElement *_parent;
-    
-    
-    
+
     int _xFloatRight;
     /* Defined by reflow/draw*/
     
     GXSize realSize;
+    FontProperties fontProps;
+    
+    HTMLNode::TagID tagID;
     
     
 };

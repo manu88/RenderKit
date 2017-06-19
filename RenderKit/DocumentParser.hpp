@@ -36,6 +36,8 @@ private:
     bool createCSSParser();
     bool createFinder();
     
+    bool parseStyleTag( Document&);
+    
     myhtml_t* _myhtml;
     mycss_t* _mycss;
     modest_finder_t* finder;

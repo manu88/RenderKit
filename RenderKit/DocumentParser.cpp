@@ -149,16 +149,14 @@ bool DocumentParser::createFinder()
     return finder != nullptr && finder_thread != nullptr;
 }
 
-bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
+bool DocumentParser::parseStyleTag( Document& doc )
 {
-
-    doc.getModest()->myhtml_tree = parse_html(html, bufLen, modest_glue_callback_myhtml_insert_node, doc.getModest());
-    
-    /* find style node */
     
     mystatus_t status = 0;
     myhtml_collection_t *c = myhtml_get_nodes_by_tag_id( doc.getModest()->myhtml_tree, NULL, MyHTML_TAG_STYLE, &status);
     assert(status == 0);
+    
+    
     
     if( c )
     {
@@ -166,11 +164,19 @@ bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
         {
             myhtml_tree_node_t* styleNode = c->list[0];
             
-            const char *css =  myhtml_node_text(styleNode->child, NULL);
-            assert(css);
-            
-            doc.getModest()->mycss_entry = parse_css(css, strlen(css));
-            
+            if( styleNode->child)
+            {
+                const char *css =  myhtml_node_text(styleNode->child, NULL);
+                assert(css);
+                
+                doc.getModest()->mycss_entry = parse_css(css, strlen(css));
+                
+            }
+            else /* style tag defined, but no text */
+            {
+                doc.getModest()->mycss_entry = parse_css(" ", 1 );
+                
+            }
             
             /* find style node */
             
@@ -188,15 +194,29 @@ bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
                 check_status("Can't find by selectors with thread\n");
                 
             }
-
-            printf("Incoming stylesheet in <style>:\n\t");
-            printf("%s\n\n", css);
+        } // end if( c->length == 1)
+        else
+        {
+            doc.getModest()->mycss_entry = parse_css(" ", 1 );
         }
         myhtml_collection_destroy(c);
         
         return true;
     }
-    assert( c == nullptr);
+
+    return false;
+}
+
+bool DocumentParser::load(Document &doc , const char* html , size_t bufLen)
+{
+
+    doc.getModest()->myhtml_tree = parse_html(html, bufLen, modest_glue_callback_myhtml_insert_node, doc.getModest());
+    
+    /* find style node */
+    assert( parseStyleTag( doc));
+
+    assert(doc.getModest()->mycss_entry);
+    
     
     return true;
 }

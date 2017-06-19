@@ -164,25 +164,23 @@ bool HTMLParser::parseCSS(Document& doc)
         
         const HTMLNode textNode = collect.at(0).getChild();
         
-        bool ret = false;
         
         if(textNode.isValid() && textNode.hasText())
         {
             const std::string &cssTxt = textNode.getText();
             
             doc.getModest()->mycss_entry = parseCSS( cssTxt.c_str(), cssTxt.size() );
-            
-            ret = doc.getModest()->mycss_entry != nullptr;
-
         }
-
-        return ret;
+    }
+    else
+    {
+        doc.getModest()->mycss_entry = parseCSS( "", 0);
     }
      // no syle node found
     
-    doc.getModest()->mycss_entry = parseCSS( "", 0);
     
-    return false;
+    
+    return doc.getModest()->mycss_entry != nullptr;
 }
 
 

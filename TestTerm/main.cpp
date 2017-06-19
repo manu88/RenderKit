@@ -13,6 +13,8 @@ int main(int argc, const char * argv[])
     Document doc;
     DocumentParser p;
     
+    printf("Load file '%s' \n" , argv[1]);
+    
     const std::string html = FileSystem::getFileText( argv[1]);
 
     p.load( doc , html.c_str() , html.size() );

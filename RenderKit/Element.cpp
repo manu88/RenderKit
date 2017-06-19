@@ -11,7 +11,7 @@
 
 
 HTMLBlockElement::HTMLBlockElement():
-_node(nullptr),
+
 type(Unknown),
 backgroundColor(GXColorInvalid),
 drawFrame(false),
@@ -19,11 +19,10 @@ frameWidth(-1),
 size( ESizeInvalid ),
 floatProp( MyCSS_PROPERTY_FLOAT_UNSET ),
 _parent(nullptr),
-realSize(GXSizeInvalid)
-{
-    
-}
-
+realSize(GXSizeInvalid),
+fontProps(DefaultProperties),
+tagID(MyHTML_TAG__UNDEF)
+{}
 
 HTMLBlockElement::~HTMLBlockElement()
 {
@@ -34,7 +33,6 @@ HTMLBlockElement::~HTMLBlockElement()
                   });
     
     _children.clear();
-    
 }
 
 

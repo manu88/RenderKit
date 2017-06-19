@@ -100,15 +100,32 @@ void WebView::paint( GXContext* ctx , const GXRect& rect )
 
 }
 
-/*static*/ void WebView::computeContentheight(GXContext* context , HTMLBlockElement* block)
+/*static*/ void WebView::computeContentHeight(GXContext* context , HTMLBlockElement* block)
 {
-    block->realSize.height = 100;
+    const GXPoint sP = GXPointMakeNull();
+    GXSize min = GXSizeInvalid;
+    GXSize max = GXSizeInvalid;
+    context->getTextSize(sP, block->realSize.width, block->text, min , max);
+    
+    block->realSize.height = max.height;
+    
+    if( block->tagID == MyHTML_TAG_P)
+    {
+        float ascender = -1.f;
+        float descender = -1.f;
+        float lineh = -1.f;
+        context->getTextMetrics( &ascender, &descender, &lineh);
+        assert(lineh > 0);
+        block->realSize.height += lineh *1.5;
+    }
 }
 
 void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXPoint &pos )
 {
     context->beginPath();
     assert(block->_parent || block == _renderer.getRoot());
+    
+
     
     GXPoint realPos = pos;
     context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
@@ -123,7 +140,7 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
 
     if( block->realSize.height == -1)
     {
-        computeContentheight(context , block);
+        computeContentHeight(context , block);
 
     }
     
@@ -170,8 +187,9 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
         context->setFillColor(GXColors::Black);
         GXPoint p = realPos;
         p.y+=15;
-        context->addText(p, block->text);
-        printf("Draw text at %i %i '%s'\n" , p.x , p.y , block->text.c_str());
+        context->addTextBox(p, block->realSize.width, block->text);
+        //context->addText(p, block->text);
+        printf("Draw text at %i %i  \n" , p.x , p.y );
     }
     
     

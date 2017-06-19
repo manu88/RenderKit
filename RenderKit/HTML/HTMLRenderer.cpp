@@ -82,7 +82,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
     HTMLBlockElement* current = nullptr;
     while(node)
     {
-        /* We skip html & body nodes */
+        /* We skip html node */
         if( node->html_node)
         {
             
@@ -104,9 +104,15 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
             _root = current;
         }
         
-        if(node_serialization(current , doc.getModest(), node ))
+        assert(node);
+        
+        if( serializeNode( current , doc.getModest(), node ))
         {
-            
+
+        }
+        else
+        {
+            assert(false);
         }
         
         if(node->child)
@@ -208,7 +214,7 @@ void HTMLRenderer::printBlockTree() const
         for(int i = 0 ; i< tab ; i++)
             printf("\t");
         
-        printf("Got child (type %i) %s ", block->type , block->tag.c_str());
+        printf("Got child (type %i)", block->type );
         printf("size w=%f %s h=%f %s %s %s",
                block->size.width,
                block->size.wPercent?"%" : "px" ,
@@ -292,8 +298,6 @@ void HTMLRenderer::printBlockTree() const
             {
                 mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
 
-                
-                
                 //printf("Got Border color \n" );
                 
             }
@@ -340,13 +344,9 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
 
     
     assert(node._node);
-    
-    
+    assert(block->tagID == node.getTagID());
 
 //    node.printCSSProperties();
-    //get_properties_and_print( node._modest,node._modest->mycss_entry,node._node);
-    
-    
 
     /* Start Style ATTR */
     
@@ -423,7 +423,7 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
     
 }
 
-bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node )
+bool HTMLRenderer::serializeNode( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node )
 {
     assert(block);
     
@@ -431,29 +431,16 @@ bool HTMLRenderer::node_serialization( HTMLBlockElement* block , modest* modest,
     {
         case MODEST_RENDER_TREE_NODE_TYPE_BLOCK:
         {
-
+            assert(node->html_node);
             HTMLNode htmlNode(node->html_node , modest );
             
-            block->type = HTMLBlockElement::Block;
             
+            block->type = HTMLBlockElement::Block;
+            block->tagID =  (HTMLNode::TagID) node->html_node->tag_id;
             if( addChild(block,  htmlNode ) )
             {
-                if( !block->text.empty())
-                {
-                    //printf(" text '%s' ",block->text.c_str() );
-                }
-                if( block->backgroundColor != GXColorInvalid)
-                {
-                }
-                if( block->size != ESizeInvalid )
-                {
-
-                }
-                if(  block->size.height == -1  )
-                {
-
-                }
             }
+            
             break;
         }
         case MODEST_RENDER_TREE_NODE_TYPE_VIEWPORT:

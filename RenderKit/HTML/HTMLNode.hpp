@@ -26,8 +26,9 @@ struct HTMLNodeBase
 class HTMLNode : public HTMLNodeBase
 {
 public:
+    typedef myhtml_tags TagID;
     
-    
+    /* **** */
     class Iterator : public std::iterator<std::forward_iterator_tag, HTMLNode> , public HTMLNodeBase
     {
         friend class HTMLNode;
@@ -61,6 +62,7 @@ public:
 
     };
     
+    /* **** */
     
     HTMLNode(myhtml_tree_node_t* node , modest_t* modest)
     {
@@ -100,6 +102,8 @@ public:
     
     void printCSSProperties() const noexcept;
     CSSDeclaration getSelectorByKey( const std::string &key)const noexcept;
+    
+    TagID getTagID() const noexcept;
 };
 
 

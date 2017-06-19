@@ -19,16 +19,7 @@ void AppDelegate::applicationWillLoad( CLApplication* app)
     
     app->pushView(&_webView);
 
-    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html";
-    const std::string html = FileSystem::getFileText( file);
-
-    Document *doc = new Document();
-    doc->setContent( html);
-
-    if(_webView.openDocument( doc))
-    {
-
-    }
+    refreshRequest(_webView);
     
 }
 

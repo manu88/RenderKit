@@ -70,6 +70,11 @@ HTMLAttribute HTMLNode::getAttribute( const std::string &key) const noexcept
     return attr;
 }
 
+HTMLNode::TagID HTMLNode::getTagID() const noexcept
+{
+    return (HTMLNode::TagID) _node->tag_id;
+}
+
 CSSDeclaration HTMLNode::parseDeclaration(myencoding_t encoding ,const HTMLAttribute & attribute) const noexcept
 {
     assert(attribute.isValid());
@@ -108,7 +113,7 @@ static mystatus_t serialization_callback(const char* data, size_t len, void* ctx
 */
 CSSDeclaration HTMLNode::getSelectorByKey( const std::string &key) const noexcept
 {
-    if( _modest->mycss_entry)
+    if( _modest->mycss_entry &&  _modest->mycss_entry->selectors->list)
     {
         mycss_selectors_list_t* sel = _modest->mycss_entry->selectors->list[0];
         

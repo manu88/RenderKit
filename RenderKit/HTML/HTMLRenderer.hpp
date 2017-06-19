@@ -38,7 +38,7 @@ private:
     bool computeTree();
     bool addChild(HTMLBlockElement*block , const HTMLNode& node );
     static bool parseStyle( HTMLBlockElement*block , const CSSDeclaration& decl);
-    bool node_serialization( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
+    bool serializeNode( HTMLBlockElement* block , modest* modest, modest_render_tree_node_t* node );
     
     modest_render_tree_t *_renderTree;
     HTMLBlockElement* _root;
