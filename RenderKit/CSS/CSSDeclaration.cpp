@@ -54,12 +54,12 @@ GXColor CSSDeclaration::getColor() const noexcept
 
 float CSSDeclaration::parseBlockWidth() const noexcept
 {
-    return CSSHelpers::parseBlockWidth( _decl);
+    return CSSHelpers::parseGetFloat( _decl);
 }
 
 float CSSDeclaration::parseBlockHeight() const noexcept
 {
-    return CSSHelpers::parseBlockHeight(_decl);
+    return CSSHelpers::parseGetFloat(_decl);
 }
 
 

@@ -129,8 +129,8 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     
     GXPoint realPos = pos;
     context->setFontId( context->getFontManager().getFont("SanFranciscoDisplay-Regular.ttf") );
-    context->setFontSize(20.f);
-    
+    context->setFontSize(block->fontProps.size);
+    context->setTextAlignement( block->fontProps.align);
 
 
     assert(block->size.width != -1 && block->size.wPercent == false);
@@ -184,9 +184,11 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
     if( !block->text.empty())
     {
         context->beginPath();
-        context->setFillColor(GXColors::Black);
-        GXPoint p = realPos;
-        p.y+=15;
+        context->setTextAlignement( block->fontProps.align );
+        context->setFillColor(block->fontProps.color);
+        
+        const GXPoint p = realPos;
+        //p.y+=15;
         context->addTextBox(p, block->realSize.width, block->text);
         //context->addText(p, block->text);
         printf("Draw text at %i %i  \n" , p.x , p.y );

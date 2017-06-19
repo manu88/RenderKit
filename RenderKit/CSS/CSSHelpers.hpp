@@ -18,8 +18,7 @@ namespace CSSHelpers
     GXColor parseColor(const mycss_declaration_entry_t* node);
     GXColor parseBackgroundColor(const mycss_declaration_entry_t* node);
     float parseFloatIntAttribute( const  mycss_declaration_entry_t* node ) noexcept;
-    float parseBlockWidth( const mycss_declaration_entry_t* node) noexcept;
-    float parseBlockHeight( const mycss_declaration_entry_t* node) noexcept;
+    float parseGetFloat( const mycss_declaration_entry_t* node) noexcept;
 }
 
 #endif /* CSSHelpers_hpp */

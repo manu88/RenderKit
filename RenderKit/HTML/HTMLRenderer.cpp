@@ -296,10 +296,9 @@ void HTMLRenderer::printBlockTree() const
             break;
             case MyCSS_PROPERTY_TYPE_BORDER_COLOR:
             {
-                mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
-
+                //mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
                 //printf("Got Border color \n" );
-                
+                assert(false ); // todo
             }
             break;
             case MyCSS_PROPERTY_TYPE_BORDER_WIDTH:
@@ -315,7 +314,70 @@ void HTMLRenderer::printBlockTree() const
                 block->floatProp =(const mycss_property_float_t) d.getValueType();
             }
             break;
+            case MyCSS_PROPERTY_TYPE_FONT_SIZE:
+            {
+                //mycss_property_font_size_t
+                //printf("GOT FONT SIZE %f\n" ,  );
+                block->fontProps.size = d.parseBlockWidth();
                 
+            }
+            break;
+            case MyCSS_PROPERTY_TYPE_COLOR:
+            {
+                block->fontProps.color = d.getColor();
+            }
+            break;
+            case MyCSS_PROPERTY_TYPE_TEXT_ALIGN:
+            {
+                const mycss_property_text_align t = (const mycss_property_text_align) d.getValueType();
+                
+                
+                switch (t)
+                {
+                    /* Horizontal */
+                    case MyCSS_PROPERTY_TEXT_ALIGN_RIGHT:
+                        block->fontProps.align = ResetHorizontal( block->fontProps.align);
+                        block->fontProps.align =  block->fontProps.align | GXTextAlign_RIGHT;
+                        break;
+                        
+                    case MyCSS_PROPERTY_TEXT_ALIGN_LEFT:
+                        block->fontProps.align = ResetHorizontal( block->fontProps.align);
+                        block->fontProps.align =  block->fontProps.align |  GXTextAlign_LEFT;
+                        
+                        break;
+                        
+                    case MyCSS_PROPERTY_TEXT_ALIGN_CENTER:
+                        block->fontProps.align = ResetHorizontal( block->fontProps.align);
+                        block->fontProps.align = block->fontProps.align | GXTextAlign_CENTER;
+                        break;
+                        /*
+                    case MyCSS_PROPERTY_TEXT_ALIGN_UNSET:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_JUSTIFY:
+                        break;
+                    
+                    
+                    case MyCSS_PROPERTY_TEXT_ALIGN_START:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_END:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_JUSTIFY_ALL:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_MATCH_PARENT:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_INHERIT:
+                        break;
+                    case MyCSS_PROPERTY_TEXT_ALIGN_INITIAL:
+                        break;
+                        */
+                    default:
+                        assert(false);
+                        break;
+                }
+                
+                printf("Align %x\n" , t);
+            }
+                break;
             default:
                 printf("Unknown prop  %x\n" , d.getType());
                 assert(false);

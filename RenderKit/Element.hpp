@@ -13,19 +13,24 @@
 //#include <myhtml/myhtml.h>
 #include <string>
 #include <vector>
+
 #include "GXColor.hpp"
 #include "GXGeometry.hpp"
+#include "GXText.hpp"
+
 #include <mycss/property/const.h> // for MyCSS_PROPERTY_FLOAT_UNSET and others
 #include "HTMLNode.hpp"
 
 
 struct FontProperties
 {
-    float size;
+    float       size;
+    GXColor     color;
+    GXTextAlign align;
 };
 
 static const FontProperties DefaultProperties =
-{ .size = 10.f };
+{ .size = 20.f , .color = GXColors::Black , .align = GXTextAlign_LEFT | GXTextAlign_TOP };
 
 
 /* **** **** **** **** **** **** **** **** **** **** **** **** */

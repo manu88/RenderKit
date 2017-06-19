@@ -39,7 +39,7 @@ float CSSHelpers::parseFloatIntAttribute( const mycss_declaration_entry_t* node 
     return retSize;
 }
 
-float CSSHelpers::parseBlockWidth( const mycss_declaration_entry_t* node) noexcept
+float CSSHelpers::parseGetFloat( const mycss_declaration_entry_t* node) noexcept
 {
     assert(node);
     
@@ -47,12 +47,6 @@ float CSSHelpers::parseBlockWidth( const mycss_declaration_entry_t* node) noexce
     return parseFloatIntAttribute(node);
 }
 
-float CSSHelpers::parseBlockHeight( const mycss_declaration_entry_t* node) noexcept
-{
-    assert(node);
-    
-    return parseFloatIntAttribute(node);
-}
 
 
 static GXColor parseColorAttr( const mycss_values_color_t* colorVal)
