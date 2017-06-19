@@ -249,8 +249,7 @@ void WebView::showContext( const GXPoint &at)
         
         _menu = new VKContextMenu();
         _menu->setController( this );
-        
-        
+
         const GXPoint c = getCoordsInParent(win) + at;
         
         _menu->setSize(GXSizeMake(getSize().width, 200));

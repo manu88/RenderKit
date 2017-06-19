@@ -4,7 +4,7 @@
 
 #include "FileSystem.hpp"
 #include "HTMLRenderer.hpp"
-#include "HTMLParser.hpp"
+//#include "HTMLParser.hpp"
 #include "Document.hpp"
 #include "DocumentParser.hpp"
 
