@@ -11,6 +11,7 @@
 
 #include <string>
 #include "VKView.hpp"
+#include "VKContextMenu.hpp"
 #include "HTMLRenderer.hpp"
 
 #include "Document.hpp"
@@ -36,7 +37,7 @@ protected:
 };
 
 
-class WebView : public VKView
+class WebView : public VKView , public VKContextMenuController
 {
 public:
     WebView();
@@ -57,13 +58,17 @@ public:
         delegate = ctl;
     }
     
+    
+    
 private:
+    void contextMenuDidDismiss( VKContextMenu* ) override;
+    void showContext( const GXPoint &at);
     bool handleFocus() override
     {
         return true;
     }
     bool keyPressed(  const GXKey &key ) override;
-    
+    bool touchEnded( const GXTouch &t) override;
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
@@ -73,6 +78,8 @@ private:
     Document *_doc;
     DocumentParser _parser;
     HTMLRenderer _renderer;
+    
+    VKContextMenu* _menu;
     
 };
 

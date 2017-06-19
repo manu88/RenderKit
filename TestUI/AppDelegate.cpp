@@ -31,19 +31,17 @@ void AppDelegate::didLoadDocument( WebView& view)
     {
         CLApplication::instance()->setName(view.getDocument()->getTitle());
     }
-    
 }
 
 bool AppDelegate::refreshRequest( WebView& view)
 {
-    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test3.html";
+    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test4.html";
     const std::string html = FileSystem::getFileText( file);
     
     Document* lastDoc = view.getDocument();
     if( lastDoc)
     {
         delete lastDoc;
-        
     }
     
     Document *doc = new Document();

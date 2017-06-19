@@ -14,7 +14,8 @@
 
 WebView::WebView():
 _doc(nullptr),
-delegate(nullptr)
+delegate(nullptr),
+_menu(nullptr)
 {
     background = GXColors::White;
 }
@@ -86,6 +87,12 @@ bool WebView::keyPressed(  const GXKey &key )
     }
     
     return false;
+}
+
+bool WebView::touchEnded( const GXTouch &t)
+{
+    showContext(t.center);
+    return true;
 }
 
 void WebView::paint( GXContext* ctx , const GXRect& rect )
@@ -207,3 +214,49 @@ void WebView::drawBlock(GXContext* context , HTMLBlockElement* block , const GXP
 
 }
 
+
+
+void WebView::contextMenuDidDismiss( VKContextMenu* menu)
+{
+    assert( _menu && _menu == menu);
+    
+    if( _menu->getSelectedIndex() >= 0)
+    {
+        if( _menu->getSelectedItem() == "quit")
+        {
+            CLApplication::instance()->quit();
+        }
+        else if( _menu->getSelectedItem() == "reload")
+        {
+            refresh();
+        }
+        printf("Selected : '%s'\n", _menu->getSelectedItem().c_str() );
+    }
+    printf("Dismiss Menu\n");
+    
+    delete _menu;
+    _menu = nullptr;
+}
+
+
+void WebView::showContext( const GXPoint &at)
+{
+    if( _menu == nullptr)
+    {
+        printf("Show Menu\n");
+        VKWindow* win = getWindow();
+        assert( win );
+        
+        _menu = new VKContextMenu();
+        _menu->setController( this );
+        
+        
+        const GXPoint c = getCoordsInParent(win) + at;
+        
+        _menu->setSize(GXSizeMake(getSize().width, 200));
+        _menu->setPos( c  );
+        _menu->setItems( { "reload" , "quit"} );
+        win->pushContextMenu(_menu);
+        
+    }
+}
