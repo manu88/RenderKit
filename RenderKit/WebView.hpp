@@ -61,6 +61,8 @@ public:
     
     
 private:
+    bool reflow( GXContext* context );
+    
     void contextMenuDidDismiss( VKContextMenu* ) override;
     void showContext( const GXPoint &at);
     bool handleFocus() override
@@ -69,10 +71,13 @@ private:
     }
     bool keyPressed(  const GXKey &key ) override;
     bool touchEnded( const GXTouch &t) override;
+    
+    
     void paint( GXContext*  , const GXRect& ) override;
     void drawBlock(GXContext* context , HTMLBlockElement* block, const GXPoint &pos );
     
     static void computeContentHeight(GXContext* context , HTMLBlockElement* block);
+    static bool computeContentWidth(GXContext* context , HTMLBlockElement* block);
     
     WebViewController* delegate;
     Document *_doc;

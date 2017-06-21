@@ -35,7 +35,7 @@ void AppDelegate::didLoadDocument( WebView& view)
 
 bool AppDelegate::refreshRequest( WebView& view)
 {
-    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/test4.html";
+    const std::string file = "/Users/manueldeneu/Documents/projets/dev/RenderKit/testDisplay.html";
     const std::string html = FileSystem::getFileText( file);
     
     Document* lastDoc = view.getDocument();

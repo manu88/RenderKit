@@ -19,6 +19,8 @@ frameWidth(-1),
 size( ESizeInvalid ),
 floatProp( MyCSS_PROPERTY_FLOAT_UNSET ),
 _parent(nullptr),
+_xFloat(0.f),
+explicitWidth(false),
 realSize(GXSizeInvalid),
 fontProps(DefaultProperties),
 tagID(MyHTML_TAG__UNDEF)

@@ -87,9 +87,9 @@ static GXColor parseColorAttr( const mycss_values_color_t* colorVal)
         size_t length;
         const char *name = mycss_values_color_name_by_id(colorVal->value.name_id, &length);
         
-        if( CSSColor::ColorsNames.count( name))
+        if( GXColors::ColorsNames.count( name))
         {
-            return CSSColor::ColorsNames.at(name);
+            return GXColors::ColorsNames.at(name);
         }
         else
         {

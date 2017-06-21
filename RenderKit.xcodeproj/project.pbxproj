@@ -149,6 +149,7 @@
 		593640021EEC439E00A96EC8 /* libVisualKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59363F621EEC412A00A96EC8 /* libVisualKit.dylib */; };
 		5936400E1EEC442100A96EC8 /* WebView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5936400B1EEC442100A96EC8 /* WebView.cpp */; };
 		593640111EEC449100A96EC8 /* libGX.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 593640101EEC449100A96EC8 /* libGX.dylib */; };
+		5942850D1EF7DFF20080DEAA /* libGroundBase-cpp.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5942850C1EF7DFF20080DEAA /* libGroundBase-cpp.dylib */; };
 		595B96611EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		595B96621EED40F500B366CC /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 595B965F1EED40F500B366CC /* Element.cpp */; };
 		596D48E51EF137300011158B /* CSSParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 596D48E11EF137300011158B /* CSSParser.cpp */; };
@@ -539,6 +540,7 @@
 		5936400B1EEC442100A96EC8 /* WebView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebView.cpp; sourceTree = "<group>"; };
 		5936400C1EEC442100A96EC8 /* WebView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebView.hpp; sourceTree = "<group>"; };
 		593640101EEC449100A96EC8 /* libGX.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGX.dylib; path = "../../../../Library/Developer/Xcode/DerivedData/RenderKit-gfmvyzpnrlyrwvfndrqyuxwzhrzn/Build/Products/Debug/libGX.dylib"; sourceTree = "<group>"; };
+		5942850C1EF7DFF20080DEAA /* libGroundBase-cpp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libGroundBase-cpp.dylib"; path = "../../../../../../usr/local/lib/libGroundBase-cpp.dylib"; sourceTree = "<group>"; };
 		595B965F1EED40F500B366CC /* Element.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		595B96601EED40F500B366CC /* Element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
 		596D48DE1EF137300011158B /* CSSColors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CSSColors.hpp; sourceTree = "<group>"; };
@@ -1072,6 +1074,7 @@
 			files = (
 				593640111EEC449100A96EC8 /* libGX.dylib in Frameworks */,
 				593640021EEC439E00A96EC8 /* libVisualKit.dylib in Frameworks */,
+				5942850D1EF7DFF20080DEAA /* libGroundBase-cpp.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1108,6 +1111,7 @@
 		5936400F1EEC449100A96EC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5942850C1EF7DFF20080DEAA /* libGroundBase-cpp.dylib */,
 				593640101EEC449100A96EC8 /* libGX.dylib */,
 			);
 			name = Frameworks;
@@ -2765,6 +2769,7 @@
 					"$(SRCROOT)/RenderKit/Modest/include/",
 					"$(SRCROOT)/../GX/include/",
 				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2813,6 +2818,7 @@
 					"$(SRCROOT)/RenderKit/Modest/include/",
 					"$(SRCROOT)/../GX/include/",
 				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;

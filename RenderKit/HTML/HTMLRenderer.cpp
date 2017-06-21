@@ -105,7 +105,7 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
         }
         
         assert(node);
-        
+        assert(current);
         if( serializeNode( current , doc.getModest(), node ))
         {
 
@@ -115,6 +115,11 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
             assert(false);
         }
         
+        if( current->tagID == MyHTML_TAG_BODY)
+        {
+            current->explicitWidth = true;
+        }
+        
         if(node->child)
         {
             depth++;
@@ -122,7 +127,6 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
 
             HTMLBlockElement* p = current;
             current = new HTMLBlockElement;
-            //current->size = p->size;
             current->_parent = p;
             p->_children.push_back(current);
         }
@@ -141,7 +145,6 @@ bool HTMLRenderer::render( const GXSize& viewPortSize, Document& doc )
             
             HTMLBlockElement* parent = current->_parent;
             current = new HTMLBlockElement;
-
             current->_parent = parent;
             parent->_children.push_back(current);
         }
@@ -164,13 +167,17 @@ bool HTMLRenderer::computeTree()
             block->size.width = block->_parent->size.width;
             block->size.wPercent = block->_parent->size.wPercent;
         }
+        else
+        {
+            block->explicitWidth = true;
+        }
         
         if( block->size.wPercent)
         {
             block->size.width *= block->_parent->size.width / 100.f;
             block->size.wPercent = false;
-            
-            block->_parent->_xFloatRight = block->_parent->size.width;
+            block->explicitWidth = false;
+            block->_parent->_xFloat = block->_parent->size.width;
         }
         
         float maxHeight = -1;
@@ -207,11 +214,11 @@ void HTMLRenderer::printBlockTree() const
     printf("List Root \n");
     assert(_root);
     
-    //int tab = 0;
-    std::function<void( const HTMLBlockElement* , int) > printBlock = [&printBlock] ( const HTMLBlockElement* block , int tab)
+    
+    std::function<void( const HTMLBlockElement* , int*) > printBlock = [&printBlock] ( const HTMLBlockElement* block , int *tab)
     {
         //assert(block->_parent);
-        for(int i = 0 ; i< tab ; i++)
+        for(int i = 0 ; i< *tab ; i++)
             printf("\t");
         
         printf("Got child (type %i)", block->type );
@@ -225,14 +232,21 @@ void HTMLRenderer::printBlockTree() const
                );
         printf("\n");
         
+        const int lastTab = *tab;
+        *tab +=1;
         for ( const HTMLBlockElement* c : block->_children)
         {
-            printBlock(c , tab+1);
+            
+            
+            printBlock(c , tab);
+            
         }
+        *tab  = lastTab-1;
         
     };
     
-    printBlock(_root , 0);
+    int tab = 0;
+    printBlock(_root , &tab);
 }
 
 
@@ -285,7 +299,6 @@ void HTMLRenderer::printBlockTree() const
             break;
             case MyCSS_PROPERTY_TYPE_BORDER_STYLE:
             {
-                
                 mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
                 
                 mycss_property_border_style_t s = (mycss_property_border_style_t) border->width->value_type;
@@ -301,6 +314,11 @@ void HTMLRenderer::printBlockTree() const
                 assert(false ); // todo
             }
             break;
+            case MyCSS_PROPERTY_TYPE_BORDER:
+            {
+                block->drawFrame = true;
+            }
+                break;
             case MyCSS_PROPERTY_TYPE_BORDER_WIDTH:
             {
                 mycss_values_border_t*  border =(mycss_values_border_t* ) d._decl->value;
@@ -454,7 +472,6 @@ bool HTMLRenderer::addChild(HTMLBlockElement*block , const HTMLNode& node )
             assert(false);
         }
     }
-    
 
     /* END Style ATTR */
 

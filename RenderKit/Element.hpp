@@ -58,6 +58,19 @@ struct ESize
 
 static constexpr ESize ESizeInvalid = { -1.f , -1.f , false , false};
 
+
+struct ComputedAttributes
+{
+    ComputedAttributes():
+    totalSize( GXSizeMakeNull() ),
+    contentSize( GXSizeMakeNull() )
+    {}
+    
+    
+    GXSize totalSize;
+    GXSize contentSize;
+};
+
 class HTMLBlockElement
 {
 public:
@@ -92,13 +105,16 @@ public:
     std::vector<HTMLBlockElement*> _children;
     HTMLBlockElement *_parent;
 
-    int _xFloatRight;
+    int _xFloat;
     /* Defined by reflow/draw*/
-    
+    bool explicitWidth;
     GXSize realSize;
     FontProperties fontProps;
     
     HTMLNode::TagID tagID;
+    
+    /* */
+    ComputedAttributes attributes;
     
     
 };
